@@ -25,6 +25,8 @@
 //answer: In the case of our scenario, this might be fin.open(e); .In other words, it turns an encoding into a rendition.Note that we cannot use ifstream for this problem because it treats all paths the same that do not refer to resources on the system.In other words, it would report two non - homographs as the same even when they are obviously different.
 //c: This is the canon.You need to identify an appropriate canon.
 //answer: We're defining it as the absolute file path
+    // //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
+    //This will have to be adjusted. Maybe the absolute path if the path reaches uses the root and the relative path if not.
 //C() : The bulk of your work will be to create an appropriate canonicalization function.This should be informed by the functionality of R() but should not use it.
 //answer: turning the encoded path into an absolute path made lowercase(windows specific).
 //H() : This is the homograph function. It determines if two encodings are the same.It should leverage the work done in C().Check the textbook for an idea of what this will look like.
@@ -71,8 +73,11 @@ void runTests(); //could return bool instead. needs to loop through all test for
 
 string canonicalize(string path); // Nathan
 
-bool isHomograph(string path1, string path2); //probably should be the unaltered paths
+bool isHomograph(string path1, string path2); 
+    //probably should be the unaltered paths
     //canonize each string and test if same
+    //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
+    //This will have to be adjusted.
 
 
 
