@@ -5,7 +5,7 @@
 // These comments should definitely be styled better and polished to be descriptive of what the code does.
 
 // Recommended tasks to assign just for the code. I did tried to do the time estimates for someone that understands C++ at a moderate level.
-// 1. DO FIRST IF POSSIBLE: make sure the code design, structure, styling, and naming follows good practice and 
+// 1. DO FIRST IF POSSIBLE: make sure the code design, structure, styling, and naming all follow good practice and 
 //        conventions. Should probably be given to someone confident in good practice. Time estimate depends on experience.
 // 2. write Canonicalize() Nathan 1 to 2 hours or more
 // 3. write runTest(). This is a little tedious, but not super complex. Still second hardest. 30min to 1 hr
@@ -86,15 +86,15 @@ int main(int argc, char* argv[]) {
 }
 
 void runTests() {
-
+    return;
 }
 
 string canonicalize(string path) {
-
+    return "";
 }
 
 bool isHomograph(string path1, string path2) { 
-
+    return false;
 }
 
 
