@@ -167,26 +167,63 @@ void runTests() {
 
 string canonicalize(string path) {
 
-   // 1. convert escaped characters to real ones and remove quotes. ^ ' " I think
+   // 1. convert escaped characters to real ones and remove quotes. ^ ' " and make lowercase
    path.replace(path.begin(), path.end(), "^","");
    path.replace(path.begin(), path.end(), "'","");
    path.replace(path.begin(), path.end(), "\"","");
+   path.tolower();
 
    // 2. replace "/" with "\"
    path.replace(path.begin(), path.end(), '/', '\\');
 
-   enum type { Unc, Relative, Device};
+   // 4. identify path type
+   enum type { Device, Unc, FullDos, RelativeToRoot, RelativeToSameDirectorySpecificDrive, RelativeToCurrent, EnvShortcut };
+   string regexs[] = {
+        // Device
+        "\\\\\\\\(\\.|\\?).*",
+        // Unc,
+        "\\\\\\\\.*",
+        // FullDos
+        "[a-z]\\:\\\\.*"
+        // RelativeToRoot,
+        "\\\\.*",
+        // RelativeToSameDirectorySpecificDrive
+        "[a-z]\\:\\.*"
+        // RelativeToCurrent,
+        "\\.*"
+        // EnvShortcut
+        "\\%.*\\%.*"
+        //C:\windows\%appdata%\password.txt
+        //%appdata%\password.txt
+   };
+
    type pathType;
-   // 3. identify path type
    int length = path.size();
+   if (length == 0) {
+      return path;
+   }
    for (int i = 0; i < 3 && i < length; ++i)
    {
-      if (path[i] =='.') {
-         pathType = Relative;
-         break;
+      if (i == 0)
+      {
+         if (path[i] == '.')
+         {
+            pathType = Relative;
+            break;
+         }
+         if (path[i] == '\\' )
+         {
+            if (length == 1) {
+               pathType = RelativeToRoot;
+               break;
+            } else if (path[i+1] != '\\') {
+               pathType = RelativeToRoot;
+               break;
+            }
+         }
       }
-
-
+      if (i == 1) {
+      }
    }
 
    // 4. replace environmental variables
@@ -195,6 +232,8 @@ string canonicalize(string path) {
    // 5. split paths into components
 
    // 6. Resolve paths to fully qualified, UNC, or device paths
+   // 6.4
+   // 6.5 get computer name for unc
 
    // 7. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
 
