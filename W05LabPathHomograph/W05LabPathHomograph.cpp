@@ -191,8 +191,9 @@ string canonicalize(string path)
 
    // a. get the current directory from windows
    current_path();
+   
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
-    
+
    // 4. identify path type
    enum type { Device, Unc, FullDos, RelativeToRoot, RelativeToSameDirectorySpecificDrive, RelativeToCurrent, EnvShortcut };
    type pathType;
