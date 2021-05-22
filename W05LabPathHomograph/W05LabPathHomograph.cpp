@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <regex>
 #include <filesystem>
+#include<bits/stdc++.h>
 
 using namespace std;
 using std::filesystem::current_path;
@@ -116,7 +117,9 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), "^","");
    path.replace(path.begin(), path.end(), "'","");
    path.replace(path.begin(), path.end(), "\"","");
-   //path.tolower(); NEEDS DONE
+   
+   //put all the path to lower case
+   transform(path.begin(), path.end(), path.begin(), ::tolower);
 
    // 2. replace "/" with "\"
    path.replace(path.begin(), path.end(), '/', '\\');
@@ -176,7 +179,21 @@ string canonicalize(string path)
        }
    }
    // e. handle going up ".."
+	vector<string> newSpliptPath;
 
+	int newPathIterator = 0;
+	for(int i = 0; i < splitPath.size(); i++){
+		if(splitPath[i] != ".."){
+			if(newPathIterator == 0){
+				newSpliptPath.push_back(splitPath[i]);
+				++newPathIterator;				
+			}
+			else if(newSpliptPath[newPathIterator - 1] != splitPath[i]){
+				newSpliptPath.push_back(splitPath[i]);
+				++newPathIterator;
+			}
+		}
+	}
    // f. concat into one string and return
 
 
