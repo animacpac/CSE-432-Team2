@@ -36,15 +36,21 @@
 
 using namespace std;
 
-const int TEST_SIZE = 2;
+const int TEST_SIZE = 12;
 
 const int FORBIDDEN_FILE_SIZE = 2;
+
+const string CURRENT_PATH[1]{
+    //This is the current path we are working from
+    "C:\\Users\\user\\cse453\\"
+};
 
 const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
     //change these. include multiple path symbols: "..", "~" etc. 
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
-    ".\forbidden\example.txt",
-    ".\forbidden2\example.txt"
+    //".\forbidden\example.txt",
+    //".\forbidden2\example.txt"
+    "C:\\Users\\user\secret\\password.txt"
 };
 
 /*
@@ -56,16 +62,40 @@ const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
 const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     //change these. include multiple path symbols: "..", "~" etc. 
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
-    ".\homograph1\example.txt",
-    ".\homograph2\example.txt"
+   //".\homograph1\example.txt",
+    //".\homograph2\example.txt"
+    "..\\secret\\pasword.txt",
+    "..\\..\\user\\secret\\password.txt",
+    "..\\..\\user\\..\\user\\secret\\pasword.txt",
+    "..\\..\\..\\Users\\user\\secret\\pasword.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\pasword.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
+    "~\\secret\\password.txt",
+    "~\\..\\user\\secret\\pasword.txt",
+    "C:\\Users\\..\\Users\\user\\secret\\pasword.txt",
+    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\pasword.txt",
+    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
+    "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\pasword.txt"
 };
 
 
 const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
     //change these. include multiple path symbols: "..", "~" etc. 
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
-    ".\non-homograph1\example.txt",
-    ".\non-homograph2\example.txt"
+    //".\non-homograph1\example.txt",
+    //".\non-homograph2\example.txt"
+    "password.txt",
+    "secret\\pasword.txt",
+    "\\..\\user\\secret\\password.txt",
+    "..\\..\\user\\..\\..\\user\\secret\\pasword.txt",
+    "..\\..\\Users\\user\\secret\\pasword.txt",
+    "..\\..\\Users\\..\\Users\\user\\secret\\pasword.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\secret\\pasword.txt",
+    "~\\..\\secret\\password.txt",
+    "~\\..\\..\\user\\secret\\pasword.txt",
+    "C:\\Users\\..\\Users\\..\\user\\secret\\pasword.txt",
+    "C:\\Users\\user\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
+    "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\pasword.txt"
 };
 
 
@@ -83,22 +113,23 @@ void runTests();
 
 string canonicalize(string path); // Nathan
 
-bool isHomograph(string path1, string path2);
+bool isHomograph(string path1, string path2){
+// This is just an example on how it should be done
+	if (canonicalizedFile1 == canonicalizedFile2) {
+		cout << "The paths are homographs.\n";
+	}
+	else {
+		cout << "The paths are not homographs.\n";
+	}
+};
 //probably should be the unaltered paths
 //canonize each string and test if same
 //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
 //This will have to be adjusted.
 
 
+//test
 
-int main(int argc, char* argv[]) {
-    //if statement to call runTests if an argument like "--run-tests" is passed
-
-    cout << "Hello World!\n";
-
-    //need to reads to get paths from user and pass them to isHomograph then display the result
-
-}
 
 void runTests() {
 
@@ -143,6 +174,30 @@ string canonicalize(string path) {
 
 bool isHomograph(string path1, string path2) {
     return false;
+}
+
+int main(int argc, char* argv[]) {
+	//if statement to call runTests if an argument like "--run-tests" is passed
+
+	// Get the files
+	string file1;
+	string file2;
+	cout << "Specify the first filename: ";
+	cin >> file1;
+	cout << "Specify the second filename: ";
+	cin >> file2;
+
+	string canonicalizedFile1;
+	string canonicalizedFile2;
+	canonicalizeFilePath(file1, canonicalizedFile1);
+	canonicalizeFilePath(file2, canonicalizedFile2);
+
+	cout << "File 1: " << canonicalizedFile1 << endl;
+	cout << "File 2: " << canonicalizedFile2 << endl;
+
+
+	//need to reads to get paths from user and pass them to isHomograph then display the result
+
 }
 
 
