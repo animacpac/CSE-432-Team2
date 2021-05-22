@@ -33,6 +33,7 @@
 //answer: simple string test 
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -116,20 +117,7 @@ bool prompt();
 
 
 
-bool isHomograph(string path1, string path2){
-// This is just an example on how it should be done
-    string canoncalizedFile1 = canonicalize(path1);
-    string canoncalizedFile2 = canonicalize(path2);
-	if (canonicalizedFile1 == canonicalizedFile2) {
-		cout << "The paths are homographs.\n";
-        return true;
-	}
-	else {
-		cout << "The paths are not homographs.\n";
-        return false;
-	}
-    return false;
-};
+bool isHomograph(string path1, string path2);
 //probably should be the unaltered paths
 //canonize each string and test if same
 //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
@@ -178,7 +166,7 @@ void runTests() {
 
 std::string get_current_dir() {
 	char buff[FILENAME_MAX]; //create string buffer to hold path
-	GetCurrentDir(buff, FILENAME_MAX);
+	//GetCurrentDir(buff, FILENAME_MAX);
 	string current_working_dir(buff);
 	return current_working_dir;
 }
@@ -227,7 +215,7 @@ bool checkPath()
 }
 
 
-string canonicalize(string enconding) {
+string canonicalize(string encoding) {
 
 	std::vector<char> canon{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
 										  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -309,8 +297,18 @@ bool prompt()
 }
 
 bool isHomograph(string path1, string path2) {
-    return false;
-}
+// This is just an example on how it should be done
+   string canoncalizedFile1 = canonicalize(path1);
+   string canoncalizedFile2 = canonicalize(path2);
+   if (canoncalizedFile1 == canoncalizedFile2) {
+      cout << "The paths are homographs.\n";
+      return true;
+   }
+   else {
+      cout << "The paths are not homographs.\n";
+      return false;
+   }
+   return false;}
 
 int main(int argc, char* argv[]) {
 
