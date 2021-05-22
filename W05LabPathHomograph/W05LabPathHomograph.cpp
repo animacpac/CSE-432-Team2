@@ -112,6 +112,7 @@ void runTests();
 
 
 string canonicalize(string path); // Nathan
+bool prompt();
 
 
 
@@ -173,6 +174,26 @@ void runTests() {
         cout << "Success in all tests";
     }
     return;
+}
+
+std::string get_current_dir() {
+	char buff[FILENAME_MAX]; //create string buffer to hold path
+	GetCurrentDir(buff, FILENAME_MAX);
+	string current_working_dir(buff);
+	return current_working_dir;
+}
+
+string GetFullPathFromPartial(char* partialPath)
+{
+	char full[_MAX_PATH];
+	if (_fullpath(full, partialPath, _MAX_PATH) != NULL)
+	{
+		return full;
+	}
+	else
+	{
+		return "Invalid path\n";
+	}
 }
 
 bool checkPath()
@@ -276,7 +297,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-
+	return 0;
 }
 
 
