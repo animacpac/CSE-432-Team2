@@ -207,8 +207,8 @@ bool prompTest()
 	// this while loop makes sure that only y or n is accepted.
 	while (tolower(answer) != 'y' && tolower(answer) != 'n')
 	{
-		std::cout << "Would you like to do a homograph test? (y/n): ";
-		std::cin >> answer;
+		cout << "Would you like to do a homograph test? (y/n): ";
+		cin >> answer;
 	}
 
 	if (tolower(answer) == 'y')
