@@ -40,7 +40,7 @@ using namespace std;
 
 const int TEST_SIZE = 12;
 
-const int FORBIDDEN_FILE_SIZE = 2;
+const int FORBIDDEN_FILE_SIZE = 1;
 
 const string CURRENT_PATH[1]{
     //This is the current path we are working from
