@@ -112,15 +112,23 @@ void runTests();
 
 
 string canonicalize(string path); // Nathan
+bool prompt();
+
+
 
 bool isHomograph(string path1, string path2){
 // This is just an example on how it should be done
+    string canoncalizedFile1 = canonicalize(path1);
+    string canoncalizedFile2 = canonicalize(path2);
 	if (canonicalizedFile1 == canonicalizedFile2) {
 		cout << "The paths are homographs.\n";
+        return true;
 	}
 	else {
 		cout << "The paths are not homographs.\n";
+        return false;
 	}
+    return false;
 };
 //probably should be the unaltered paths
 //canonize each string and test if same
@@ -168,8 +176,109 @@ void runTests() {
     return;
 }
 
-string canonicalize(string path) {
-    return "";
+std::string get_current_dir() {
+	char buff[FILENAME_MAX]; //create string buffer to hold path
+	GetCurrentDir(buff, FILENAME_MAX);
+	string current_working_dir(buff);
+	return current_working_dir;
+}
+
+string GetFullPathFromPartial(char* partialPath)
+{
+	char full[_MAX_PATH];
+	if (_fullpath(full, partialPath, _MAX_PATH) != NULL)
+	{
+		return full;
+	}
+	else
+	{
+		return "Invalid path\n";
+	}
+}
+
+bool checkPath()
+{
+	string fName1 = "";
+	string fName2 = "";
+	string fFullPath1 = "";
+	string fFullPath2 = "";
+
+	// Retrieving Full path of file 1
+	cin.ignore();
+	cout << "File name 1> ";
+	std::getline(std::cin, fName1); //changed from simple std::cin to std::getline to allow user to input whitespaces
+	fFullPath1 = get_current_dir() + "\\" + fName1;
+
+
+	//Retrieving Full path of file 2
+	cout << "File name 2> ";
+	std::getline(std::cin, fName2); //changed from simple std::cin to std::getline to allow user to input whitespaces
+	char* c = const_cast<char*>(fName2.c_str());
+	fFullPath2 = GetFullPathFromPartial(c);
+
+	if (fFullPath1 == fFullPath2)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+string canonicalize(string enconding) {
+
+	std::vector<char> canon{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+										  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+										   'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+										   'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+										   'w', 'x', 'y', 'z', '.', '<', '>', ':', '\'', '/', '\\',
+										   '|', '*', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+										   '!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '=', '+',
+										   '`', '~', ',', '[', ']', '{', '}', '\"' };
+
+	//Loop through each character in the string and check to see if the 
+	//character is contained within the canon. If it isn't in the canon,
+	//print a message to the user.
+	for (int i = 0; i < encoding.size(); i++)
+	{
+
+		auto result = std::find(canon.begin(), canon.end(), encoding[i]);
+
+		if (result == end(canon)) {
+			std::cout << "There is an invalid character ";
+			std::cout << encoding[i];
+			std::cout << " at position ";
+			std::cout << (i + 1);
+			std::cout << endl;
+		}
+
+	}
+
+
+	return encoding;
+}
+
+bool prompt()
+{
+	char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
+
+	// this while loop makes sure that only y or n is accepted.
+	while (tolower(answer) != 'y' && tolower(answer) != 'n')
+	{
+		std::cout << "Would you like to do a homograph test? (y/n): ";
+		std::cin >> answer;
+	}
+
+	if (tolower(answer) == 'y')
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool isHomograph(string path1, string path2) {
@@ -177,27 +286,18 @@ bool isHomograph(string path1, string path2) {
 }
 
 int main(int argc, char* argv[]) {
-	//if statement to call runTests if an argument like "--run-tests" is passed
+	
+	while (prompt())
+	{
+		if (checkPath() == true) {
+			cout << "This is Homograph\n"
+		}
+		else {
+			cout << "Not a Homograph\n"
+		}
+	}
 
-	// Get the files
-	string file1;
-	string file2;
-	cout << "Specify the first filename: ";
-	cin >> file1;
-	cout << "Specify the second filename: ";
-	cin >> file2;
-
-	string canonicalizedFile1;
-	string canonicalizedFile2;
-	canonicalizeFilePath(file1, canonicalizedFile1);
-	canonicalizeFilePath(file2, canonicalizedFile2);
-
-	cout << "File 1: " << canonicalizedFile1 << endl;
-	cout << "File 2: " << canonicalizedFile2 << endl;
-
-
-	//need to reads to get paths from user and pass them to isHomograph then display the result
-
+	return 0;
 }
 
 
