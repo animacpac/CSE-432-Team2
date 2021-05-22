@@ -169,7 +169,7 @@ void runTests()
 string get_env_var(string const & key ) {                                 
     char * val;                                                                        
     val = getenv( key.c_str() );                                                       
-    string retval = "";                                                           
+    string retval = "";                                                    
     if (val != NULL) {                                                                 
         retval = val;                                                                    
     }                                                                                  
@@ -190,8 +190,8 @@ string canonicalize(string path)
    enum type { Unc, Relative, Device};
    type pathType;
     // 3 replace environmental variables
-                  
-    string get_env_var(string const & key );
+    string key = "%WINDIR%";
+    string get_env_var(key);
 
    // 4. identify path type
    int length = path.size();
