@@ -113,6 +113,8 @@ void runTests();
 
 string canonicalize(string path); // Nathan
 
+
+
 bool isHomograph(string path1, string path2){
 // This is just an example on how it should be done
 	if (canonicalizedFile1 == canonicalizedFile2) {
@@ -167,6 +169,37 @@ void runTests() {
     }
     return;
 }
+
+bool checkPath()
+{
+	string fName1 = "";
+	string fName2 = "";
+	string fFullPath1 = "";
+	string fFullPath2 = "";
+
+	// Retrieving Full path of file 1
+	cin.ignore();
+	cout << "File name 1> ";
+	std::getline(std::cin, fName1); //changed from simple std::cin to std::getline to allow user to input whitespaces
+	fFullPath1 = get_current_dir() + "\\" + fName1;
+
+
+	//Retrieving Full path of file 2
+	cout << "File name 2> ";
+	std::getline(std::cin, fName2); //changed from simple std::cin to std::getline to allow user to input whitespaces
+	char* c = const_cast<char*>(fName2.c_str());
+	fFullPath2 = GetFullPathFromPartial(c);
+
+	if (fFullPath1 == fFullPath2)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 
 string canonicalize(string path) {
     return "";
