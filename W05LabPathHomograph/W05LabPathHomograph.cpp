@@ -83,7 +83,15 @@ void runTests();
 
 string canonicalize(string path); // Nathan
 
-bool isHomograph(string path1, string path2);
+bool isHomograph(string path1, string path2){
+// This is just an example on how it should be done
+	if (canonicalizedFile1 == canonicalizedFile2) {
+		cout << "The paths are homographs.\n";
+	}
+	else {
+		cout << "The paths are not homographs.\n";
+	}
+};
 //probably should be the unaltered paths
 //canonize each string and test if same
 //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
@@ -91,14 +99,7 @@ bool isHomograph(string path1, string path2);
 
 
 
-int main(int argc, char* argv[]) {
-    //if statement to call runTests if an argument like "--run-tests" is passed
 
-    cout << "Hello World!\n";
-
-    //need to reads to get paths from user and pass them to isHomograph then display the result
-
-}
 
 void runTests() {
 
@@ -143,6 +144,30 @@ string canonicalize(string path) {
 
 bool isHomograph(string path1, string path2) {
     return false;
+}
+
+int main(int argc, char* argv[]) {
+	//if statement to call runTests if an argument like "--run-tests" is passed
+
+	// Get the files
+	string file1;
+	string file2;
+	cout << "Specify the first filename: ";
+	cin >> file1;
+	cout << "Specify the second filename: ";
+	cin >> file2;
+
+	string canonicalizedFile1;
+	string canonicalizedFile2;
+	canonicalizeFilePath(file1, canonicalizedFile1);
+	canonicalizeFilePath(file2, canonicalizedFile2);
+
+	cout << "File 1: " << canonicalizedFile1 << endl;
+	cout << "File 2: " << canonicalizedFile2 << endl;
+
+
+	//need to reads to get paths from user and pass them to isHomograph then display the result
+
 }
 
 
