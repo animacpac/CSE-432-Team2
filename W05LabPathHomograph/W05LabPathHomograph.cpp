@@ -199,7 +199,7 @@ string canonicalize(string path)
    //enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
    const int FULL_DOS = 0;
    const int RELATIVE_TO_ROOT = 1;
-   const int RELATIVE_TO_CURRENT = 0;
+   const int RELATIVE_TO_CURRENT = 2;
    int pathType;
    int regexsSize = 3;
    regex regexs[3] = {
@@ -222,12 +222,16 @@ string canonicalize(string path)
    }
 
    // c. if it's relative, prepend it with the drive letter or current directory
-   if (pathType == 1) {
+   if (pathType == RELATIVE_TO_ROOT) {
        //relative to root. add name of drive and :
+       path += currentDirectory.substr(0, 1);
    }
        
-   if (pathType == 2) {
-
+   if (pathType == RELATIVE_TO_CURRENT) {
+       if (path.size >= 3 && path.substr(0, 1) == ".\\") {
+           path = path.substr(2, path.end());
+       }
+       path += currentDirectory;
    }
        
    // d. split into strings using "\" as delimiter
