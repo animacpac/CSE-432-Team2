@@ -33,6 +33,7 @@
 //answer: simple string test 
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -106,7 +107,7 @@ const string PATH_SYMBOLS[] = {
 };
 
 
-//could return bool instead. needs to loop through all test forbidden files and loop all homographs 
+//could return bool instead. needs to loop through all test forbidden files and loop all homographs
 //then non-homographs. It should probably log if tests pass or not. This is probably the second most complex function
 void runTests();
 
@@ -116,20 +117,7 @@ bool prompt();
 
 
 
-bool isHomograph(string path1, string path2){
-// This is just an example on how it should be done
-    string canoncalizedFile1 = canonicalize(path1);
-    string canoncalizedFile2 = canonicalize(path2);
-	if (canonicalizedFile1 == canonicalizedFile2) {
-		cout << "The paths are homographs.\n";
-        return true;
-	}
-	else {
-		cout << "The paths are not homographs.\n";
-        return false;
-	}
-    return false;
-};
+bool isHomograph(string path1, string path2);
 //probably should be the unaltered paths
 //canonize each string and test if same
 //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
@@ -178,7 +166,7 @@ void runTests() {
 
 std::string get_current_dir() {
 	char buff[FILENAME_MAX]; //create string buffer to hold path
-	GetCurrentDir(buff, FILENAME_MAX);
+	//GetCurrentDir(buff, FILENAME_MAX);
 	string current_working_dir(buff);
 	return current_working_dir;
 }
@@ -227,7 +215,7 @@ bool checkPath()
 }
 
 
-string canonicalize(string enconding) {
+string canonicalize(string encoding) {
 
 	std::vector<char> canon{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
 										  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -238,7 +226,7 @@ string canonicalize(string enconding) {
 										   '!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '=', '+',
 										   '`', '~', ',', '[', ']', '{', '}', '\"' };
 
-	//Loop through each character in the string and check to see if the 
+	//Loop through each character in the string and check to see if the
 	//character is contained within the canon. If it isn't in the canon,
 	//print a message to the user.
 	for (int i = 0; i < encoding.size(); i++)
@@ -258,6 +246,33 @@ string canonicalize(string enconding) {
 
 
 	return encoding;
+   //might need to add an ambiguous case, in other words, it depends on
+   // real folder and file structure that will vary system to system.
+   //
+   // https://docs.microsoft.com/en-us/dotnet/standard/io/file-path-formats
+   //
+   // TODO:
+   // 2. replace "/" with "\"
+   // 2. handle drive letters, unc paths, as root
+   // 3. handle ".", "..", and "~". ^
+   //      a. look up ~ value, or write the code in a comment and put that. Since we are working with theoritical paths,
+   //          running homograph tests based on a real value that changes from machine to machine will yeild inconsistent
+   //          results. However if this program were put into practice, this is the code you would use.
+   // 4. convert the handling of the symbols to a map include all
+   //
+   // 1. convert escaped charachters to real ones and remove quotes. ^ ' " I think
+   // 2. replace "/" with "\"
+   // 3. identify path type
+   // 4. replace environmental variables split paths into components
+   // 5. Resolve paths to fully qualified, UNC, or device paths
+   // 6. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
+   // 7. loop through until no resolutions are needed.
+   // 4. convert the handling of the symbols to a map include all
+   // resolution needed unordered set.
+   //
+   //
+   //
+   //
 }
 
 bool prompt()
@@ -282,18 +297,28 @@ bool prompt()
 }
 
 bool isHomograph(string path1, string path2) {
-    return false;
-}
+// This is just an example on how it should be done
+   string canoncalizedFile1 = canonicalize(path1);
+   string canoncalizedFile2 = canonicalize(path2);
+   if (canoncalizedFile1 == canoncalizedFile2) {
+      cout << "The paths are homographs.\n";
+      return true;
+   }
+   else {
+      cout << "The paths are not homographs.\n";
+      return false;
+   }
+   return false;}
 
 int main(int argc, char* argv[]) {
-	
+
 	while (prompt())
 	{
 		if (checkPath() == true) {
-			cout << "This is Homograph\n"
+			cout << "This is Homograph\n";
 		}
 		else {
-			cout << "Not a Homograph\n"
+			cout << "Not a Homograph\n";
 		}
 	}
 
