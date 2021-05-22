@@ -68,16 +68,16 @@ const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     //".\homograph2\example.txt"
     "..\\secret\\pasword.txt",
     "..\\..\\user\\secret\\password.txt",
-    "..\\..\\user\\..\\user\\secret\\pasword.txt",
-    "..\\..\\..\\Users\\user\\secret\\pasword.txt",
-    "..\\..\\..\\Users\\..\\Users\\user\\secret\\pasword.txt",
-    "..\\..\\..\\Users\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
+    "..\\..\\user\\..\\user\\secret\\password.txt",
+    "..\\..\\..\\Users\\user\\secret\\password.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\password.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\..\\secret\\password.txt",
     "~\\secret\\password.txt",
-    "~\\..\\user\\secret\\pasword.txt",
-    "C:\\Users\\..\\Users\\user\\secret\\pasword.txt",
-    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\pasword.txt",
-    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
-    "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\pasword.txt"
+    "~\\..\\user\\secret\\password.txt",
+    "C:\\Users\\..\\Users\\user\\secret\\password.txt",
+    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\password.txt",
+    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\..\\secret\\password.txt",
+    "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\password.txt"
 };
 
 
@@ -87,17 +87,17 @@ const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
     //".\non-homograph1\example.txt",
     //".\non-homograph2\example.txt"
     "password.txt",
-    "secret\\pasword.txt",
+    "secret\\password.txt",
     "\\..\\user\\secret\\password.txt",
-    "..\\..\\user\\..\\..\\user\\secret\\pasword.txt",
-    "..\\..\\Users\\user\\secret\\pasword.txt",
-    "..\\..\\Users\\..\\Users\\user\\secret\\pasword.txt",
-    "..\\..\\..\\Users\\..\\Users\\user\\secret\\secret\\pasword.txt",
+    "..\\..\\user\\..\\..\\user\\secret\\password.txt",
+    "..\\..\\Users\\user\\secret\\password.txt",
+    "..\\..\\Users\\..\\Users\\user\\secret\\password.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\secret\\password.txt",
     "~\\..\\secret\\password.txt",
-    "~\\..\\..\\user\\secret\\pasword.txt",
-    "C:\\Users\\..\\Users\\..\\user\\secret\\pasword.txt",
-    "C:\\Users\\user\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
-    "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\pasword.txt"
+    "~\\..\\..\\user\\secret\\password.txt",
+    "C:\\Users\\..\\Users\\..\\user\\secret\\password.txt",
+    "C:\\Users\\user\\..\\Users\\user\\secret\\..\\secret\\password.txt",
+    "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\password.txt"
 };
 
 
@@ -165,84 +165,9 @@ void runTests() {
     return;
 }
 
-std::string get_current_dir() {
-	char buff[FILENAME_MAX]; //create string buffer to hold path
-	//GetCurrentDir(buff, FILENAME_MAX);
-	string current_working_dir(buff);
-	return current_working_dir;
-}
-
-string GetFullPathFromPartial(char* partialPath)
-{
-	char full[_MAX_PATH];
-	if (_fullpath(full, partialPath, _MAX_PATH) != NULL)
-	{
-		return full;
-	}
-	else
-	{
-		return "Invalid path\n";
-	}
-}
-
-bool checkPath()
-{
-	string fName1 = "";
-	string fName2 = "";
-	string fFullPath1 = "";
-	string fFullPath2 = "";
-
-	// Retrieving Full path of file 1
-	cin.ignore();
-	cout << "File name 1> ";
-	std::getline(std::cin, fName1); //changed from simple std::cin to std::getline to allow user to input whitespaces
-	fFullPath1 = get_current_dir() + "\\" + fName1;
-
-
-	//Retrieving Full path of file 2
-	cout << "File name 2> ";
-	std::getline(std::cin, fName2); //changed from simple std::cin to std::getline to allow user to input whitespaces
-	char* c = const_cast<char*>(fName2.c_str());
-	fFullPath2 = GetFullPathFromPartial(c);
-
-	if (fFullPath1 == fFullPath2)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
 
 string canonicalize(string path) {
-//
-//	std::vector<char> canon{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-//										  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-//										   'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-//										   'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-//										   'w', 'x', 'y', 'z', '.', '<', '>', ':', '\'', '/', '\\',
-//										   '|', '*', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-//										   '!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '=', '+',
-//										   '`', '~', ',', '[', ']', '{', '}', '\"' };
-//
-//	//Loop through each character in the string and check to see if the
-//	//character is contained within the canon. If it isn't in the canon,
-//	//print a message to the user.
-//	for (int i = 0; i < encoding.size(); i++)
-//	{
-//
-//		auto result = std::find(canon.begin(), canon.end(), encoding[i]);
-//
-//		if (result == end(canon)) {
-//			std::cout << "There is an invalid character ";
-//			std::cout << encoding[i];
-//			std::cout << " at position ";
-//			std::cout << (i + 1);
-//			std::cout << endl;
-//		}
-//
+
    replace(path.begin(), path.end(), '\\', '\\');
 
    //might need to add an ambiguous case, in other words, it depends on
@@ -250,7 +175,16 @@ string canonicalize(string path) {
    //
    // https://docs.microsoft.com/en-us/dotnet/standard/io/file-path-formats
    //
-   // 1. convert escaped characters to real ones and remove quotes. ^ ' " I think
+   // TODO:
+   // 2. replace "/" with "\"
+   // 2. handle drive letters, unc paths, as root
+   // 3. handle ".", "..", and "~". ^
+   //      a. look up ~ value, or write the code in a comment and put that. Since we are working with theoritical paths,
+   //          running homograph tests based on a real value that changes from machine to machine will yeild inconsistent
+   //          results. However if this program were put into practice, this is the code you would use.
+   // 4. convert the handling of the symbols to a map include all
+   //
+   // 1. convert escaped charachters to real ones and remove quotes. ^ ' " I think
    // 2. replace "/" with "\"
    // 3. identify path type
    // 4. replace environmental variables split paths into components
@@ -263,10 +197,10 @@ string canonicalize(string path) {
    //
    //
    //
-   return encoding;
+   return path;
 }
 
-bool prompt()
+bool prompTest()
 {
 	char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
 
@@ -303,15 +237,21 @@ bool isHomograph(string path1, string path2) {
 
 int main(int argc, char* argv[]) {
 
-	while (prompt())
-	{
-		if (checkPath() == true) {
-			cout << "This is Homograph\n";
-		}
-		else {
-			cout << "Not a Homograph\n";
-		}
-	}
+    string file1;
+    string file2;
+
+	if (prompTest()){
+        runTests();
+    }
+
+    cout << "Specify the first filename: ";
+
+    cin >> file1;
+    cout << "Specify the second filename: ";
+
+    cin >> file2;
+
+    isHomograph(file1, file2);
 
 	return 0;
 }
