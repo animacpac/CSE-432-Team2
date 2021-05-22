@@ -193,7 +193,6 @@ string canonicalize(string path)
 
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
-   // c. if it's relative, prepend it with the drive letter or current directory
    // 4. identify path type
    enum type { Device, Unc, FullDos, RelativeToRoot, RelativeToSameDirectorySpecificDrive, RelativeToCurrent, EnvShortcut };
    type pathType;
@@ -224,6 +223,8 @@ string canonicalize(string path)
    {
 
    }
+
+   // c. if it's relative, prepend it with the drive letter or current directory
 
    // d. split into strings using "\" as delimiter
 
