@@ -172,19 +172,36 @@ string canonicalize(string path) {
    path.replace(path.begin(), path.end(), "'","");
    path.replace(path.begin(), path.end(), "\"","");
 
-   // 2
+   // 2. replace "/" with "\"
    path.replace(path.begin(), path.end(), '/', '\\');
 
-   // 3
+   enum type { Unc, Relative, Device};
+   type pathType;
+   // 3. identify path type
+   int length = path.size();
+   for (int i = 0; i < 3 && i < length; ++i)
+   {
+      if (path[i] =='.') {
+         pathType = Relative;
+         break;
+      }
 
 
-   // 4
+   }
 
-   // 5
+   // 4. replace environmental variables
+   
 
-   // 6
+   // 5. split paths into components
 
-   // 7
+   // 6. Resolve paths to fully qualified, UNC, or device paths
+
+   // 7. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
+
+   // 8. loop through until no resolutions are needed.
+
+   // 9. convert the handling of the symbols to a map include all
+
 
    // might need to add an ambiguous case, in other words, it depends on
    // real folder and file structure that will vary system to system.
@@ -198,10 +215,10 @@ string canonicalize(string path) {
    // 3. identify path type
    // 4. replace environmental variables
    // 5. split paths into components
-   // 5. Resolve paths to fully qualified, UNC, or device paths
-   // 6. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
-   // 7. loop through until no resolutions are needed.
-   // 4. convert the handling of the symbols to a map include all
+   // 6. Resolve paths to fully qualified, UNC, or device paths
+   // 7. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
+   // 8. loop through until no resolutions are needed.
+   // 9. convert the handling of the symbols to a map include all
    // resolution needed unordered set.
    //
    //
