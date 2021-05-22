@@ -195,8 +195,8 @@ string canonicalize(string path)
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
    // 4. identify path type
-   enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
-   typesOfPaths pathType;
+   //enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
+   int pathType;
    int regexsSize = 3;
    regex regexs[3] = {
            // FullDos
@@ -213,7 +213,7 @@ string canonicalize(string path)
    for (int i = 0; i < regexsSize; ++i)
    {
       if(regex_match(path, regexs[i])) {
-         pathType =  statici;
+         pathType = i;
       }
    }
 
