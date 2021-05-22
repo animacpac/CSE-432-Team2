@@ -34,6 +34,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -215,52 +216,41 @@ bool checkPath()
 }
 
 
-string canonicalize(string encoding) {
+string canonicalize(string path) {
+//
+//	std::vector<char> canon{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+//										  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+//										   'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+//										   'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+//										   'w', 'x', 'y', 'z', '.', '<', '>', ':', '\'', '/', '\\',
+//										   '|', '*', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+//										   '!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '=', '+',
+//										   '`', '~', ',', '[', ']', '{', '}', '\"' };
+//
+//	//Loop through each character in the string and check to see if the
+//	//character is contained within the canon. If it isn't in the canon,
+//	//print a message to the user.
+//	for (int i = 0; i < encoding.size(); i++)
+//	{
+//
+//		auto result = std::find(canon.begin(), canon.end(), encoding[i]);
+//
+//		if (result == end(canon)) {
+//			std::cout << "There is an invalid character ";
+//			std::cout << encoding[i];
+//			std::cout << " at position ";
+//			std::cout << (i + 1);
+//			std::cout << endl;
+//		}
+//
+   replace(path.begin(), path.end(), '\\', '\\');
 
-	std::vector<char> canon{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-										  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-										   'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-										   'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-										   'w', 'x', 'y', 'z', '.', '<', '>', ':', '\'', '/', '\\',
-										   '|', '*', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-										   '!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '=', '+',
-										   '`', '~', ',', '[', ']', '{', '}', '\"' };
-
-	//Loop through each character in the string and check to see if the
-	//character is contained within the canon. If it isn't in the canon,
-	//print a message to the user.
-	for (int i = 0; i < encoding.size(); i++)
-	{
-
-		auto result = std::find(canon.begin(), canon.end(), encoding[i]);
-
-		if (result == end(canon)) {
-			std::cout << "There is an invalid character ";
-			std::cout << encoding[i];
-			std::cout << " at position ";
-			std::cout << (i + 1);
-			std::cout << endl;
-		}
-
-	}
-
-
-	return encoding;
    //might need to add an ambiguous case, in other words, it depends on
    // real folder and file structure that will vary system to system.
    //
    // https://docs.microsoft.com/en-us/dotnet/standard/io/file-path-formats
    //
-   // TODO:
-   // 2. replace "/" with "\"
-   // 2. handle drive letters, unc paths, as root
-   // 3. handle ".", "..", and "~". ^
-   //      a. look up ~ value, or write the code in a comment and put that. Since we are working with theoritical paths,
-   //          running homograph tests based on a real value that changes from machine to machine will yeild inconsistent
-   //          results. However if this program were put into practice, this is the code you would use.
-   // 4. convert the handling of the symbols to a map include all
-   //
-   // 1. convert escaped charachters to real ones and remove quotes. ^ ' " I think
+   // 1. convert escaped characters to real ones and remove quotes. ^ ' " I think
    // 2. replace "/" with "\"
    // 3. identify path type
    // 4. replace environmental variables split paths into components
@@ -273,6 +263,7 @@ string canonicalize(string encoding) {
    //
    //
    //
+   return encoding;
 }
 
 bool prompt()
