@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <regex>
 #include <filesystem>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 using std::filesystem::current_path;
