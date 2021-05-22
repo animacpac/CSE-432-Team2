@@ -197,6 +197,9 @@ string canonicalize(string path)
 
    // 4. identify path type
    //enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
+   const int FULL_DOS = 0;
+   const int RELATIVE_TO_ROOT = 1;
+   const int RELATIVE_TO_CURRENT = 0;
    int pathType;
    int regexsSize = 3;
    regex regexs[3] = {
