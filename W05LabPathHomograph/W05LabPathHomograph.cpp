@@ -83,8 +83,12 @@ bool isHomograph(string path1, string path2);
 
 int main(int argc, char* argv[]) {
     //if statement to call runTests if an argument like "--run-tests" is passed
-    
     cout << "Hello World!\n";
+
+
+    // Note from instructions:
+    // it should be possible to execute any of the test cases in the report. A simple menu structure should be 
+    // provided to facilitate this. Maybe just do something like "Would you like to run the tests? (y/n).
 
     //need to reads to get paths from user and pass them to isHomograph then display the result
 
@@ -94,7 +98,34 @@ void runTests() {
     return;
 }
 
-string canonicalize(string path) {
+string canonicalize(string path) { //might need to add an ambiguous case, in other words, it depends on 
+    // real folder and file structure that will vary system to system. 
+    // 
+    // https://docs.microsoft.com/en-us/dotnet/standard/io/file-path-formats
+    // 
+    // TODO:
+    // 2. replace "/" with "\"
+    // 2. handle drive letters, unc paths, as root
+    // 3. handle ".", "..", and "~". ^
+    //      a. look up ~ value, or write the code in a comment and put that. Since we are working with theoritical paths,
+    //          running homograph tests based on a real value that changes from machine to machine will yeild inconsistent 
+    //          results. However if this program were put into practice, this is the code you would use.
+    // 4. convert the handling of the symbols to a map include all 
+    //
+    // 1. convert escaped charachters to real ones and remove quotes. ^ ' " I think
+    // 2. replace "/" with "\"
+    // 3. identify path type
+    // 4. replace environmental variables split paths into components
+    // 5. Resolve paths to fully qualified, UNC, or device paths
+    // 6. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
+    // 7. loop through until no resolutions are needed.
+    // 4. convert the handling of the symbols to a map include all 
+    // resolution needed unordered set.
+    //
+    //
+    //
+    //
+
     return "";
 }
 
