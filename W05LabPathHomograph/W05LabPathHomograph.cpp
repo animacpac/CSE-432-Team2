@@ -168,19 +168,37 @@ void runTests() {
 
 string canonicalize(string path) {
 
-   replace(path.begin(), path.end(), '\\', '\\');
+   // 1
+   path.replace(path.begin(), path.end(), "^","");
+   path.replace(path.begin(), path.end(), "'","");
+   path.replace(path.begin(), path.end(), "\"","");
 
-   //might need to add an ambiguous case, in other words, it depends on
+   // 2
+   path.replace(path.begin(), path.end(), '/', '\\');
+
+   // 3
+
+
+   // 4
+
+   // 5
+
+   // 6
+
+   // 7
+
+   // might need to add an ambiguous case, in other words, it depends on
    // real folder and file structure that will vary system to system.
    //
    // https://docs.microsoft.com/en-us/dotnet/standard/io/file-path-formats
    //
    // TODO:
 
-   // 1. convert escaped charachters to real ones and remove quotes. ^ ' " I think
+   // 1. convert escaped characters to real ones and remove quotes. ^ ' " I think
    // 2. replace "/" with "\"
    // 3. identify path type
-   // 4. replace environmental variables split paths into components
+   // 4. replace environmental variables
+   // 5. split paths into components
    // 5. Resolve paths to fully qualified, UNC, or device paths
    // 6. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
    // 7. loop through until no resolutions are needed.
