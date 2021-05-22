@@ -166,7 +166,14 @@ string canonicalize(string path)
    }
        
    // d. split into strings using "\" as delimiter
-
+   vector<string> splitPath;
+   int j = 0;
+   for (i = 0; i < path.size(); i++) {
+       if (path[i] == '\\' || i == path.size()) {
+           splitPath.push_back(path.substr(j, i - j));
+           j = i + 1;
+       }
+   }
    // e. handle going up ".."
 
    // f. concat into one string and return
