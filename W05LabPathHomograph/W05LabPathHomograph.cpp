@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <regex>
 #include <filesystem>
-#include<bits/stdc++.h>
 
 using namespace std;
 using std::filesystem::current_path;
@@ -119,7 +118,7 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), "\"","");
    
    //put all the path to lower case
-   transform(path.begin(), path.end(), path.begin(), ::tolower);
+   //transform(path.begin(), path.end(), path.begin(), ::tolower);
 
    // 2. replace "/" with "\"
    path.replace(path.begin(), path.end(), '/', '\\');
