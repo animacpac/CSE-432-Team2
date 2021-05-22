@@ -36,26 +36,66 @@
 
 using namespace std;
 
+const int TEST_SIZE = 12;
 
-const string TEST_FORBIDDEN_FILES[]{ 
-    //change these. include multiple path symbols: "..", "~" etc. 
-    //Also, some of the characters will have to be escaped. I don't remember which ones in c++
-    ".\forbidden\example.txt",  
-    ".\forbidden2\example.txt"
+const int FORBIDDEN_FILE_SIZE = 2;
+
+const string CURRENT_PATH[1]{
+    //This is the current path we are working from
+    "C:\\Users\\user\\cse453\\"
 };
 
-const string TEST_HOMOGRAPHS[] = {
+const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
     //change these. include multiple path symbols: "..", "~" etc. 
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
-    ".\homograph1\example.txt",
-    ".\homograph2\example.txt"
+    //".\forbidden\example.txt",
+    //".\forbidden2\example.txt"
+    "C:\\Users\\user\\secret\\password.txt"
 };
 
-const string TEST_NON_HOMOGRAPHS[] = {
+/*
+    Everton: I put the test in multi-dimensional array
+    because the isHomograph function gets 2 inputs to compare.
+    For now I'll write the code to just test the homographs results.
+*/
+
+const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     //change these. include multiple path symbols: "..", "~" etc. 
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
-    ".\non-homograph1\example.txt"
-    ".\non-homograph2\example.txt"
+   //".\homograph1\example.txt",
+    //".\homograph2\example.txt"
+    "..\\secret\\pasword.txt",
+    "..\\..\\user\\secret\\password.txt",
+    "..\\..\\user\\..\\user\\secret\\pasword.txt",
+    "..\\..\\..\\Users\\user\\secret\\pasword.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\pasword.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
+    "~\\secret\\password.txt",
+    "~\\..\\user\\secret\\pasword.txt",
+    "C:\\Users\\..\\Users\\user\\secret\\pasword.txt",
+    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\pasword.txt",
+    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
+    "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\pasword.txt"
+};
+
+
+const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
+    //change these. include multiple path symbols: "..", "~" etc. 
+    //Also, some of the characters will have to be escaped. I don't remember which ones in c++
+    //".\non-homograph1\example.txt",
+    //".\non-homograph2\example.txt"
+    "password.txt",
+    "secret\\pasword.txt",
+    "\\..\\user\\secret\\password.txt",
+    "..\\..\\user\\..\\..\\user\\secret\\pasword.txt",
+    "..\\..\\Users\\user\\secret\\pasword.txt",
+    "..\\..\\Users\\..\\Users\\user\\secret\\pasword.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\secret\\pasword.txt",
+    "~\\..\\secret\\password.txt",
+    "~\\..\\..\\user\\secret\\pasword.txt",
+    "C:\\Users\\..\\Users\\..\\user\\secret\\pasword.txt",
+    "C:\\Users\\user\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
+    "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\pasword.txt"
 };
 
 
@@ -66,20 +106,36 @@ const string PATH_SYMBOLS[] = {
 };
 
 
-
-void runTests(); //could return bool instead. needs to loop through all test forbidden files and loop all homographs 
+//could return bool instead. needs to loop through all test forbidden files and loop all homographs
 //then non-homographs. It should probably log if tests pass or not. This is probably the second most complex function
+void runTests();
 
 
 string canonicalize(string path); // Nathan
 
-bool isHomograph(string path1, string path2); 
-    //probably should be the unaltered paths
-    //canonize each string and test if same
-    //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
-    //This will have to be adjusted.
 
 
+bool isHomograph(string path1, string path2){
+// This is just an example on how it should be done
+    string canoncalizedFile1 = canonicalize(path1);
+    string canoncalizedFile2 = canonicalize(path2);
+	if (canonicalizedFile1 == canonicalizedFile2) {
+		cout << "The paths are homographs.\n";
+        return true;
+	}
+	else {
+		cout << "The paths are not homographs.\n";
+        return false;
+	}
+    return false;
+};
+//probably should be the unaltered paths
+//canonize each string and test if same
+//it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
+//This will have to be adjusted.
+
+
+//test
 
 int main(int argc, char* argv[]) {
     //if statement to call runTests if an argument like "--run-tests" is passed
@@ -87,7 +143,7 @@ int main(int argc, char* argv[]) {
 
 
     // Note from instructions:
-    // it should be possible to execute any of the test cases in the report. A simple menu structure should be 
+    // it should be possible to execute any of the test cases in the report. A simple menu structure should be
     // provided to facilitate this. Maybe just do something like "Would you like to run the tests? (y/n).
 
     //need to reads to get paths from user and pass them to isHomograph then display the result
@@ -95,38 +151,131 @@ int main(int argc, char* argv[]) {
 }
 
 void runTests() {
+
+    bool passedAllHomographTest = true;
+    bool passedAllNonHomographTest = true;
+
+    //Loop and tests  all homograph examples
+    for (int h = 0; h < TEST_SIZE; h++) {
+        for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++) {
+            if (isHomograph(TEST_HOMOGRAPHS[h], TEST_FORBIDDEN_FILES[f]) == false) {
+
+
+                cout << "Failed Homograph Examples at test line: "
+                    << h + 1 << " at the Forbidden line: " << f + 1 << endl;
+                passedAllHomographTest = false;
+            }
+        }
+    }
+
+    //Loop and tests all Non-Homograph examples
+    for (int n = 0; n < TEST_SIZE; n++) {
+        for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++) {
+            if (isHomograph(TEST_NON_HOMOGRAPHS[n], TEST_FORBIDDEN_FILES[f])) {
+
+                cout << "Failed Non-Homograph Examples at test line: "
+                    << n + 1 << " at the Forbidden line: " << f + 1 << endl;
+                passedAllNonHomographTest = false;
+            }
+        }
+    }
+
+    if (passedAllHomographTest && passedAllNonHomographTest) {
+
+        cout << "Success in all tests";
+    }
     return;
 }
 
-string canonicalize(string path) { //might need to add an ambiguous case, in other words, it depends on 
-    // real folder and file structure that will vary system to system. 
-    // 
-    // https://docs.microsoft.com/en-us/dotnet/standard/io/file-path-formats
-    // 
-    // TODO:
-    // 2. replace "/" with "\"
-    // 2. handle drive letters, unc paths, as root
-    // 3. handle ".", "..", and "~". ^
-    //      a. look up ~ value, or write the code in a comment and put that. Since we are working with theoritical paths,
-    //          running homograph tests based on a real value that changes from machine to machine will yeild inconsistent 
-    //          results. However if this program were put into practice, this is the code you would use.
-    // 4. convert the handling of the symbols to a map include all 
-    //
-    // 1. convert escaped charachters to real ones and remove quotes. ^ ' " I think
-    // 2. replace "/" with "\"
-    // 3. identify path type
-    // 4. replace environmental variables split paths into components
-    // 5. Resolve paths to fully qualified, UNC, or device paths
-    // 6. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
-    // 7. loop through until no resolutions are needed.
-    // 4. convert the handling of the symbols to a map include all 
-    // resolution needed unordered set.
-    //
-    //
-    //
-    //
+bool checkPath()
+{
+	string fName1 = "";
+	string fName2 = "";
+	string fFullPath1 = "";
+	string fFullPath2 = "";
 
-    return "";
+	// Retrieving Full path of file 1
+	cin.ignore();
+	cout << "File name 1> ";
+	std::getline(std::cin, fName1); //changed from simple std::cin to std::getline to allow user to input whitespaces
+	fFullPath1 = get_current_dir() + "\\" + fName1;
+
+
+	//Retrieving Full path of file 2
+	cout << "File name 2> ";
+	std::getline(std::cin, fName2); //changed from simple std::cin to std::getline to allow user to input whitespaces
+	char* c = const_cast<char*>(fName2.c_str());
+	fFullPath2 = GetFullPathFromPartial(c);
+
+	if (fFullPath1 == fFullPath2)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+string canonicalize(string enconding) {
+
+	std::vector<char> canon{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+										  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+										   'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+										   'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+										   'w', 'x', 'y', 'z', '.', '<', '>', ':', '\'', '/', '\\',
+										   '|', '*', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+										   '!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '=', '+',
+										   '`', '~', ',', '[', ']', '{', '}', '\"' };
+
+	//Loop through each character in the string and check to see if the
+	//character is contained within the canon. If it isn't in the canon,
+	//print a message to the user.
+	for (int i = 0; i < encoding.size(); i++)
+	{
+
+		auto result = std::find(canon.begin(), canon.end(), encoding[i]);
+
+		if (result == end(canon)) {
+			std::cout << "There is an invalid character ";
+			std::cout << encoding[i];
+			std::cout << " at position ";
+			std::cout << (i + 1);
+			std::cout << endl;
+		}
+
+	}
+
+
+	return encoding;
+   //might need to add an ambiguous case, in other words, it depends on
+   // real folder and file structure that will vary system to system.
+   //
+   // https://docs.microsoft.com/en-us/dotnet/standard/io/file-path-formats
+   //
+   // TODO:
+   // 2. replace "/" with "\"
+   // 2. handle drive letters, unc paths, as root
+   // 3. handle ".", "..", and "~". ^
+   //      a. look up ~ value, or write the code in a comment and put that. Since we are working with theoritical paths,
+   //          running homograph tests based on a real value that changes from machine to machine will yeild inconsistent
+   //          results. However if this program were put into practice, this is the code you would use.
+   // 4. convert the handling of the symbols to a map include all
+   //
+   // 1. convert escaped charachters to real ones and remove quotes. ^ ' " I think
+   // 2. replace "/" with "\"
+   // 3. identify path type
+   // 4. replace environmental variables split paths into components
+   // 5. Resolve paths to fully qualified, UNC, or device paths
+   // 6. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
+   // 7. loop through until no resolutions are needed.
+   // 4. convert the handling of the symbols to a map include all
+   // resolution needed unordered set.
+   //
+   //
+   //
+   //
 }
 
 bool isHomograph(string path1, string path2) { 
