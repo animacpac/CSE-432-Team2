@@ -116,7 +116,6 @@ string canonicalize(string path); // Nathan
 bool prompt();
 
 
-
 bool isHomograph(string path1, string path2);
 //probably should be the unaltered paths
 //canonize each string and test if same
