@@ -4,7 +4,7 @@
 // Each of those sections is also organized by test code first then everything else alphabetically, with the exception of main(). 
 // These comments should definitely be styled better and polished to be descriptive of what the code does.
 
-// Recommended tasks to assign just for the code. I did tried to do the time estimates for someone that understands C++ at a moderate level.
+// Recommended tasks to assign just for the code. I tried to do the time estimates for someone that understands C++ at a moderate level.
 // 1. DO FIRST IF POSSIBLE: make sure the code design, structure, styling, and naming all follow good practice and 
 //        conventions. Should probably be given to someone confident in good practice. Time estimate depends on experience.
 // 2. write Canonicalize() Nathan 1 to 2 hours or more
@@ -29,7 +29,7 @@
     //This will have to be adjusted. Maybe the absolute path if the path reaches uses the root and the relative path if not.
 //C() : The bulk of your work will be to create an appropriate canonicalization function.This should be informed by the functionality of R() but should not use it.
 //answer: turning the encoded path into an absolute path made lowercase(windows specific).
-//H() : This is the homograph function. It determines if two encodings are the same.It should leverage the work done in C().Check the textbook for an idea of what this will look like.
+//H() : This is the homograph function. It determines if two encodings are the same. It should leverage the work done in C().Check the textbook for an idea of what this will look like.
 //answer: simple string test 
 
 #include <iostream>
