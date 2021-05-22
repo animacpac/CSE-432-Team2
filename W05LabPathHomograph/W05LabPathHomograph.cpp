@@ -40,7 +40,7 @@ using namespace std;
 
 const int TEST_SIZE = 12;
 
-const int FORBIDDEN_FILE_SIZE = 2;
+const int FORBIDDEN_FILE_SIZE = 1;
 
 const string CURRENT_PATH[1]{
     //This is the current path we are working from
@@ -123,7 +123,6 @@ bool isHomograph(string path1, string path2);
 //canonize each string and test if same
 //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
 //This will have to be adjusted.
-
 
 //test
 
