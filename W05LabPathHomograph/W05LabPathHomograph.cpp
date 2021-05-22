@@ -275,7 +275,7 @@ string canonicalize(string encoding) {
    //
 }
 
-bool prompt()
+bool prompTest()
 {
 	char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
 
@@ -310,17 +310,25 @@ bool isHomograph(string path1, string path2) {
    }
    return false;}
 
+
 int main(int argc, char* argv[]) {
 
-	while (prompt())
-	{
-		if (checkPath() == true) {
-			cout << "This is Homograph\n";
-		}
-		else {
-			cout << "Not a Homograph\n";
-		}
-	}
+    string file1;
+    string file2;
+     
+
+	if (prompTest()){
+        runTests();
+    }
+
+    cout << "Specify the first filename: ";
+   
+    cin >> file1;
+    cout << "Specify the second filename: ";
+    
+    cin >> file2;
+
+    isHomograph(file1, file2);
 
 	return 0;
 }
