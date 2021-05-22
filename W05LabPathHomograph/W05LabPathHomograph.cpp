@@ -112,6 +112,7 @@ void runTests();
 
 
 string canonicalize(string path); // Nathan
+bool prompt();
 
 
 
@@ -137,18 +138,6 @@ bool isHomograph(string path1, string path2){
 
 //test
 
-int main(int argc, char* argv[]) {
-    //if statement to call runTests if an argument like "--run-tests" is passed
-    cout << "Hello World!\n";
-
-
-    // Note from instructions:
-    // it should be possible to execute any of the test cases in the report. A simple menu structure should be
-    // provided to facilitate this. Maybe just do something like "Would you like to run the tests? (y/n).
-
-    //need to reads to get paths from user and pass them to isHomograph then display the result
-
-}
 
 void runTests() {
 
@@ -185,6 +174,26 @@ void runTests() {
         cout << "Success in all tests";
     }
     return;
+}
+
+std::string get_current_dir() {
+	char buff[FILENAME_MAX]; //create string buffer to hold path
+	GetCurrentDir(buff, FILENAME_MAX);
+	string current_working_dir(buff);
+	return current_working_dir;
+}
+
+string GetFullPathFromPartial(char* partialPath)
+{
+	char full[_MAX_PATH];
+	if (_fullpath(full, partialPath, _MAX_PATH) != NULL)
+	{
+		return full;
+	}
+	else
+	{
+		return "Invalid path\n";
+	}
 }
 
 bool checkPath()
@@ -278,8 +287,44 @@ string canonicalize(string enconding) {
    //
 }
 
-bool isHomograph(string path1, string path2) { 
+bool prompt()
+{
+	char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
+
+	// this while loop makes sure that only y or n is accepted.
+	while (tolower(answer) != 'y' && tolower(answer) != 'n')
+	{
+		std::cout << "Would you like to do a homograph test? (y/n): ";
+		std::cin >> answer;
+	}
+
+	if (tolower(answer) == 'y')
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool isHomograph(string path1, string path2) {
     return false;
+}
+
+int main(int argc, char* argv[]) {
+
+	while (prompt())
+	{
+		if (checkPath() == true) {
+			cout << "This is Homograph\n";
+		}
+		else {
+			cout << "Not a Homograph\n";
+		}
+	}
+
+	return 0;
 }
 
 
