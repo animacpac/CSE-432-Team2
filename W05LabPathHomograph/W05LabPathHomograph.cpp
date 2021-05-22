@@ -219,7 +219,14 @@ string canonicalize(string path)
    }
 
    // c. if it's relative, prepend it with the drive letter or current directory
+   if (pathType == 1) {
+       //relative to root. add name of drive and :
+   }
+       
+   if (pathType == 2) {
 
+   }
+       
    // d. split into strings using "\" as delimiter
 
    // e. handle going up ".."
