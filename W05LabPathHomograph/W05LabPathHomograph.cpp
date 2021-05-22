@@ -50,7 +50,7 @@ const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
     //".\forbidden\example.txt",
     //".\forbidden2\example.txt"
-    "C:\\Users\\user\secret\\password.txt"
+    "C:\\Users\\user\\secret\\password.txt"
 };
 
 /*
