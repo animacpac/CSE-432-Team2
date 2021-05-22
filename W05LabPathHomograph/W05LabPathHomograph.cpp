@@ -269,10 +269,9 @@ int main(int argc, char* argv[]) {
     }
 
     cout << "Specify the first filename: ";
-   
     cin >> file1;
+
     cout << "Specify the second filename: ";
-    
     cin >> file2;
 
     isHomograph(file1, file2);
