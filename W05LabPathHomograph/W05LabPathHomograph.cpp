@@ -176,14 +176,7 @@ string canonicalize(string path) {
    // https://docs.microsoft.com/en-us/dotnet/standard/io/file-path-formats
    //
    // TODO:
-   // 2. replace "/" with "\"
-   // 2. handle drive letters, unc paths, as root
-   // 3. handle ".", "..", and "~". ^
-   //      a. look up ~ value, or write the code in a comment and put that. Since we are working with theoritical paths,
-   //          running homograph tests based on a real value that changes from machine to machine will yeild inconsistent
-   //          results. However if this program were put into practice, this is the code you would use.
-   // 4. convert the handling of the symbols to a map include all
-   //
+
    // 1. convert escaped charachters to real ones and remove quotes. ^ ' " I think
    // 2. replace "/" with "\"
    // 3. identify path type
