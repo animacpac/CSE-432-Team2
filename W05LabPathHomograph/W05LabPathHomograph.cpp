@@ -122,7 +122,8 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), '/', '\\');
 
    // a. get the current directory from windows
-   string currentDirectory = current_path();
+   char currentDirectory[256];
+    getcwd(currentDirectory, 256);
 
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
