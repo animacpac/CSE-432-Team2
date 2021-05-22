@@ -166,16 +166,6 @@ void runTests()
     return;
 }
 
-string get_env_var(string const & key ) {                                 
-    char * val;                                                                        
-    val = getenv( key.c_str() );                                                       
-    string retval = "";                                                    
-    if (val != NULL) {                                                                 
-        retval = val;                                                                    
-    }                                                                                  
-    return retval;                                                                        
-} 
-
 string canonicalize(string path) 
 {
 
@@ -189,9 +179,6 @@ string canonicalize(string path)
 
    enum type { Unc, Relative, Device};
    type pathType;
-    // 3 replace environmental variables
-    string key = "%WINDIR%";
-    string get_env_var(key);
 
    // 4. identify path type
    int length = path.size();
@@ -209,6 +196,7 @@ string canonicalize(string path)
    
 
    // 5. split paths into components
+   
 
    // 6. Resolve paths to fully qualified, UNC, or device paths
 
@@ -282,6 +270,8 @@ bool isHomograph(string path1, string path2)
 
 int main(int argc, char* argv[]) {
 
+
+
     string file1;
     string file2;
 
@@ -296,7 +286,7 @@ int main(int argc, char* argv[]) {
     cin >> file2;
 
     isHomograph(file1, file2);
-
+    
 	return 0;
 }
 
