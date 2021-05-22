@@ -36,25 +36,35 @@
 
 using namespace std;
 
+const int TEST_SIZE = 2;
 
-const string TEST_FORBIDDEN_FILES[]{ 
+const int FORBIDDEN_FILE_SIZE = 2;
+
+const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
     //change these. include multiple path symbols: "..", "~" etc. 
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
-    ".\forbidden\example.txt",  
+    ".\forbidden\example.txt",
     ".\forbidden2\example.txt"
 };
 
-const string TEST_HOMOGRAPHS[] = {
+/*
+    Everton: I put the test in multi-dimensional array
+    because the isHomograph function gets 2 inputs to compare.
+    For now I'll write the code to just test the homographs results.
+*/
+
+const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     //change these. include multiple path symbols: "..", "~" etc. 
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
     ".\homograph1\example.txt",
     ".\homograph2\example.txt"
 };
 
-const string TEST_NON_HOMOGRAPHS[] = {
+
+const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
     //change these. include multiple path symbols: "..", "~" etc. 
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
-    ".\non-homograph1\example.txt"
+    ".\non-homograph1\example.txt",
     ".\non-homograph2\example.txt"
 };
 
@@ -66,24 +76,24 @@ const string PATH_SYMBOLS[] = {
 };
 
 
-
-void runTests(); //could return bool instead. needs to loop through all test forbidden files and loop all homographs 
+//could return bool instead. needs to loop through all test forbidden files and loop all homographs 
 //then non-homographs. It should probably log if tests pass or not. This is probably the second most complex function
+void runTests();
 
 
 string canonicalize(string path); // Nathan
 
-bool isHomograph(string path1, string path2); 
-    //probably should be the unaltered paths
-    //canonize each string and test if same
-    //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
-    //This will have to be adjusted.
+bool isHomograph(string path1, string path2);
+//probably should be the unaltered paths
+//canonize each string and test if same
+//it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
+//This will have to be adjusted.
 
 
 
 int main(int argc, char* argv[]) {
     //if statement to call runTests if an argument like "--run-tests" is passed
-    
+
     cout << "Hello World!\n";
 
     //need to reads to get paths from user and pass them to isHomograph then display the result
@@ -91,6 +101,39 @@ int main(int argc, char* argv[]) {
 }
 
 void runTests() {
+
+    bool passedAllHomographTest = true;
+    bool passedAllNonHomographTest = true;
+
+    //Loop and tests  all homograph examples
+    for (int h = 0; h < TEST_SIZE; h++) {
+        for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++) {
+            if (isHomograph(TEST_HOMOGRAPHS[h], TEST_FORBIDDEN_FILES[f]) == false) {
+
+
+                cout << "Failed Homograph Examples at test line: "
+                    << h + 1 << " at the Forbidden line: " << f + 1 << endl;
+                passedAllHomographTest = false;
+            }
+        }
+    }
+
+    //Loop and tests all Non-Homograph examples
+    for (int n = 0; n < TEST_SIZE; n++) {
+        for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++) {
+            if (isHomograph(TEST_NON_HOMOGRAPHS[n], TEST_FORBIDDEN_FILES[f])) {
+
+                cout << "Failed Non-Homograph Examples at test line: "
+                    << n + 1 << " at the Forbidden line: " << f + 1 << endl;
+                passedAllNonHomographTest = false;
+            }
+        }
+    }
+
+    if (passedAllHomographTest && passedAllNonHomographTest) {
+
+        cout << "Success in all tests";
+    }
     return;
 }
 
@@ -98,7 +141,7 @@ string canonicalize(string path) {
     return "";
 }
 
-bool isHomograph(string path1, string path2) { 
+bool isHomograph(string path1, string path2) {
     return false;
 }
 
