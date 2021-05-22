@@ -127,7 +127,8 @@ bool isHomograph(string path1, string path2);
 //test
 
 
-void runTests() {
+void runTests() 
+{
 
     bool passedAllHomographTest = true;
     bool passedAllNonHomographTest = true;
@@ -157,15 +158,26 @@ void runTests() {
         }
     }
 
-    if (passedAllHomographTest && passedAllNonHomographTest) {
+    if (passedAllHomographTest && passedAllNonHomographTest)
+    {
 
         cout << "Success in all tests";
     }
     return;
 }
 
+string get_env_var(string const & key ) {                                 
+    char * val;                                                                        
+    val = getenv( key.c_str() );                                                       
+    string retval = "";                                                           
+    if (val != NULL) {                                                                 
+        retval = val;                                                                    
+    }                                                                                  
+    return retval;                                                                        
+} 
 
-string canonicalize(string path) {
+string canonicalize(string path) 
+{
 
    // 1. convert escaped characters to real ones and remove quotes. ^ ' " I think
    path.replace(path.begin(), path.end(), "^","");
@@ -177,7 +189,11 @@ string canonicalize(string path) {
 
    enum type { Unc, Relative, Device};
    type pathType;
-   // 3. identify path type
+    // 3 replace environmental variables
+                  
+    string get_env_var(string const & key );
+
+   // 4. identify path type
    int length = path.size();
    for (int i = 0; i < 3 && i < length; ++i)
    {
@@ -248,7 +264,8 @@ bool prompTest()
 	}
 }
 
-bool isHomograph(string path1, string path2) {
+bool isHomograph(string path1, string path2) 
+{
 // This is just an example on how it should be done
    string canoncalizedFile1 = canonicalize(path1);
    string canoncalizedFile2 = canonicalize(path2);
@@ -260,7 +277,8 @@ bool isHomograph(string path1, string path2) {
       cout << "The paths are not homographs.\n";
       return false;
    }
-   return false;}
+   return false;
+}
 
 int main(int argc, char* argv[]) {
 
