@@ -265,6 +265,7 @@ bool isHomograph(string path1, string path2) {
 }
 
 int main(int argc, char* argv[]) {
+	
 	while (prompt())
 	{
 		if (checkPath() == true) {
