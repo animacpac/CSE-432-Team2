@@ -35,6 +35,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <regex>
 
 using namespace std;
 
@@ -194,34 +195,26 @@ string canonicalize(string path)
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
    // 4. identify path type
-   enum type { Device, Unc, FullDos, RelativeToRoot, RelativeToSameDirectorySpecificDrive, RelativeToCurrent, EnvShortcut };
-   type pathType;
-   string regexs[] = {
-           // Device
-           "\\\\\\\\(\\.|\\?).*",
-           // Unc,
-           "\\\\\\\\.*",
+   enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
+   typesOfPaths pathType;
+   int regexsSize = 3;
+   regex regexs[3] = {
            // FullDos
-           "[a-z]\\:\\\\.*"
+           regex("[a-z]\\:\\\\.*"),
            // RelativeToRoot,
-           "\\\\.*",
-           // RelativeToSameDirectorySpecificDrive
-           "[a-z]\\:\\.*"
+           regex("\\\\.*"),
            // RelativeToCurrent,
-           "\\.*"
-           // EnvShortcut
-           "\\%.*\\%.*"
-           //C:\windows\%appdata%\password.txt
-           //%appdata%\password.txt
+           regex("\\.*")
    };
 
-   int length = path.size();
-   if (length == 0) {
+   if (path.size() == 0) {
       return path;
    }
-   for (int i = 0; i < regexs->size(); ++i)
+   for (int i = 0; i < regexsSize; ++i)
    {
-
+      if(regex_match(path, regexs[i])) {
+         pathType =  statici;
+      }
    }
 
    // c. if it's relative, prepend it with the drive letter or current directory
