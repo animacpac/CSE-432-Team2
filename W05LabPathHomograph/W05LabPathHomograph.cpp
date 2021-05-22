@@ -67,16 +67,16 @@ const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     //".\homograph2\example.txt"
     "..\\secret\\pasword.txt",
     "..\\..\\user\\secret\\password.txt",
-    "..\\..\\user\\..\\user\\secret\\pasword.txt",
-    "..\\..\\..\\Users\\user\\secret\\pasword.txt",
-    "..\\..\\..\\Users\\..\\Users\\user\\secret\\pasword.txt",
-    "..\\..\\..\\Users\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
+    "..\\..\\user\\..\\user\\secret\\password.txt",
+    "..\\..\\..\\Users\\user\\secret\\password.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\password.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\..\\secret\\password.txt",
     "~\\secret\\password.txt",
-    "~\\..\\user\\secret\\pasword.txt",
-    "C:\\Users\\..\\Users\\user\\secret\\pasword.txt",
-    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\pasword.txt",
-    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
-    "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\pasword.txt"
+    "~\\..\\user\\secret\\password.txt",
+    "C:\\Users\\..\\Users\\user\\secret\\password.txt",
+    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\password.txt",
+    "C:\\Users\\user\\..\\..\\Users\\user\\secret\\..\\secret\\password.txt",
+    "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\password.txt"
 };
 
 
@@ -86,17 +86,17 @@ const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
     //".\non-homograph1\example.txt",
     //".\non-homograph2\example.txt"
     "password.txt",
-    "secret\\pasword.txt",
+    "secret\\password.txt",
     "\\..\\user\\secret\\password.txt",
-    "..\\..\\user\\..\\..\\user\\secret\\pasword.txt",
-    "..\\..\\Users\\user\\secret\\pasword.txt",
-    "..\\..\\Users\\..\\Users\\user\\secret\\pasword.txt",
-    "..\\..\\..\\Users\\..\\Users\\user\\secret\\secret\\pasword.txt",
+    "..\\..\\user\\..\\..\\user\\secret\\password.txt",
+    "..\\..\\Users\\user\\secret\\password.txt",
+    "..\\..\\Users\\..\\Users\\user\\secret\\password.txt",
+    "..\\..\\..\\Users\\..\\Users\\user\\secret\\secret\\password.txt",
     "~\\..\\secret\\password.txt",
-    "~\\..\\..\\user\\secret\\pasword.txt",
-    "C:\\Users\\..\\Users\\..\\user\\secret\\pasword.txt",
-    "C:\\Users\\user\\..\\Users\\user\\secret\\..\\secret\\pasword.txt",
-    "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\pasword.txt"
+    "~\\..\\..\\user\\secret\\password.txt",
+    "C:\\Users\\..\\Users\\..\\user\\secret\\password.txt",
+    "C:\\Users\\user\\..\\Users\\user\\secret\\..\\secret\\password.txt",
+    "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\password.txt"
 };
 
 
