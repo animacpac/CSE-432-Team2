@@ -168,7 +168,7 @@ void runTests() {
 
 string canonicalize(string path) {
 
-   // 1
+   // 1. convert escaped characters to real ones and remove quotes. ^ ' " I think
    path.replace(path.begin(), path.end(), "^","");
    path.replace(path.begin(), path.end(), "'","");
    path.replace(path.begin(), path.end(), "\"","");
