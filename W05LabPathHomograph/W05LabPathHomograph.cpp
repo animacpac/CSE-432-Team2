@@ -124,7 +124,6 @@ bool isHomograph(string path1, string path2);
 //it's late. I just realized that an absolute path will not work as a canon because we're working on theoretical paths.
 //This will have to be adjusted.
 
-
 //test
 
 
