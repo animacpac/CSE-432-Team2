@@ -191,7 +191,7 @@ string canonicalize(string path)
 
    // a. get the current directory from windows
    current_path();
-   
+
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
    // 4. identify path type
@@ -230,7 +230,7 @@ string canonicalize(string path)
    // d. split into strings using "\" as delimiter
 
    // e. handle going up ".."
-
+    
    // f. concat into one string and return
 
 
