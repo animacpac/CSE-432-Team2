@@ -38,7 +38,7 @@
 
 using namespace std;
 
-const int TEST_SIZE = 12;
+const int TEST_SIZE = 10;
 
 const int FORBIDDEN_FILE_SIZE = 1;
 
@@ -72,8 +72,8 @@ const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     "..\\..\\..\\Users\\user\\secret\\password.txt",
     "..\\..\\..\\Users\\..\\Users\\user\\secret\\password.txt",
     "..\\..\\..\\Users\\..\\Users\\user\\secret\\..\\secret\\password.txt",
-    "~\\secret\\password.txt",
-    "~\\..\\user\\secret\\password.txt",
+//    "~\\secret\\password.txt",
+//    "~\\..\\user\\secret\\password.txt",
     "C:\\Users\\..\\Users\\user\\secret\\password.txt",
     "C:\\Users\\user\\..\\..\\Users\\user\\secret\\password.txt",
     "C:\\Users\\user\\..\\..\\Users\\user\\secret\\..\\secret\\password.txt",
@@ -88,13 +88,13 @@ const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
     //".\non-homograph2\example.txt"
     "password.txt",
     "secret\\password.txt",
-    "\\..\\user\\secret\\password.txt",
+    ".\\..\\user\\secret\\password.txt",
     "..\\..\\user\\..\\..\\user\\secret\\password.txt",
     "..\\..\\Users\\user\\secret\\password.txt",
     "..\\..\\Users\\..\\Users\\user\\secret\\password.txt",
     "..\\..\\..\\Users\\..\\Users\\user\\secret\\secret\\password.txt",
-    "~\\..\\secret\\password.txt",
-    "~\\..\\..\\user\\secret\\password.txt",
+//    "~\\..\\secret\\password.txt",
+//    "~\\..\\..\\user\\secret\\password.txt",
     "C:\\Users\\..\\Users\\..\\user\\secret\\password.txt",
     "C:\\Users\\user\\..\\Users\\user\\secret\\..\\secret\\password.txt",
     "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\password.txt"
@@ -179,21 +179,21 @@ string get_env_var(string const & key ) {
 string canonicalize(string path)
 {
 
+
    // 1. convert escaped characters to real ones and remove quotes. ^ ' " and make lowercase
    path.replace(path.begin(), path.end(), "^","");
    path.replace(path.begin(), path.end(), "'","");
    path.replace(path.begin(), path.end(), "\"","");
-   //path.tolower();
+   //path.tolower(); NEEDS DONE
 
    // 2. replace "/" with "\"
    path.replace(path.begin(), path.end(), '/', '\\');
 
-  
+   // a. get the current directory from windows
 
-    // 3 replace environmental variables
-    string key = "%WINDIR%";
-    string get_env_var(key);
+   // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
+   // c. if it's relative, prepend it with the drive letter or current directory
    // 4. identify path type
    enum type { Device, Unc, FullDos, RelativeToRoot, RelativeToSameDirectorySpecificDrive, RelativeToCurrent, EnvShortcut };
    type pathType;
@@ -222,8 +222,56 @@ string canonicalize(string path)
    }
    for (int i = 0; i < regexs->size(); ++i)
    {
-      
+
    }
+
+   // d. split into strings using "\" as delimiter
+
+   // e. handle going up ".."
+
+   // f. concat into one string and return
+
+
+
+
+
+
+  
+
+    // 3 replace environmental variables
+//    string key = "%WINDIR%";
+//    string get_env_var(key);
+
+//   // 4. identify path type
+//   enum type { Device, Unc, FullDos, RelativeToRoot, RelativeToSameDirectorySpecificDrive, RelativeToCurrent, EnvShortcut };
+//   type pathType;
+//   string regexs[] = {
+//           // Device
+//           "\\\\\\\\(\\.|\\?).*",
+//           // Unc,
+//           "\\\\\\\\.*",
+//           // FullDos
+//           "[a-z]\\:\\\\.*"
+//           // RelativeToRoot,
+//           "\\\\.*",
+//           // RelativeToSameDirectorySpecificDrive
+//           "[a-z]\\:\\.*"
+//           // RelativeToCurrent,
+//           "\\.*"
+//           // EnvShortcut
+//           "\\%.*\\%.*"
+//           //C:\windows\%appdata%\password.txt
+//           //%appdata%\password.txt
+//   };
+//
+//   int length = path.size();
+//   if (length == 0) {
+//      return path;
+//   }
+//   for (int i = 0; i < regexs->size(); ++i)
+//   {
+//
+//   }
    // 4. replace environmental variables
    
 
