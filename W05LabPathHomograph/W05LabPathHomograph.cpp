@@ -239,31 +239,42 @@ string canonicalize(string enconding) {
 	return encoding;
 }
 
+bool prompt()
+{
+	char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
+
+	// this while loop makes sure that only y or n is accepted.
+	while (tolower(answer) != 'y' && tolower(answer) != 'n')
+	{
+		std::cout << "Would you like to do a homograph test? (y/n): ";
+		std::cin >> answer;
+	}
+
+	if (tolower(answer) == 'y')
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 bool isHomograph(string path1, string path2) {
     return false;
 }
 
 int main(int argc, char* argv[]) {
-	//if statement to call runTests if an argument like "--run-tests" is passed
+	while (prompt())
+	{
+		if (checkPath() == true) {
+			cout << "This is Homograph\n"
+		}
+		else {
+			cout << "Not a Homograph\n"
+		}
+	}
 
-	// Get the files
-	string file1;
-	string file2;
-	cout << "Specify the first filename: ";
-	cin >> file1;
-	cout << "Specify the second filename: ";
-	cin >> file2;
-
-	string canonicalizedFile1;
-	string canonicalizedFile2;
-	canonicalizeFilePath(file1, canonicalizedFile1);
-	canonicalizeFilePath(file2, canonicalizedFile2);
-
-	cout << "File 1: " << canonicalizedFile1 << endl;
-	cout << "File 2: " << canonicalizedFile2 << endl;
-
-
-	//need to reads to get paths from user and pass them to isHomograph then display the result
 
 }
 
