@@ -165,7 +165,7 @@ void runTests() {
 
 string canonicalize(string encoding) {
 
-	std::vector<char> canon{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+	vector<char> canon{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
 										  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
 										   'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 										   'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
@@ -180,14 +180,14 @@ string canonicalize(string encoding) {
 	for (int i = 0; i < encoding.size(); i++)
 	{
 
-		auto result = std::find(canon.begin(), canon.end(), encoding[i]);
+		auto result = find(canon.begin(), canon.end(), encoding[i]);
 
 		if (result == end(canon)) {
-			std::cout << "There is an invalid character ";
-			std::cout << encoding[i];
-			std::cout << " at position ";
-			std::cout << (i + 1);
-			std::cout << endl;
+			cout << "There is an invalid character ";
+			cout << encoding[i];
+			cout << " at position ";
+			cout << (i + 1);
+			cout << endl;
 		}
 
 	}
@@ -230,8 +230,8 @@ bool prompTest()
 	// this while loop makes sure that only y or n is accepted.
 	while (tolower(answer) != 'y' && tolower(answer) != 'n')
 	{
-		std::cout << "Would you like to do a homograph test? (y/n): ";
-		std::cin >> answer;
+		cout << "Would you like to do a homograph test? (y/n): ";
+		cin >> answer;
 	}
 
 	if (tolower(answer) == 'y')
