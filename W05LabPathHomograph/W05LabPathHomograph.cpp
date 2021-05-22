@@ -191,12 +191,15 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), '/', '\\');
 
    // a. get the current directory from windows
-   current_path();
+   string currentDirectory = current_path();
 
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
    // 4. identify path type
    //enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
+   const int FULL_DOS = 0;
+   const int RELATIVE_TO_ROOT = 1;
+   const int RELATIVE_TO_CURRENT = 0;
    int pathType;
    int regexsSize = 3;
    regex regexs[3] = {
