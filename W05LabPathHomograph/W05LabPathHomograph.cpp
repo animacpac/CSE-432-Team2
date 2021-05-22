@@ -35,17 +35,16 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <filesystem>
 
 using namespace std;
+using std::filesystem::current_path;
 
 const int TEST_SIZE = 10;
 
 const int FORBIDDEN_FILE_SIZE = 1;
 
-const string CURRENT_PATH[1]{
-    //This is the current path we are working from
-    "C:\\Users\\user\\cse453\\"
-};
+
 
 const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
     //change these. include multiple path symbols: "..", "~" etc. 
@@ -176,6 +175,7 @@ void runTests()
 //    return retval;
 //}
 
+
 string canonicalize(string path)
 {
 
@@ -190,7 +190,7 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), '/', '\\');
 
    // a. get the current directory from windows
-
+   current_path();
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
    // 4. identify path type
