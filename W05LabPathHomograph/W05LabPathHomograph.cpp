@@ -117,12 +117,17 @@ string canonicalize(string path); // Nathan
 
 bool isHomograph(string path1, string path2){
 // This is just an example on how it should be done
+    string canoncalizedFile1 = canonicalize(path1);
+    string canoncalizedFile2 = canonicalize(path2);
 	if (canonicalizedFile1 == canonicalizedFile2) {
 		cout << "The paths are homographs.\n";
+        return true;
 	}
 	else {
 		cout << "The paths are not homographs.\n";
+        return false;
 	}
+    return false;
 };
 //probably should be the unaltered paths
 //canonize each string and test if same
