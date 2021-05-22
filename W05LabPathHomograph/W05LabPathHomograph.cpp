@@ -66,7 +66,7 @@ const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     //Also, some of the characters will have to be escaped. I don't remember which ones in c++
    //".\homograph1\example.txt",
     //".\homograph2\example.txt"
-    "..\\secret\\pasword.txt",
+    "..\\secret\\password.txt",
     "..\\..\\user\\secret\\password.txt",
     "..\\..\\user\\..\\user\\secret\\password.txt",
     "..\\..\\..\\Users\\user\\secret\\password.txt",
@@ -183,66 +183,47 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), "^","");
    path.replace(path.begin(), path.end(), "'","");
    path.replace(path.begin(), path.end(), "\"","");
-   path.tolower();
+   //path.tolower();
 
    // 2. replace "/" with "\"
    path.replace(path.begin(), path.end(), '/', '\\');
 
-   // 4. identify path type
-   enum type { Device, Unc, FullDos, RelativeToRoot, RelativeToSameDirectorySpecificDrive, RelativeToCurrent, EnvShortcut };
-   string regexs[] = {
-        // Device
-        "\\\\\\\\(\\.|\\?).*",
-        // Unc,
-        "\\\\\\\\.*",
-        // FullDos
-        "[a-z]\\:\\\\.*"
-        // RelativeToRoot,
-        "\\\\.*",
-        // RelativeToSameDirectorySpecificDrive
-        "[a-z]\\:\\.*"
-        // RelativeToCurrent,
-        "\\.*"
-        // EnvShortcut
-        "\\%.*\\%.*"
-        //C:\windows\%appdata%\password.txt
-        //%appdata%\password.txt
-   };
+  
 
-   type pathType;
     // 3 replace environmental variables
     string key = "%WINDIR%";
     string get_env_var(key);
 
    // 4. identify path type
+   enum type { Device, Unc, FullDos, RelativeToRoot, RelativeToSameDirectorySpecificDrive, RelativeToCurrent, EnvShortcut };
+   type pathType;
+   string regexs[] = {
+           // Device
+           "\\\\\\\\(\\.|\\?).*",
+           // Unc,
+           "\\\\\\\\.*",
+           // FullDos
+           "[a-z]\\:\\\\.*"
+           // RelativeToRoot,
+           "\\\\.*",
+           // RelativeToSameDirectorySpecificDrive
+           "[a-z]\\:\\.*"
+           // RelativeToCurrent,
+           "\\.*"
+           // EnvShortcut
+           "\\%.*\\%.*"
+           //C:\windows\%appdata%\password.txt
+           //%appdata%\password.txt
+   };
+
    int length = path.size();
    if (length == 0) {
       return path;
    }
-   for (int i = 0; i < 3 && i < length; ++i)
+   for (int i = 0; i < regexs->size(); ++i)
    {
-      if (i == 0)
-      {
-         if (path[i] == '.')
-         {
-            pathType = Relative;
-            break;
-         }
-         if (path[i] == '\\' )
-         {
-            if (length == 1) {
-               pathType = RelativeToRoot;
-               break;
-            } else if (path[i+1] != '\\') {
-               pathType = RelativeToRoot;
-               break;
-            }
-         }
-      }
-      if (i == 1) {
-      }
+      
    }
-
    // 4. replace environmental variables
    
 
