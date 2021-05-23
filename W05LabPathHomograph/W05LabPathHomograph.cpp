@@ -226,6 +226,12 @@ bool prompTest()
 	}
 }
 
+/*******************************************************************
+* isHomograph
+* This function will take two paths and the current directory path 
+* and compare the paths to see if they are homographs. It uses the
+* canonicalization function.
+*/
 bool isHomograph(string path1, string path2, string currentDirectory)
 {
 // This is just an example on how it should be done
@@ -242,9 +248,10 @@ bool isHomograph(string path1, string path2, string currentDirectory)
    return false;
 }
 
+/******************************************************************
+* Main Program
+******************************************************************/
 int main(int argc, char* argv[]) {
-
-
 
     string file1;               // file specified by the user
     string file2;               // file specified by the user
