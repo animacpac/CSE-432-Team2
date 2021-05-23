@@ -224,6 +224,10 @@ string canonicalize(string path, string currentDirectory)
    return newPath;
 }
 
+/**************************************************************************************************
+* promptTest
+* This function will prompt the user to see what they want to do.
+**************************************************************************************************/
 bool prompTest()
 {
 	char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
