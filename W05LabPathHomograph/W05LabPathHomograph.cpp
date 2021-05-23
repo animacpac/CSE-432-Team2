@@ -12,20 +12,17 @@
 
 #define GetCurrentDir _getcwd
 
-
 using namespace std;
 
 const int TEST_SIZE = 10;
 
 const int FORBIDDEN_FILE_SIZE = 1;
 
-
 const string TEST_DIRECTORY = "C:\\Users\\user\\secret";
 
 const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
     // Test for a forbidden.
-    "C:\\Users\\user\\secret\\password.txt"
-};
+    "C:\\Users\\user\\secret\\password.txt"};
 
 const string TEST_HOMOGRAPHS[TEST_SIZE] = {
 
@@ -38,9 +35,7 @@ const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     "C:\\Users\\..\\Users\\user\\secret\\password.txt",
     "C:\\Users\\user\\..\\..\\Users\\user\\secret\\password.txt",
     "C:\\Users\\user\\..\\..\\Users\\user\\secret\\..\\secret\\password.txt",
-    "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\password.txt"
-};
-
+    "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\password.txt"};
 
 const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
 
@@ -53,23 +48,16 @@ const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
     "..\\..\\..\\Users\\..\\Users\\user\\secret\\secret\\password.txt",
     "C:\\Users\\..\\Users\\..\\user\\secret\\password.txt",
     "C:\\Users\\user\\..\\Users\\user\\secret\\..\\secret\\password.txt",
-    "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\password.txt"
-};
-
-
+    "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\password.txt"};
 
 const string PATH_SYMBOLS[] = {
     "/",
-    "`" 
-};
-
-
+    "`"};
 
 void runTests();
 string canonicalize(string path, string currentDirectory); // Nathan
 bool prompt();
 bool isHomograph(string path1, string path2, string currentDirectory);
-
 
 void runTests()
 {
@@ -78,25 +66,30 @@ void runTests()
     bool passedAllNonHomographTest = true;
 
     //Loop and tests  all homograph examples
-    for (int h = 0; h < TEST_SIZE; h++) {
-        for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++) {
-            if (isHomograph(TEST_HOMOGRAPHS[h], TEST_FORBIDDEN_FILES[f],TEST_DIRECTORY) == false) {
-
+    for (int h = 0; h < TEST_SIZE; h++)
+    {
+        for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++)
+        {
+            if (isHomograph(TEST_HOMOGRAPHS[h], TEST_FORBIDDEN_FILES[f], TEST_DIRECTORY) == false)
+            {
 
                 cout << "Failed Homograph Examples at test line: "
-                    << h + 1 << " at the Forbidden line: " << f + 1 << endl;
+                     << h + 1 << " at the Forbidden line: " << f + 1 << endl;
                 passedAllHomographTest = false;
             }
         }
     }
 
     //Loop and tests all Non-Homograph examples
-    for (int n = 0; n < TEST_SIZE; n++) {
-        for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++) {
-            if (isHomograph(TEST_NON_HOMOGRAPHS[n], TEST_FORBIDDEN_FILES[f], TEST_DIRECTORY) ){
+    for (int n = 0; n < TEST_SIZE; n++)
+    {
+        for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++)
+        {
+            if (isHomograph(TEST_NON_HOMOGRAPHS[n], TEST_FORBIDDEN_FILES[f], TEST_DIRECTORY))
+            {
 
                 cout << "Failed Non-Homograph Examples at test line: "
-                    << n + 1 << " at the Forbidden line: " << f + 1 << endl;
+                     << n + 1 << " at the Forbidden line: " << f + 1 << endl;
                 passedAllNonHomographTest = false;
             }
         }
@@ -109,197 +102,174 @@ void runTests()
     }
     return;
 }
-/**********************************************************************
- * GetCurrentPath
- * The function which gets current Path
- ***********************************************************************/
-string get_current_dir() {
-	char buff[FILENAME_MAX]; //create string buffer to hold path
-	GetCurrentDir(buff, FILENAME_MAX);
-	string current_working_dir(buff);
-	return current_working_dir;
-}
 
+string get_current_dir()
+{
+    char buff[FILENAME_MAX]; //create string buffer to hold path
+    GetCurrentDir(buff, FILENAME_MAX);
+    string current_working_dir(buff);
+    return current_working_dir;
+}
 
 string canonicalize(string path, string currentDirectory)
 {
 
+    for (int i = 0; i < path.length(); i++)
+    {
+        path[i] = tolower(path[i]);
+    }
 
-   // 1. convert escaped characters to real ones and remove quotes. ^ ' " and make lowercase
-//   replace(path.begin(), path.end(), "^","");
-//   replace(path.begin(), path.end(), "'","");
-//   replace(path.begin(), path.end(), "\"","");
-//
-   //put all the path to lower case
-   for (int i = 0; i < path.length(); i++) {
-       path[i] = tolower(path[i]);
-   }
+    replace(path.begin(), path.end(), '/', '\\');
 
-   // 2. replace "/" with "\"
-   replace(path.begin(), path.end(), '/', '\\');
+    for (int i = 0; i < currentDirectory.length(); i++)
+    {
+        currentDirectory[i] = tolower(currentDirectory[i]);
+    }
 
-   // a. get the current directory from windows
-   for (int i = 0; i < currentDirectory.length(); i++) {
-      currentDirectory[i] = tolower(currentDirectory[i]);
-   }
-   // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
+    //enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
+    const int FULL_DOS = 0;
+    const int RELATIVE_TO_ROOT = 1;
+    const int RELATIVE_TO_CURRENT = 2;
+    int pathType;
+    int regexsSize = 3;
+    regex regexs[3] = {
+        // FullDos
+        regex("[a-z]\\:.*"),
+        // RelativeToRoot,
+        regex("\\\\.*"),
+        // RelativeToCurrent,
+        regex(R"((\..*)||.*)")};
 
-   // 4. identify path type
-   //enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
-   const int FULL_DOS = 0;
-   const int RELATIVE_TO_ROOT = 1;
-   const int RELATIVE_TO_CURRENT = 2;
-   int pathType;
-   int regexsSize = 3;
-   regex regexs[3] = {
-           // FullDos
-           regex("[a-z]\\:.*"),
-           // RelativeToRoot,
-           regex("\\\\.*"),
-           // RelativeToCurrent,
-           regex(R"((\..*)||.*)")
-   };
-
-   if (path.size() == 0) {
-      return path;
-   }
-   for (int i = 0; i < regexsSize; ++i)
-   {
-      if(regex_match(path, regexs[i])) {
-         pathType = i;
-         break;
-      }
-   }
-
-   // c. if it's relative, prepend it with the drive letter or current directory
-   if (pathType == RELATIVE_TO_ROOT) {
-       //relative to root. add name of drive and :
-       path = currentDirectory.substr(0, 1) + '\\' + path;
-   }
-       
-   if (pathType == RELATIVE_TO_CURRENT) {
-       if (path.size() >= 3 && path.substr(0, 2) == ".\\") {
-           path = path.substr(2);
-       }
-       path = currentDirectory + '\\' + path;
-   }
-       
-   // d. split into strings using "\" as delimiter
-   vector<string> splitPath;
-   int j = 0;
-   for (int i = 0; i < path.size(); i++) {
-       if (path[i] == '\\' || i == path.size()) {
-           splitPath.push_back(path.substr(j, i - j));
-           j = i + 1;
-       }
-   }
-   splitPath.push_back(path.substr(j, path.size()));
-
-   // e. handle going up ".."
-	vector<string> newSplitPath;
-
-	int newPathIterator = 0;
-	for(int i = 0; i < splitPath.size(); i++){
-		if(splitPath[i] == ".."){
-		   if(newSplitPath.size() > 1) {
-		      newSplitPath.pop_back();
-         }
-		} else {
-		   newSplitPath.push_back(splitPath[i]);
-		}
-//			if(newPathIterator == 0){
-//				newSplitPath.push_back(splitPath[i]);
-//				++newPathIterator;
-//			}
-//			else if(newSplitPath[newPathIterator - 1] != splitPath[i]){
-//				newSplitPath.push_back(splitPath[i]);
-//				++newPathIterator;
-//			}
-//		}
-	}
-   // f. concat into one string and return
-
-    string newPath;
-    for (int i = 0; i < newSplitPath.size(); i++) {
-        if (i == 0) {
-            newPath.append(newSplitPath[i]);
-        }
-        else {
-            newPath.append("\\" + newSplitPath[i]);
+    if (path.size() == 0)
+    {
+        return path;
+    }
+    for (int i = 0; i < regexsSize; ++i)
+    {
+        if (regex_match(path, regexs[i]))
+        {
+            pathType = i;
+            break;
         }
     }
 
-   return newPath;
-}
-
-bool prompTest()
-{
-	char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
-
-	// this while loop makes sure that only y or n is accepted.
-	while (tolower(answer) != 'y' && tolower(answer) != 'n')
-	{
-		cout << "Would you like to do a homograph test? (y/n): ";
-		cin >> answer;
-	}
-
-	if (tolower(answer) == 'y')
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-bool isHomograph(string path1, string path2, string currentDirectory)
-{
-// This is just an example on how it should be done
-   string canoncalizedFile1 = canonicalize(path1, currentDirectory);
-   string canoncalizedFile2 = canonicalize(path2, currentDirectory);
-   if (canoncalizedFile1 == canoncalizedFile2) {
-      cout << "The paths are homographs.\n";
-      return true;
-   }
-   else {
-      cout << "The paths are not homographs.\n";
-      return false;
-   }
-   return false;
-}
-
-int main(int argc, char* argv[]) {
-
-
-
-    string file1;
-    string file2;
-
-	if (prompTest()){
-        runTests();
+    if (pathType == RELATIVE_TO_ROOT)
+    {
+        //relative to root. add name of drive and :
+        path = currentDirectory.substr(0, 1) + '\\' + path;
     }
 
-    cout << "Specify the first filename: ";
-    cin >> file1;
+    if (pathType == RELATIVE_TO_CURRENT)
+    {
+        if (path.size() >= 3 && path.substr(0, 2) == ".\\")
+        {
+            path = path.substr(2);
+        }
+        path = currentDirectory + '\\' + path;
+    }
 
-    cout << "Specify the second filename: ";
-    cin >> file2;
+    vector<string> splitPath;
+    int j = 0;
+    for (int i = 0; i < path.size(); i++)
+    {
+        if (path[i] == '\\' || i == path.size())
+        {
+            splitPath.push_back(path.substr(j, i - j));
+            j = i + 1;
+        }
+    }
+    splitPath.push_back(path.substr(j, path.size()));
 
-   isHomograph(file1, file2, get_current_dir());
+    vector<string> newSplitPath;
 
-	return 0;
-}
+    int newPathIterator = 0;
+    for (int i = 0; i < splitPath.size(); i++)
+    {
+        if (splitPath[i] == "..")
+        {
+            if (newSplitPath.size() > 1)
+            {
+                newSplitPath.pop_back();
+            }
+        }
+        else
+        {
+            newSplitPath.push_back(splitPath[i]);
+        }
 
+        string newPath;
+        for (int i = 0; i < newSplitPath.size(); i++)
+        {
+            if (i == 0)
+            {
+                newPath.append(newSplitPath[i]);
+            }
+            else
+            {
+                newPath.append("\\" + newSplitPath[i]);
+            }
+        }
 
+        return newPath;
+    }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+    bool prompTest()
+    {
+        char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+        // this while loop makes sure that only y or n is accepted.
+        while (tolower(answer) != 'y' && tolower(answer) != 'n')
+        {
+            cout << "Would you like to do a homograph test? (y/n): ";
+            cin >> answer;
+        }
+
+        if (tolower(answer) == 'y')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool isHomograph(string path1, string path2, string currentDirectory)
+    {
+        // This is just an example on how it should be done
+        string canoncalizedFile1 = canonicalize(path1, currentDirectory);
+        string canoncalizedFile2 = canonicalize(path2, currentDirectory);
+        if (canoncalizedFile1 == canoncalizedFile2)
+        {
+            cout << "The paths are homographs.\n";
+            return true;
+        }
+        else
+        {
+            cout << "The paths are not homographs.\n";
+            return false;
+        }
+        return false;
+    }
+
+    int main(int argc, char *argv[])
+    {
+
+        string file1;
+        string file2;
+
+        if (prompTest())
+        {
+            runTests();
+        }
+
+        cout << "Specify the first filename: ";
+        cin >> file1;
+
+        cout << "Specify the second filename: ";
+        cin >> file2;
+
+        isHomograph(file1, file2, get_current_dir());
+
+        return 0;
+    }
