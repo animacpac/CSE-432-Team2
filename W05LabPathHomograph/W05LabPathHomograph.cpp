@@ -184,7 +184,7 @@ string canonicalize(string path, string currentDirectory)
        path = currentDirectory + '\\' + path;
    }
        
-   
+   //Takes the path and splits it into words in a vector
    vector<string> splitPath;
    int j = 0;
    for (int i = 0; i < path.size(); i++) {
@@ -195,7 +195,7 @@ string canonicalize(string path, string currentDirectory)
    }
    splitPath.push_back(path.substr(j, path.size()));
 
-   //Takes the vector of path words and takes out the ..
+   //Takes the vector of path words and takes out the .. of the paths
 	vector<string> newSplitPath;
 
 	int newPathIterator = 0;
