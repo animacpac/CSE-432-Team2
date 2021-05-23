@@ -250,7 +250,7 @@ bool prompTest()
 * This function will take two paths and the current directory path 
 * and compare the paths to see if they are homographs. It uses the
 * canonicalization function.
-*/
+*******************************************************************/
 bool isHomograph(string path1, string path2, string currentDirectory)
 {
 // This is just an example on how it should be done
