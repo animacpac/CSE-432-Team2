@@ -176,8 +176,8 @@ string canonicalize(string path)
    }
        
    if (pathType == RELATIVE_TO_CURRENT) {
-       if (path.size >= 3 && path.substr(0, 1) == ".\\") {
-           path = path.substr(2, path.end());
+       if (path.size() >= 3 && path.substr(0, 1) == ".\\") {
+           path = path.substr(2, path.size()-1);
        }
        path += currentDirectory;
    }
