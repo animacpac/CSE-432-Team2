@@ -9,6 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <regex>
+#define GetCurrentDir _getcwd
 
 
 using namespace std;
