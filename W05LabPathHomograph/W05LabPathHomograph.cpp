@@ -108,12 +108,9 @@ void runTests()
     }
     return;
 }
-/**********************************************************************
- * GetCurrentPath
- * The function which gets current Path
- ***********************************************************************/
+
 std::string get_current_dir() {
-	char buff[FILENAME_MAX]; //create string buffer to hold path
+	char buff[FILENAME_MAX]; 
 	GetCurrentDir(buff, FILENAME_MAX);
 	string current_working_dir(buff);
 	return current_working_dir;
@@ -124,17 +121,12 @@ string canonicalize(string path)
 {
 
 
-   // 1. convert escaped characters to real ones and remove quotes. ^ ' " and make lowercase
-//   replace(path.begin(), path.end(), "^","");
-//   replace(path.begin(), path.end(), "'","");
-//   replace(path.begin(), path.end(), "\"","");
-//
-   //put all the path to lower case
+ 
    for (int i = 0; i < path.length(); i++) {
        path[i] = tolower(path[i]);
    }
 
-   // 2. replace "/" with "\"
+ 
    replace(path.begin(), path.end(), '/', '\\');
 
    // a. get the current directory from windows
@@ -143,10 +135,7 @@ string canonicalize(string path)
    for (int i = 0; i < currentDirectory.length(); i++) {
       currentDirectory[i] = tolower(currentDirectory[i]);
    }
-   // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
-
-   // 4. identify path type
-   //enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
+   
    const int FULL_DOS = 0;
    const int RELATIVE_TO_ROOT = 1;
    const int RELATIVE_TO_CURRENT = 2;
@@ -172,7 +161,7 @@ string canonicalize(string path)
       }
    }
 
-   // c. if it's relative, prepend it with the drive letter or current directory
+  
    if (pathType == RELATIVE_TO_ROOT) {
        //relative to root. add name of drive and :
        path = currentDirectory.substr(0, 1) + '\\' + path;
@@ -185,7 +174,7 @@ string canonicalize(string path)
        path = currentDirectory + '\\' + path;
    }
        
-   // d. split into strings using "\" as delimiter
+  
    vector<string> splitPath;
    int j = 0;
    for (int i = 0; i < path.size(); i++) {
@@ -196,7 +185,7 @@ string canonicalize(string path)
    }
    splitPath.push_back(path.substr(j, path.size()));
 
-   // e. handle going up ".."
+  
 	vector<string> newSplitPath;
 
 	int newPathIterator = 0;
@@ -208,17 +197,7 @@ string canonicalize(string path)
 		} else {
 		   newSplitPath.push_back(splitPath[i]);
 		}
-//			if(newPathIterator == 0){
-//				newSplitPath.push_back(splitPath[i]);
-//				++newPathIterator;
-//			}
-//			else if(newSplitPath[newPathIterator - 1] != splitPath[i]){
-//				newSplitPath.push_back(splitPath[i]);
-//				++newPathIterator;
-//			}
-//		}
-	}
-   // f. concat into one string and return
+
 
     string newPath;
     for (int i = 0; i < newSplitPath.size(); i++) {
@@ -256,7 +235,7 @@ bool prompTest()
 
 bool isHomograph(string path1, string path2)
 {
-// This is just an example on how it should be done
+
    string canoncalizedFile1 = canonicalize(path1);
    string canoncalizedFile2 = canonicalize(path2);
    if (canoncalizedFile1 == canoncalizedFile2) {
@@ -291,16 +270,3 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
-
-
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
