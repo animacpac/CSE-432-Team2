@@ -10,11 +10,9 @@
 #include <algorithm>
 #include <regex>
 #include <filesystem>
-#include<bits/stdc++.h>
 
 using namespace std;
 using std::filesystem::current_path;
-
 const int TEST_SIZE = 10;
 
 const int FORBIDDEN_FILE_SIZE = 1;
@@ -109,6 +107,13 @@ void runTests()
     return;
 }
 
+string get_current_dir() {
+	char buff[FILENAME_MAX]; 
+	GetCurrentDir(buff, FILENAME_MAX);
+	string current_working_dir(buff);
+	return current_working_dir;
+}
+
 string canonicalize(string path)
 {
 
@@ -119,14 +124,14 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), "\"","");
    
    //put all the path to lower case
-   transform(path.begin(), path.end(), path.begin(), ::tolower);
+   //transform(path.begin(), path.end(), path.begin(), ::tolower);
 
    // 2. replace "/" with "\"
    path.replace(path.begin(), path.end(), '/', '\\');
 
    // a. get the current directory from windows
-   char currentDirectory[256];
-    getcwd(currentDirectory, 256);
+    string currentDirectory = get_current_dir()
+ 
 
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
