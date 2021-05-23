@@ -186,6 +186,8 @@ string canonicalize(string path)
            j = i + 1;
        }
    }
+   splitPath.push_back(path.substr(j, path.size()));
+
    // e. handle going up ".."
 	vector<string> newSpliptPath;
 
