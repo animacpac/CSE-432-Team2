@@ -9,10 +9,10 @@
 #include <vector>
 #include <algorithm>
 #include <regex>
-#include <filesystem>
+
 
 using namespace std;
-using std::filesystem::current_path;
+
 const int TEST_SIZE = 10;
 
 const int FORBIDDEN_FILE_SIZE = 1;
