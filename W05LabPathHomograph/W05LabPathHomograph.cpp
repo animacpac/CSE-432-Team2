@@ -43,7 +43,7 @@ const string TEST_HOMOGRAPHS[TEST_SIZE] = {
 
 const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
 
-    "password.txt",
+    "passwordtxt",
     "secret\\password.txt",
     ".\\..\\user\\secret\\password.txt",
     "..\\..\\user\\..\\..\\user\\secret\\password.txt",
@@ -125,9 +125,9 @@ string canonicalize(string path)
 
 
    // 1. convert escaped characters to real ones and remove quotes. ^ ' " and make lowercase
-//   path.replace(path.begin(), path.end(), "^","");
-//   path.replace(path.begin(), path.end(), "'","");
-//   path.replace(path.begin(), path.end(), "\"","");
+//   replace(path.begin(), path.end(), "^","");
+//   replace(path.begin(), path.end(), "'","");
+//   replace(path.begin(), path.end(), "\"","");
 //
    //put all the path to lower case
    for (int i = 0; i < path.length(); i++) {
@@ -135,7 +135,7 @@ string canonicalize(string path)
    }
 
    // 2. replace "/" with "\"
-   //path.replace(path.begin(), path.end(), '/', '\\');
+   replace(path.begin(), path.end(), '/', '\\');
 
    // a. get the current directory from windows
     string currentDirectory = get_current_dir();
@@ -179,8 +179,8 @@ string canonicalize(string path)
    }
        
    if (pathType == RELATIVE_TO_CURRENT) {
-       if (path.size() >= 3 && path.substr(0, 1) == ".\\") {
-           path = path.substr(2, path.size()-1);
+       if (path.size() >= 3 && path.substr(0, 2) == ".\\") {
+           path = path.substr(2);
        }
        path = currentDirectory + '\\' + path;
    }
@@ -201,16 +201,22 @@ string canonicalize(string path)
 
 	int newPathIterator = 0;
 	for(int i = 0; i < splitPath.size(); i++){
-		if(splitPath[i] != ".."){
-			if(newPathIterator == 0){
-				newSplitPath.push_back(splitPath[i]);
-				++newPathIterator;				
-			}
-			else if(newSplitPath[newPathIterator - 1] != splitPath[i]){
-				newSplitPath.push_back(splitPath[i]);
-				++newPathIterator;
-			}
+		if(splitPath[i] == ".."){
+		   if(newSplitPath.size() > 1) {
+		      newSplitPath.pop_back();
+         }
+		} else {
+		   newSplitPath.push_back(splitPath[i]);
 		}
+//			if(newPathIterator == 0){
+//				newSplitPath.push_back(splitPath[i]);
+//				++newPathIterator;
+//			}
+//			else if(newSplitPath[newPathIterator - 1] != splitPath[i]){
+//				newSplitPath.push_back(splitPath[i]);
+//				++newPathIterator;
+//			}
+//		}
 	}
    // f. concat into one string and return
 
