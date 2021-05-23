@@ -154,11 +154,11 @@ string canonicalize(string path)
    int regexsSize = 3;
    regex regexs[3] = {
            // FullDos
-           regex(R"([a-z]\:\\\..*)"),
+           regex("[a-z]\\:.*"),
            // RelativeToRoot,
-           regex(R"(\\.*)"),
+           regex("\\\\.*"),
            // RelativeToCurrent,
-           regex(R"((\..*)||.*))"
+           regex(R"((\..*)||.*)")
    };
 
    if (path.size() == 0) {
@@ -168,6 +168,7 @@ string canonicalize(string path)
    {
       if(regex_match(path, regexs[i])) {
          pathType = i;
+         break;
       }
    }
 
