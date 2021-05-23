@@ -133,7 +133,7 @@ string get_current_dir() {
  ***********************************************************************/
 string canonicalize(string path, string currentDirectory)
 {
-
+    // Make everything lowercase
    for (int i = 0; i < path.length(); i++) {
        path[i] = tolower(path[i]);
    }
@@ -141,7 +141,7 @@ string canonicalize(string path, string currentDirectory)
   
    replace(path.begin(), path.end(), '/', '\\');
 
-  
+    // Current Directory in lowercase
    for (int i = 0; i < currentDirectory.length(); i++) {
       currentDirectory[i] = tolower(currentDirectory[i]);
    }
@@ -159,7 +159,7 @@ string canonicalize(string path, string currentDirectory)
            // RelativeToCurrent,
            regex(R"((\..*)||.*)")
    };
-
+    
    if (path.size() == 0) {
       return path;
    }
