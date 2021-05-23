@@ -23,13 +23,16 @@ const string TEST_DIRECTORY = "C:\\Users\\user\\secret";
 
 
 /************************************************************
-** TEST_FORBIDDEN_FILES test the forbidden files
+* TEST_FORBIDDEN_FILES test the forbidden files
 ***********************************************************/
 const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
     // Test for a forbidden.
     "C:\\Users\\user\\secret\\password.txt"
 };
 
+/************************************************************
+* TEST_HOMOGRAPHS test the Homographs files
+***********************************************************/
 const string TEST_HOMOGRAPHS[TEST_SIZE] = {
 
     "..\\secret\\password.txt",
@@ -44,6 +47,9 @@ const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\password.txt"
 };
 
+/************************************************************
+* TEST_NON_HOMOGRAPHS test the that are not Homographs files
+***********************************************************/
 const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
 
     "passwordtxt",
@@ -104,6 +110,11 @@ void runTests()
     }
     return;
 }
+
+/**********************************************************************
+ * GetCurrentPath
+ * The function which gets current Path
+ ***********************************************************************/
 
 string get_current_dir() {
 	char buff[FILENAME_MAX]; //create string buffer to hold path
