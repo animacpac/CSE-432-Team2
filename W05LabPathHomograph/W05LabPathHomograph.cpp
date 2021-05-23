@@ -4,21 +4,20 @@
 ** , Everton Alves, Mark Wright
 ** Purpose: It checks the path Homographs
 ***********************************************************/
-#include <direct.h>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <regex>
+
+#include <direct.h>     // for _getcwd
+#include <iostream>     // for input and output functions
+#include <vector>       // for vectorizing file paths
+#include <algorithm>    // for the replace function
+#include <regex>        // for sorting and modifying path name 
 
 #define GetCurrentDir _getcwd
-
 
 using namespace std;
 
 const int TEST_SIZE = 10;
 
 const int FORBIDDEN_FILE_SIZE = 1;
-
 
 const string TEST_DIRECTORY = "C:\\Users\\user\\secret";
 
@@ -41,7 +40,6 @@ const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\password.txt"
 };
 
-
 const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
 
     "passwordtxt",
@@ -56,20 +54,15 @@ const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
     "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\password.txt"
 };
 
-
-
 const string PATH_SYMBOLS[] = {
     "/",
     "`" 
 };
 
-
-
 void runTests();
 string canonicalize(string path, string currentDirectory); 
 bool prompt();
 bool isHomograph(string path1, string path2, string currentDirectory);
-
 
 void runTests()
 {
@@ -88,7 +81,6 @@ void runTests()
             }
         }
     }
-
     
     for (int n = 0; n < TEST_SIZE; n++) {
         for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++) {
@@ -115,7 +107,6 @@ string get_current_dir() {
 	string current_working_dir(buff);
 	return current_working_dir;
 }
-
 
 string canonicalize(string path, string currentDirectory)
 {
@@ -251,11 +242,11 @@ int main(int argc, char* argv[]) {
 
 
 
-    string file1;
-    string file2;
+    string file1;               // file specified by the user
+    string file2;               // file specified by the user
 
-	if (prompTest()){
-        runTests();
+	if (prompTest()){           // promptTest() provides a bool if 
+        runTests();             //    the user wants to run the test
     }
 
     cout << "Specify the first filename: ";
