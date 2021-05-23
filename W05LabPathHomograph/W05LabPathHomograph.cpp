@@ -158,7 +158,7 @@ string canonicalize(string path)
            // RelativeToRoot,
            regex(R"(\\.*)"),
            // RelativeToCurrent,
-           regex(R"((\..*)||.*)")
+           regex(R"((\..*)||.*))"
    };
 
    if (path.size() == 0) {
