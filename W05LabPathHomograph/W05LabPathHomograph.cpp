@@ -21,6 +21,10 @@ const int FORBIDDEN_FILE_SIZE = 1;
 
 const string TEST_DIRECTORY = "C:\\Users\\user\\secret";
 
+
+/************************************************************
+** TEST_FORBIDDEN_FILES test the forbidden files
+***********************************************************/
 const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
     // Test for a forbidden.
     "C:\\Users\\user\\secret\\password.txt"
