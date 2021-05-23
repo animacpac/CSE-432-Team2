@@ -4,12 +4,12 @@
 ** , Everton Alves, Mark Wright
 ** Purpose: It checks the path Homographs
 ***********************************************************/
-
+#include <direct.h>
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <regex>
-#include <filesystem>
+
 #define GetCurrentDir _getcwd
 
 
