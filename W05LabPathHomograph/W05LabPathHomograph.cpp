@@ -125,10 +125,10 @@ string canonicalize(string path)
 
 
    // 1. convert escaped characters to real ones and remove quotes. ^ ' " and make lowercase
-   path.replace(path.begin(), path.end(), "^","");
-   path.replace(path.begin(), path.end(), "'","");
-   path.replace(path.begin(), path.end(), "\"","");
-   
+//   path.replace(path.begin(), path.end(), "^","");
+//   path.replace(path.begin(), path.end(), "'","");
+//   path.replace(path.begin(), path.end(), "\"","");
+//
    //put all the path to lower case
    for (int i = 0; i < path.length(); i++) {
        path[i] = tolower(path[i]);
