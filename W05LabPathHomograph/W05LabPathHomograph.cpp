@@ -135,7 +135,7 @@ string canonicalize(string path)
    }
 
    // 2. replace "/" with "\"
-   path.replace(path.begin(), path.end(), '/', '\\');
+   //path.replace(path.begin(), path.end(), '/', '\\');
 
    // a. get the current directory from windows
     string currentDirectory = get_current_dir();
@@ -152,11 +152,11 @@ string canonicalize(string path)
    int regexsSize = 3;
    regex regexs[3] = {
            // FullDos
-           regex("[a-z]\\:\\\\.*"),
+           regex("[a-z]\\:\\\\..*"),
            // RelativeToRoot,
-           regex("\\\\.*"),
+           regex("\\\\..*"),
            // RelativeToCurrent,
-           regex("\\.*")
+           regex("\\..*")
    };
 
    if (path.size() == 0) {
@@ -172,14 +172,14 @@ string canonicalize(string path)
    // c. if it's relative, prepend it with the drive letter or current directory
    if (pathType == RELATIVE_TO_ROOT) {
        //relative to root. add name of drive and :
-       path += currentDirectory.substr(0, 1);
+       path = currentDirectory.substr(0, 1) + path;
    }
        
    if (pathType == RELATIVE_TO_CURRENT) {
        if (path.size() >= 3 && path.substr(0, 1) == ".\\") {
            path = path.substr(2, path.size()-1);
        }
-       path += currentDirectory;
+       path = currentDirectory + path;
    }
        
    // d. split into strings using "\" as delimiter
@@ -221,83 +221,6 @@ string canonicalize(string path)
         }
     }
 
-
-
-
-
-
-    // 3 replace environmental variables
-//    string key = "%WINDIR%";
-//    string get_env_var(key);
-
-//   // 4. identify path type
-//   enum type { Device, Unc, FullDos, RelativeToRoot, RelativeToSameDirectorySpecificDrive, RelativeToCurrent, EnvShortcut };
-//   type pathType;
-//   string regexs[] = {
-//           // Device
-//           "\\\\\\\\(\\.|\\?).*",
-//           // Unc,
-//           "\\\\\\\\.*",
-//           // FullDos
-//           "[a-z]\\:\\\\.*"
-//           // RelativeToRoot,
-//           "\\\\.*",
-//           // RelativeToSameDirectorySpecificDrive
-//           "[a-z]\\:\\.*"
-//           // RelativeToCurrent,
-//           "\\.*"
-//           // EnvShortcut
-//           "\\%.*\\%.*"
-//           //C:\windows\%appdata%\password.txt
-//           //%appdata%\password.txt
-//   };
-//
-//   int length = path.size();
-//   if (length == 0) {
-//      return path;
-//   }
-//   for (int i = 0; i < regexs->size(); ++i)
-//   {
-//
-//   }
-   // 4. replace environmental variables
-   
-
-   // 5. split paths into components
-
-
-   // 6. Resolve paths to fully qualified, UNC, or device paths
-   // 6.4
-   // 6.5 get computer name for unc
-
-   // 7. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
-
-   // 8. loop through until no resolutions are needed.
-
-   // 9. convert the handling of the symbols to a map include all
-
-
-   // might need to add an ambiguous case, in other words, it depends on
-   // real folder and file structure that will vary system to system.
-   //
-   // https://docs.microsoft.com/en-us/dotnet/standard/io/file-path-formats
-   //
-   // TODO:
-
-   // 1. convert escaped characters to real ones and remove quotes. ^ ' " I think
-   // 2. replace "/" with "\"
-   // 3. identify path type
-   // 4. replace environmental variables
-   // 5. split paths into components
-   // 6. Resolve paths to fully qualified, UNC, or device paths
-   // 7. check if unc paths are pointing to self and resolve, check if device paths are pointing to a drive or UNC and resolve. 127.0.0.1, c$, etc
-   // 8. loop through until no resolutions are needed.
-   // 9. convert the handling of the symbols to a map include all
-   // resolution needed unordered set.
-   //
-   //
-   //
-   //
    return path;
 }
 
