@@ -152,17 +152,19 @@ string canonicalize(string path, string currentDirectory)
    int pathType;
    int regexsSize = 3;
    regex regexs[3] = {
-           // FullDos
+    // FullDos
            regex("[a-z]\\:.*"),
-           // RelativeToRoot,
+    // RelativeToRoot,
            regex("\\\\.*"),
-           // RelativeToCurrent,
+    // RelativeToCurrent,
            regex(R"((\..*)||.*)")
    };
     
    if (path.size() == 0) {
       return path;
    }
+
+   // Match the path and get the size
    for (int i = 0; i < regexsSize; ++i)
    {
       if(regex_match(path, regexs[i])) {
@@ -170,13 +172,12 @@ string canonicalize(string path, string currentDirectory)
          break;
       }
    }
-
    
    if (pathType == RELATIVE_TO_ROOT) {
-       //relative to root. add name of drive and :
+    //relative to root. add name of drive and :
        path = currentDirectory.substr(0, 1) + '\\' + path;
    }
-       
+    // gets the .\ of the path and remove it
    if (pathType == RELATIVE_TO_CURRENT) {
        if (path.size() >= 3 && path.substr(0, 2) == ".\\") {
            path = path.substr(2);
