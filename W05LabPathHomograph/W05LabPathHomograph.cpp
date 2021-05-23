@@ -211,7 +211,15 @@ string canonicalize(string path)
 	}
    // f. concat into one string and return
 
-
+    string newPath;
+    for (int i = 0; i < splitPath.size(); i++) {
+        if (i == 0) {
+            newPath.append(splitPath[i]);
+        }
+        else {
+            newPath.append("\\" + splitPath[i]);
+        }
+    }
 
 
 
