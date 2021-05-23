@@ -74,6 +74,11 @@ string canonicalize(string path, string currentDirectory);
 bool prompt();
 bool isHomograph(string path1, string path2, string currentDirectory);
 
+/**********************************************************************
+ * runTests
+ * This functions will run the tests.
+ ***********************************************************************/
+
 void runTests()
 {
 
@@ -115,7 +120,6 @@ void runTests()
  * GetCurrentPath
  * The function which gets current Path
  ***********************************************************************/
-
 string get_current_dir() {
 	char buff[FILENAME_MAX]; //create string buffer to hold path
 	GetCurrentDir(buff, FILENAME_MAX);
@@ -123,6 +127,10 @@ string get_current_dir() {
 	return current_working_dir;
 }
 
+/**********************************************************************
+ * canonicalize
+ * This functions has all the homograph parameters and all the matching
+ ***********************************************************************/
 string canonicalize(string path, string currentDirectory)
 {
 
@@ -246,7 +254,7 @@ bool prompTest()
 * This function will take two paths and the current directory path 
 * and compare the paths to see if they are homographs. It uses the
 * canonicalization function.
-*/
+*******************************************************************/
 bool isHomograph(string path1, string path2, string currentDirectory)
 {
 // This is just an example on how it should be done
