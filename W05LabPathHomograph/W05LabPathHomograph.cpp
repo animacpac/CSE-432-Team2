@@ -124,7 +124,9 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), "\"","");
    
    //put all the path to lower case
-   //transform(path.begin(), path.end(), path.begin(), ::tolower);
+   for (int i = 0; i < path.length(); i++) {
+       path[i] = tolower(path[i]);
+   }
 
    // 2. replace "/" with "\"
    path.replace(path.begin(), path.end(), '/', '\\');
