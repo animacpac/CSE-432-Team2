@@ -194,17 +194,17 @@ string canonicalize(string path)
    splitPath.push_back(path.substr(j, path.size()));
 
    // e. handle going up ".."
-	vector<string> newSpliptPath;
+	vector<string> newSplitPath;
 
 	int newPathIterator = 0;
 	for(int i = 0; i < splitPath.size(); i++){
 		if(splitPath[i] != ".."){
 			if(newPathIterator == 0){
-				newSpliptPath.push_back(splitPath[i]);
+				newSplitPath.push_back(splitPath[i]);
 				++newPathIterator;				
 			}
-			else if(newSpliptPath[newPathIterator - 1] != splitPath[i]){
-				newSpliptPath.push_back(splitPath[i]);
+			else if(newSplitPath[newPathIterator - 1] != splitPath[i]){
+				newSplitPath.push_back(splitPath[i]);
 				++newPathIterator;
 			}
 		}
@@ -212,12 +212,12 @@ string canonicalize(string path)
    // f. concat into one string and return
 
     string newPath;
-    for (int i = 0; i < splitPath.size(); i++) {
+    for (int i = 0; i < newSplitPath.size(); i++) {
         if (i == 0) {
-            newPath.append(splitPath[i]);
+            newPath.append(newSplitPath[i]);
         }
         else {
-            newPath.append("\\" + splitPath[i]);
+            newPath.append("\\" + newSplitPath[i]);
         }
     }
 
