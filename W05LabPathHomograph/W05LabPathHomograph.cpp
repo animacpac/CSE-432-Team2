@@ -125,13 +125,15 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), "\"","");
    
    //put all the path to lower case
-   //transform(path.begin(), path.end(), path.begin(), ::tolower);
+   for (int i = 0; i < path.length(); i++) {
+       path[i] = tolower(path[i]);
+   }
 
    // 2. replace "/" with "\"
    path.replace(path.begin(), path.end(), '/', '\\');
 
    // a. get the current directory from windows
-    string currentDirectory = get_current_dir()
+   string currentDirectory = get_current_dir();
  
 
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
