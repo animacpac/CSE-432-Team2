@@ -139,8 +139,10 @@ string canonicalize(string path)
 
    // a. get the current directory from windows
     string currentDirectory = get_current_dir();
- 
-
+   currentDirectory =     "C:\\Users\\user\\secret";
+   for (int i = 0; i < currentDirectory.length(); i++) {
+      currentDirectory[i] = tolower(currentDirectory[i]);
+   }
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
    // 4. identify path type
@@ -152,11 +154,11 @@ string canonicalize(string path)
    int regexsSize = 3;
    regex regexs[3] = {
            // FullDos
-           regex("[a-z]\\:\\\\..*"),
+           regex(R"([a-z]\:\\\..*)"),
            // RelativeToRoot,
-           regex("\\\\..*"),
+           regex(R"(\\.*)"),
            // RelativeToCurrent,
-           regex("\\..*")
+           regex(R"((\..*)||.*)")
    };
 
    if (path.size() == 0) {
@@ -172,14 +174,14 @@ string canonicalize(string path)
    // c. if it's relative, prepend it with the drive letter or current directory
    if (pathType == RELATIVE_TO_ROOT) {
        //relative to root. add name of drive and :
-       path = currentDirectory.substr(0, 1) + path;
+       path = currentDirectory.substr(0, 1) + '\\' + path;
    }
        
    if (pathType == RELATIVE_TO_CURRENT) {
        if (path.size() >= 3 && path.substr(0, 1) == ".\\") {
            path = path.substr(2, path.size()-1);
        }
-       path = currentDirectory + path;
+       path = currentDirectory + '\\' + path;
    }
        
    // d. split into strings using "\" as delimiter
@@ -221,7 +223,7 @@ string canonicalize(string path)
         }
     }
 
-   return path;
+   return newPath;
 }
 
 bool prompTest()
