@@ -9,6 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <regex>
+#include <filesystem>
 #define GetCurrentDir _getcwd
 
 
@@ -107,13 +108,17 @@ void runTests()
     }
     return;
 }
-
-string get_current_dir() {
-	char buff[FILENAME_MAX]; 
+/**********************************************************************
+ * GetCurrentPath
+ * The function which gets current Path
+ ***********************************************************************/
+std::string get_current_dir() {
+	char buff[FILENAME_MAX]; //create string buffer to hold path
 	GetCurrentDir(buff, FILENAME_MAX);
 	string current_working_dir(buff);
 	return current_working_dir;
 }
+
 
 string canonicalize(string path)
 {
@@ -131,7 +136,7 @@ string canonicalize(string path)
    path.replace(path.begin(), path.end(), '/', '\\');
 
    // a. get the current directory from windows
-    string currentDirectory = get_current_dir()
+    string currentDirectory = get_current_dir();
  
 
    // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
