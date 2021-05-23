@@ -185,12 +185,14 @@ string canonicalize(string path)
    // d. split into strings using "\" as delimiter
    vector<string> splitPath;
    int j = 0;
-   for (i = 0; i < path.size(); i++) {
+   for (int i = 0; i < path.size(); i++) {
        if (path[i] == '\\' || i == path.size()) {
            splitPath.push_back(path.substr(j, i - j));
            j = i + 1;
        }
    }
+   splitPath.push_back(path.substr(j, path.size()));
+
    // e. handle going up ".."
 	vector<string> newSpliptPath;
 
