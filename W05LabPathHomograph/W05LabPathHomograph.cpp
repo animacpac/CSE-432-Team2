@@ -195,7 +195,7 @@ string canonicalize(string path, string currentDirectory)
    }
    splitPath.push_back(path.substr(j, path.size()));
 
-   
+   //Takes the vector of path words and takes out the ..
 	vector<string> newSplitPath;
 
 	int newPathIterator = 0;
@@ -210,7 +210,7 @@ string canonicalize(string path, string currentDirectory)
 
 	}
    
-
+    //Takes a vector of the words in the path and puts them back into a path
     string newPath;
     for (int i = 0; i < newSplitPath.size(); i++) {
         if (i == 0) {
