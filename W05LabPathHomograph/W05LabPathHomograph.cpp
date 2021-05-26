@@ -4,14 +4,14 @@
 ** , Everton Alves, Mark Wright
 ** Purpose: It checks the path Homographs
 ***********************************************************/
-#include <direct.h>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <regex>
+
+#include <direct.h>     // for _getcwd
+#include <iostream>     // for input and output functions
+#include <vector>       // for vectorizing file paths
+#include <algorithm>    // for the replace function
+#include <regex>        // for sorting and modifying path name 
 
 #define GetCurrentDir _getcwd
-
 
 using namespace std;
 
@@ -19,14 +19,20 @@ const int TEST_SIZE = 10;
 
 const int FORBIDDEN_FILE_SIZE = 1;
 
-
 const string TEST_DIRECTORY = "C:\\Users\\user\\secret";
 
+
+/************************************************************
+* TEST_FORBIDDEN_FILES test the forbidden files
+***********************************************************/
 const string TEST_FORBIDDEN_FILES[FORBIDDEN_FILE_SIZE]{
     // Test for a forbidden.
     "C:\\Users\\user\\secret\\password.txt"
 };
 
+/************************************************************
+* TEST_HOMOGRAPHS test the Homographs files
+***********************************************************/
 const string TEST_HOMOGRAPHS[TEST_SIZE] = {
 
     "..\\secret\\password.txt",
@@ -41,7 +47,9 @@ const string TEST_HOMOGRAPHS[TEST_SIZE] = {
     "c:\\users\\user\\..\\..\\users\\user\\secret\\..\\secret\\password.txt"
 };
 
-
+/************************************************************
+* TEST_NON_HOMOGRAPHS test the that are not Homographs files
+***********************************************************/
 const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
 
     "passwordtxt",
@@ -56,20 +64,20 @@ const string TEST_NON_HOMOGRAPHS[TEST_SIZE] = {
     "c:\\users\\user\\..\\users\\user\\secret\\..\\secret\\password.txt"
 };
 
-
-
 const string PATH_SYMBOLS[] = {
     "/",
     "`" 
 };
 
-
-
 void runTests();
-string canonicalize(string path, string currentDirectory); // Nathan
+string canonicalize(string path, string currentDirectory); 
 bool prompt();
 bool isHomograph(string path1, string path2, string currentDirectory);
 
+/**********************************************************************
+ * runTests
+ * This functions will run the tests.
+ ***********************************************************************/
 
 void runTests()
 {
@@ -77,7 +85,6 @@ void runTests()
     bool passedAllHomographTest = true;
     bool passedAllNonHomographTest = true;
 
-    //Loop and tests  all homograph examples
     for (int h = 0; h < TEST_SIZE; h++) {
         for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++) {
             if (isHomograph(TEST_HOMOGRAPHS[h], TEST_FORBIDDEN_FILES[f],TEST_DIRECTORY) == false) {
@@ -89,8 +96,7 @@ void runTests()
             }
         }
     }
-
-    //Loop and tests all Non-Homograph examples
+    
     for (int n = 0; n < TEST_SIZE; n++) {
         for (int f = 0; f < FORBIDDEN_FILE_SIZE; f++) {
             if (isHomograph(TEST_NON_HOMOGRAPHS[n], TEST_FORBIDDEN_FILES[f], TEST_DIRECTORY) ){
@@ -109,6 +115,7 @@ void runTests()
     }
     return;
 }
+
 /**********************************************************************
  * GetCurrentPath
  * The function which gets current Path
@@ -120,49 +127,44 @@ string get_current_dir() {
 	return current_working_dir;
 }
 
-
+/**********************************************************************
+ * canonicalize
+ * This functions has all the homograph parameters and all the matching
+ ***********************************************************************/
 string canonicalize(string path, string currentDirectory)
 {
-
-
-   // 1. convert escaped characters to real ones and remove quotes. ^ ' " and make lowercase
-//   replace(path.begin(), path.end(), "^","");
-//   replace(path.begin(), path.end(), "'","");
-//   replace(path.begin(), path.end(), "\"","");
-//
-   //put all the path to lower case
+    // Make everything lowercase
    for (int i = 0; i < path.length(); i++) {
        path[i] = tolower(path[i]);
    }
 
-   // 2. replace "/" with "\"
+  
    replace(path.begin(), path.end(), '/', '\\');
 
-   // a. get the current directory from windows
+    // Current Directory in lowercase
    for (int i = 0; i < currentDirectory.length(); i++) {
       currentDirectory[i] = tolower(currentDirectory[i]);
    }
-   // b. test to see if it's fully qualified(C:\etc), relative to root of drive or relative to current folder
 
-   // 4. identify path type
-   //enum typesOfPaths { FullDos, RelativeToRoot, RelativeToCurrent };
    const int FULL_DOS = 0;
    const int RELATIVE_TO_ROOT = 1;
    const int RELATIVE_TO_CURRENT = 2;
    int pathType;
    int regexsSize = 3;
    regex regexs[3] = {
-           // FullDos
+    // FullDos
            regex("[a-z]\\:.*"),
-           // RelativeToRoot,
+    // RelativeToRoot,
            regex("\\\\.*"),
-           // RelativeToCurrent,
+    // RelativeToCurrent,
            regex(R"((\..*)||.*)")
    };
-
+    
    if (path.size() == 0) {
       return path;
    }
+
+   // Match the path and get the size
    for (int i = 0; i < regexsSize; ++i)
    {
       if(regex_match(path, regexs[i])) {
@@ -170,13 +172,12 @@ string canonicalize(string path, string currentDirectory)
          break;
       }
    }
-
-   // c. if it's relative, prepend it with the drive letter or current directory
+   
    if (pathType == RELATIVE_TO_ROOT) {
-       //relative to root. add name of drive and :
+    //relative to root. add name of drive and :
        path = currentDirectory.substr(0, 1) + '\\' + path;
    }
-       
+    // gets the .\ of the path and remove it
    if (pathType == RELATIVE_TO_CURRENT) {
        if (path.size() >= 3 && path.substr(0, 2) == ".\\") {
            path = path.substr(2);
@@ -184,7 +185,7 @@ string canonicalize(string path, string currentDirectory)
        path = currentDirectory + '\\' + path;
    }
        
-   // d. split into strings using "\" as delimiter
+   //Takes the path and splits it into words in a vector
    vector<string> splitPath;
    int j = 0;
    for (int i = 0; i < path.size(); i++) {
@@ -195,7 +196,7 @@ string canonicalize(string path, string currentDirectory)
    }
    splitPath.push_back(path.substr(j, path.size()));
 
-   // e. handle going up ".."
+   //Takes the vector of path words and takes out the .. of the paths
 	vector<string> newSplitPath;
 
 	int newPathIterator = 0;
@@ -207,18 +208,10 @@ string canonicalize(string path, string currentDirectory)
 		} else {
 		   newSplitPath.push_back(splitPath[i]);
 		}
-//			if(newPathIterator == 0){
-//				newSplitPath.push_back(splitPath[i]);
-//				++newPathIterator;
-//			}
-//			else if(newSplitPath[newPathIterator - 1] != splitPath[i]){
-//				newSplitPath.push_back(splitPath[i]);
-//				++newPathIterator;
-//			}
-//		}
-	}
-   // f. concat into one string and return
 
+	}
+   
+    //Takes a vector of the words in the path and puts them back into a path
     string newPath;
     for (int i = 0; i < newSplitPath.size(); i++) {
         if (i == 0) {
@@ -232,6 +225,10 @@ string canonicalize(string path, string currentDirectory)
    return newPath;
 }
 
+/**************************************************************************************************
+* promptTest
+* This function will prompt the user to see what they want to do.
+**************************************************************************************************/
 bool prompTest()
 {
 	char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
@@ -253,6 +250,12 @@ bool prompTest()
 	}
 }
 
+/*******************************************************************
+* isHomograph
+* This function will take two paths and the current directory path 
+* and compare the paths to see if they are homographs. It uses the
+* canonicalization function.
+*******************************************************************/
 bool isHomograph(string path1, string path2, string currentDirectory)
 {
 // This is just an example on how it should be done
@@ -269,15 +272,16 @@ bool isHomograph(string path1, string path2, string currentDirectory)
    return false;
 }
 
+/******************************************************************
+* Main Program
+******************************************************************/
 int main(int argc, char* argv[]) {
 
+    string file1;               // file specified by the user
+    string file2;               // file specified by the user
 
-
-    string file1;
-    string file2;
-
-	if (prompTest()){
-        runTests();
+	if (prompTest()){           // promptTest() provides a bool if 
+        runTests();             //    the user wants to run the test
     }
 
     cout << "Specify the first filename: ";
@@ -290,16 +294,3 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
-
-
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
