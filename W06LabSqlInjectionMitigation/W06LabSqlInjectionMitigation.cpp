@@ -61,17 +61,8 @@ const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 /******************** Function Declarations ***************/
 string generateQuery(string username, string password);
 
-void displayTestQueries(string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
-
-void demonstrateValidTests();
-
-void demonstrateTautologyAttack();
-
-void demonstrateUnionAttack();
-
-void demonstrateAddStateAttack();
-
-void demonstrateCommentAttack();
+void demonstrateTest(string testName,
+                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
 void demonstrateWeakMitigation();
 
@@ -86,41 +77,16 @@ string generateQuery(string username, string password)
 {
    // todo: create a query that could be vulnerable to the 4 types of attacks in
    //  the instuctions
-   return "Some Query" + username + password;
+   return "Some query part" + username + "other query part" + password;
 }
 
-void displayTestQueries(string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
+void demonstrateTest(string testName,
+                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]){
+   cout << testName << endl;
    //todo: loop through all cases and cout generateQuery results. Like this
    cout << generateQuery(cases[0/*replace with i*/][USERNAME_INDEX],
                          cases[0/*replace with i*/][PASS_INDEX]);
    cout << endl;
-}
-
-void demonstrateValidTests() {
-
-   cout << "Valid Cases:" << endl;
-   //Todo: call displayTestQueries with correct array
-}
-
-void demonstrateTautologyAttack() {
-
-   //Todo: like demonstrateValidTests
-}
-
-void demonstrateUnionAttack() {
-
-   //Todo: like demonstrateValidTests
-}
-void demonstrateAddStateAttack() {
-
-   //Todo: like demonstrateValidTests
-
-}
-
-void demonstrateCommentAttack() {
-
-   //Todo: like demonstrateValidTests
-
 }
 
 void demonstrateWeakMitigation() {
@@ -159,7 +125,12 @@ void strongMitigation(string &username, string &password)
 int main() {
    // From instructions. It should be possible to execute any of the test cases in the report.
    // A simple menu structure should be provided to facilitate this.
-   // todo: create a menu to call correct function: The 5 (maybe 7)
-   //  demonstration functions.
+   // todo: create a menu to call correct function: The demonstrateTest function
+   //  with the correct parameters. Also maybe include options for calling the
+   //  mitigation demonstration functions depending on if we figure out it's
+   //  required.
+   // todo: call it like this.
+   demonstrateTest("Valid Cases", TESTS_VALID);
+
    return 0;
 }
