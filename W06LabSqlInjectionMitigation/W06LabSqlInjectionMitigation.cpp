@@ -98,7 +98,7 @@ void displayTestQueries(string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
 void demonstrateValidTests() {
 
    cout << "Valid Cases:" << endl;
-   //Todo: call displayTestQueries with array
+   //Todo: call displayTestQueries with correct array
 }
 
 void demonstrateTautologyAttack() {
@@ -142,7 +142,11 @@ void demonstrateStrongMitigation() {
    //  case from each type of vulnerability.
 }
 
-void strongMitigation(string &username, string &password) //could
+void strongMitigation(string &username, string &password)
+// Todo: look at the book strong mitigation definition along with instructions
+//  to see if we are supposed to alter the invalid input, or just not run it
+//  all together. We could return a boolean that shows if the input is invalid
+//  if that's all we need to do.
 {
    // Todo: Alter username and password to only allow letters, numbers, and underscores.
    // note: If we want to just throw out any invalid input that does not include the correct
