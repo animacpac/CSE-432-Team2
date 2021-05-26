@@ -15,6 +15,7 @@ const int TEST_PARAMETERS_SIZE = 2;
 const int USERNAME_INDEX = 0;
 const int PASS_INDEX = 1;
 
+/******************** Constant Declarations ***************/
 // Todo: EVERYONE create one of each of these test cases by your name.
 //  this needs to be done after the generateQuery function
 const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
@@ -57,7 +58,7 @@ const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username2", "password2"} // Everton
 };
 
-/******************** Declarations ***************/
+/******************** Function Declarations ***************/
 string generateQuery(string username, string password);
 
 void displayTestQueries(string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
@@ -80,7 +81,7 @@ void demonstrateStrongMitigation();
 
 void strongMitigation(string &username, string &password);
 
-/******************** Definitions ***************/
+/******************** Function Definitions ***************/
 string generateQuery(string username, string password)
 {
    // todo: create a query that could be vulnerable to the 4 types of attacks in
@@ -154,7 +155,7 @@ void strongMitigation(string &username, string &password)
    // but correct characters then we need to do it slightly differently.
 }
 
-
+/******************** Main ***************/
 int main() {
    // From instructions. It should be possible to execute any of the test cases in the report.
    // A simple menu structure should be provided to facilitate this.
