@@ -110,13 +110,18 @@ void demonstrateStrongMitigation(string testName,
     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
     cout << testName << endl;
     //todo: loop through all cases and cout generateQuery results. Like this
-    cout << generateQuery(cases[0/*replace with i*/][USERNAME_INDEX],
-        cases[0/*replace with i*/][PASS_INDEX]);
+    for (int i = 0; i < TESTS_SIZE; i++) {
+        string username = "prbowler";
+        string password = "bowler123";
+        if (strongMitigation(username, password)) {
+            cout << generateQuery(cases[i][USERNAME_INDEX],
+                cases[i][PASS_INDEX]) << endl;
+        }
+    }
     // Todo: Read instructions and see if this is required. I would assume so,
     //  but I can't tell. If it is, maybe show the alteration of one test
     //  case from each type of vulnerability.
     cout << endl;
-
 }
 
 bool strongMitigation(string &username, string &password)
