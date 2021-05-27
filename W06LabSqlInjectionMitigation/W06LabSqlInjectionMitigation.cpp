@@ -46,7 +46,7 @@ const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn", "insignificant; INSERT INTO administrators (username, password) VALUES 'attacker', 'mypassword'"}, // Nathan
         {"vbarret", "1'; DELETE FROM users WHERE 1=1 nothing'; INSERT INTO users (name, passwd) VALUES 'Awesome', '1234'"}, // Valter
-        {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
+        {"prbowler", "non' INSERT INTO users (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"Bob", "something' ; del C:\root\user\VSCode "}, // Mark
         {"itsMeMario", " '; DROP TABLE users;"} // Everton
 };
@@ -54,7 +54,7 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn /*", "*/"}, // Nathan
         {"vbarret';--", " DROP users"}, // Valter
-        {"prbowler", "--"}, // Phillip
+        {"prbowler';--", "SELECT * FROM users"}, // Phillip
         {"username1", "password1"}, // Mark
         {"itsMeMario'; --", "thanks"} // Everton
 };
@@ -140,6 +140,28 @@ int main() {
    // todo: call it like this.
 
    //valid cases
+    int menuChoice;
+    cout << "******MENU*********\n";
+    cout << "1. Test Vulnerabilities\n";
+    cout << "2. Test Weak Mitigation\n";
+    cout << "3. Test Strong Mitigation\n";
+    cout << "Please select the test you wish to preform.\n";
+    cin >> menuChoice;
+
+    switch (menuChoice) {
+    case 1:
+        demonstrateTest("Valid Cases", TESTS_VALID);
+        break;
+    case 2:
+        demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
+        break;
+    case 3:
+        demonstrateStrongMitigation();
+        break;
+    default:
+        cout << "Invalid Input";
+    }
+
    demonstrateTest("Valid Cases", TESTS_VALID);
 
    string tests[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
