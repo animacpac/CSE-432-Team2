@@ -16,8 +16,6 @@
 
 using namespace std;
 
-void replaceAll(std::string& str, const std::string& from, const std::string& to);
-
 
 const int TESTS_SIZE = 5;
 const int TEST_PARAMETERS_SIZE = 2;
@@ -143,6 +141,7 @@ void replaceAll(std::string& str, const std::string& from, const std::string& to
 }
 
 void demonstrateWeakMitigation(string username, string password) {
+   
     username = username.substr(0, username.find(";"));
     password = password.substr(0, password.find(";"));
 
