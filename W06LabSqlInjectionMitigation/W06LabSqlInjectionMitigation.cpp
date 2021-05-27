@@ -53,7 +53,7 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
         {"vbarret", "-- DROP users"}, // Valter
-        {"prbowler", "//"}, // Phillip
+        {"prbowler", "--"}, // Phillip
         {"username1", "password1"}, // Mark
         {"itsMeMario'; --", "thanks"} // Everton
 };
@@ -121,6 +121,14 @@ bool strongMitigation(string &username, string &password)
    // note: If we want to just throw out any invalid input that does not include the correct
    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
    // but correct characters then we need to do it slightly differently.
+    if (!regex_match(username, regex(^ [a - zA - Z0 - 9_] *) || !reqex_match(password, regex(^ [a - zA - Z0 - 9_] *) {
+        cout << "Username input not valid";
+        return 1;
+    }
+    else {
+        return 0;
+    }
+    return 0;
 }
 
 /******************** Main ***************/
