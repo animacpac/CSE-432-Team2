@@ -75,11 +75,7 @@ bool strongMitigation(string &username, string &password);
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
 {
-   // todo: create a query that could be vulnerable to the 4 types of attacks in
-   //  the instuctions
-   return "Some query part" + username + "other query part" + password;
-
-   // "SELECT * FROM users where Username=" + username + " password=" + password;
+   return "SELECT * FROM users WHERE username=" + username + " AND Password=" + password;
 }
 
 void demonstrateTest(string testName,
@@ -102,7 +98,7 @@ void weakMitigation(string &username, string &password)
 {
    // Instructions: This function accepts the input as a parameter (or two!) and
    // returns the sanitized input.
-   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " "
+   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
 }
 
 void demonstrateStrongMitigation() {
