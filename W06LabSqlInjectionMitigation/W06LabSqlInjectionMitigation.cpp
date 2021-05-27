@@ -70,7 +70,7 @@ void weakMitigation(string &username, string &password);
 
 void demonstrateStrongMitigation();
 
-void strongMitigation(string &username, string &password);
+bool strongMitigation(string &username, string &password);
 
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
@@ -78,6 +78,8 @@ string generateQuery(string username, string password)
    // todo: create a query that could be vulnerable to the 4 types of attacks in
    //  the instuctions
    return "Some query part" + username + "other query part" + password;
+
+   // "SELECT * FROM users where Username=" + username + " password=" + password;
 }
 
 void demonstrateTest(string testName,
@@ -100,7 +102,7 @@ void weakMitigation(string &username, string &password)
 {
    // Instructions: This function accepts the input as a parameter (or two!) and
    // returns the sanitized input.
-   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--"
+   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " "
 }
 
 void demonstrateStrongMitigation() {
@@ -109,7 +111,7 @@ void demonstrateStrongMitigation() {
    //  case from each type of vulnerability.
 }
 
-void strongMitigation(string &username, string &password)
+bool strongMitigation(string &username, string &password)
 // Todo: look at the book strong mitigation definition along with instructions
 //  to see if we are supposed to alter the invalid input, or just not run it
 //  all together. We could return a boolean that shows if the input is invalid
