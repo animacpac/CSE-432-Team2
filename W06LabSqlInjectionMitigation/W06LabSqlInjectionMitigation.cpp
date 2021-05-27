@@ -6,6 +6,7 @@
 ***********************************************************/
 
 #include <iostream>
+#include <regex>
 
 using namespace std;
 
@@ -27,33 +28,33 @@ const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-        {"user OR 'gotcha' = 'gotcha'", "doesn_tmatter"}, // Nathan
-        {"vbarret", "ask\' OR 1=1"}, // Valter
+        {"user OR 'gotcha' = 'gotcha'", "doesn_tmatter OR 'cantstopme' = 'cantstopme'"}, // Nathan
+        {"vbarret", "ask' OR 1=1"}, // Valter
         {"prbowler", "non' or 'x' = 'x"}, // Phillip
         {"Jill", "something' OR '4' = 4"}, // Mark
         {"itsMeMario", " ' OR '1' = '1"} // Everton
 };
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-        {"username1", "password1"}, // Nathan
-        {"vbarret", "Gimme\' UNION ALL SELECT * from users WHERE username = \'admin\'"}, // Valter
+        {"spottenn", "UNION SELECT * FROM administrators"}, // Nathan
+        {"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin'"}, // Valter
         {"username1", "password1"}, // Phillip
         {"John", "so' UNION SELECT autenticate FROM passwordList"}, // Mark
         {"istMeMario", " ' UNION SELECT * FROM users;"} // Everton
 };
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-        {"spottenn", "insignificant; "}, // Nathan
-        {"vbarret", "1\'; DELETE FROM users WHERE 1=1 nothing\'; INSERT INTO users (name, passwd) VALUES \'Awesome\', \'1234'"}, // Valter
-        {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
+        {"spottenn", "insignificant; INSERT INTO administrators (username, password) VALUES 'attacker', 'mypassword'"}, // Nathan
+        {"vbarret", "1'; DELETE FROM users WHERE 1=1 nothing'; INSERT INTO users (name, passwd) VALUES 'Awesome', '1234'"}, // Valter
+        {"prbowler", "non' INSERT INTO users (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"Bob", "something' ; DELETE row25 "}, // Mark
         {"itsMeMario", " '; DROP TABLE users;"} // Everton
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn /*", "*/"}, // Nathan
-        {"vbarret", "-- DROP users"}, // Valter
-        {"prbowler", "--"}, // Phillip
+        {"vbarret';--", " DROP users"}, // Valter
+        {"prbowler';--", "SELECT * FROM users"}, // Phillip
         {"markw--", "yes"}, // Mark
         {"itsMeMario'; --", "thanks"} // Everton
 };
@@ -121,12 +122,9 @@ bool strongMitigation(string &username, string &password)
    // note: If we want to just throw out any invalid input that does not include the correct
    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
    // but correct characters then we need to do it slightly differently.
-    if (!regex_match(username, regex(^ [a - zA - Z0 - 9_] *) || !reqex_match(password, regex(^ [a - zA - Z0 - 9_] *) {
-        cout << "Username input not valid";
+    if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*"))) {
+        cout << "Username or password are not valid";
         return 1;
-    }
-    else {
-        return 0;
     }
     return 0;
 }
@@ -140,7 +138,41 @@ int main() {
    //  mitigation demonstration functions depending on if we figure out it's
    //  required.
    // todo: call it like this.
+
+   //valid cases
+    int menuChoice;
+    cout << "******MENU*********\n";
+    cout << "1. Test Vulnerabilities\n";
+    cout << "2. Test Weak Mitigation\n";
+    cout << "3. Test Strong Mitigation\n";
+    cout << "Please select the test you wish to preform.\n";
+    cin >> menuChoice;
+
+    switch (menuChoice) {
+    case 1:
+        demonstrateTest("Valid Cases", TESTS_VALID);
+        break;
+    case 2:
+        demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
+        break;
+    case 3:
+        demonstrateStrongMitigation();
+        break;
+    default:
+        cout << "Invalid Input";
+    }
+
    demonstrateTest("Valid Cases", TESTS_VALID);
+
+   string tests[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
+           {"spottenn /*", "*/"}, // Nathan
+           {"vbarret", "-- DROP users"}, // Valter
+           {"prbowler", "--"}, // Phillip
+           {"username1", "password1"}, // Mark
+           {"itsMeMario'; --", "thanks"} // Everton
+   };
+
+   demonstrateTest("ealfejh" , tests);
 
    return 0;
 }
