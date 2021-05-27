@@ -36,8 +36,11 @@ const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"vbarret", "password1"}, // Valter
-        {"prbowler", "non' UNION SELECT * from username"}, // Phillip
+        {"vbarret", "1\'; DELETE FROM users WHERE 1=1","nothing\'; INSERT INTO users (name, passwd) VALUES \'Awesome\', \'1234",
+                                "WHERE id = \'username\' UNION SELECT Username, Password FROM users;",
+                                "\'; SELECT * FROM users WHERE user_id = Username; DROP TABLE users",
+                                "\'; SELECT * FROM users WHERE id = 0 OR 1=1"}, // Valter
+        {"username1", "password1"}, // Phillip
         {"username1", "password1"}, // Mark
         {"istMeMario", " ' UNION SELECT * FROM users;"} // Everton
 };
