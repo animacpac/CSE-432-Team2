@@ -13,16 +13,17 @@
 
 
 
+
 using namespace std;
 
-static vector<string> split(string value, char delimiter);
-static string join(vector<string> values, char delimiter);
-static string to_lower(string s);
+void replaceAll(std::string& str, const std::string& from, const std::string& to);
+
 
 const int TESTS_SIZE = 5;
 const int TEST_PARAMETERS_SIZE = 2;
 const int USERNAME_INDEX = 0;
 const int PASS_INDEX = 1;
+
 
 /******************** Constant Declarations ***************/
 // Todo: EVERYONE create one of each of these test cases by your name.
@@ -128,47 +129,33 @@ void demonstrateAddStateAttack() {
 
 void demonstrateCommentAttack() {
 
-   //Todo: like demonstrateValidTests
+  //Todo: like demonstrateVal idTests
 
 }
-
-void demonstrateWeakMitigation(string value) {
-       // split the sql
-    vector<string> splitValues = split(value, ' ');
-    string cleanValue = "";
-
-    // Look for dirtysql
-    for (int i = 0; i < splitValues.size(); i++)
-    {
-        string segment = splitValues[i];
-        
-        if (segment.find(';') != string::npos)
-        {
-            // remove the semicolon
-            segment = join(split(segment, ';'), '\0');
-        }
-        if (segment.find("'") != string::npos)
-        {
-            // remove the single quotes
-            segment = join(split(segment, '\''), '\0');
-        }
-        if (to_lower(segment) == "union" || segment.find("--") != string::npos)
-        {
-            return cleanValue;
-        }
-        if (to_lower(segment) == "or")
-        {
-            continue;
-        }
-
-        cleanValue += segment;
-        if (i < splitValues.size() - 1)
-        {
-            cleanValue += " ";
-        }
+void replaceAll(std::string& str, const std::string& from, const std::string& to) {
+    if(from.empty())
+        return;
+    size_t start_pos = 0;
+    while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+        str.replace(start_pos, from.length(), to);
+        start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
     }
+}
 
-    return cleanValue;
+void demonstrateWeakMitigation(string username, string password) {
+    username = username.substr(0, username.find(";"));
+    password = password.substr(0, password.find(";"));
+
+    username = username.substr(0, username.find("\""));
+    password = password.substr(0, password.find("\""));
+
+    replaceAll(username, "\'", "\'\'");
+    replaceAll(password,  "\'", "\'\'");    
+
+    string SQL_statement = "SELECT * FROM Users WHERE username='" + username + 
+        "' AND password='" + password +"'";
+    
+    return SQL_statement;
 
 }
 
