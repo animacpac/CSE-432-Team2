@@ -6,6 +6,7 @@
 ***********************************************************/
 
 #include <iostream>
+#include <regex>
 
 using namespace std;
 
@@ -117,12 +118,9 @@ bool strongMitigation(string &username, string &password)
    // note: If we want to just throw out any invalid input that does not include the correct
    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
    // but correct characters then we need to do it slightly differently.
-    if (!regex_match(username, regex(^ [a - zA - Z0 - 9_] *) || !reqex_match(password, regex(^ [a - zA - Z0 - 9_] *) {
-        cout << "Username input not valid";
+    if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*"))) {
+        cout << "Username or password are not valid";
         return 1;
-    }
-    else {
-        return 0;
     }
     return 0;
 }
@@ -136,6 +134,8 @@ int main() {
    //  mitigation demonstration functions depending on if we figure out it's
    //  required.
    // todo: call it like this.
+
+   //valid cases
    demonstrateTest("Valid Cases", TESTS_VALID);
 
    return 0;
