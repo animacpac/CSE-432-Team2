@@ -21,41 +21,41 @@ const int PASS_INDEX = 1;
 const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn",  "secret_Buffalo7"}, // Nathan
         {"vbarret", "nothingTolose1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"prbowler", "bowler123"}, // Phillip
         {"markw", "smashingPumpkins"}, // Mark
-        {"username2", "password2"} // Everton
+        {"itsMeMario", "Luigi123"} // Everton
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-        {"username1", "password1"}, // Nathan
-        {"vbarret", "' OR 1=1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"user OR 'gotcha' = 'gotcha'", "doesn_tmatter"}, // Nathan
+        {"vbarret", "ask\' OR 1=1"}, // Valter
+        {"prbowler", "non' or 'x' = 'x"}, // Phillip
         {"Jill", "something' OR '4' = 4"}, // Mark
-        {"username2", "password2"} // Everton
+        {"itsMeMario", " ' OR '1' = '1"} // Everton
 };
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"vbarret", "password1"}, // Valter
+        {"vbarret", "Gimme\' UNION ALL SELECT * from users WHERE username = \'admin\'"}, // Valter
         {"username1", "password1"}, // Phillip
         {"John", "so' UNION SELECT autenticate FROM passwordList"}, // Mark
-        {"username2", "password2"} // Everton
+        {"istMeMario", " ' UNION SELECT * FROM users;"} // Everton
 };
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-        {"username1", "password1"}, // Nathan
-        {"vbarret", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"spottenn", "insignificant; "}, // Nathan
+        {"vbarret", "1\'; DELETE FROM users WHERE 1=1 nothing\'; INSERT INTO users (name, passwd) VALUES \'Awesome\', \'1234'"}, // Valter
+        {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"Bob", "something' ; del "C:\root\user\VSCode "}, // Mark
-        {"username2", "password2"} // Everton
+        {"itsMeMario", " '; DROP TABLE users;"} // Everton
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-        {"username1", "password1"}, // Nathan
-        {"vbarret", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"spottenn /*", "*/"}, // Nathan
+        {"vbarret", "-- DROP users"}, // Valter
+        {"prbowler", "--"}, // Phillip
         {"username1", "password1"}, // Mark
-        {"username2", "password2"} // Everton
+        {"itsMeMario'; --", "thanks"} // Everton
 };
 
 /******************** Function Declarations ***************/
@@ -75,11 +75,7 @@ bool strongMitigation(string &username, string &password);
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
 {
-   // todo: create a query that could be vulnerable to the 4 types of attacks in
-   //  the instuctions
-   return "Some query part" + username + "other query part" + password;
-
-   // "SELECT * FROM users where Username=" + username + " password=" + password;
+   return "SELECT * FROM users WHERE username=" + username + " AND Password=" + password + ";";
 }
 
 void demonstrateTest(string testName,
@@ -102,7 +98,7 @@ void weakMitigation(string &username, string &password)
 {
    // Instructions: This function accepts the input as a parameter (or two!) and
    // returns the sanitized input.
-   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " "
+   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
 }
 
 void demonstrateStrongMitigation() {
@@ -121,6 +117,14 @@ bool strongMitigation(string &username, string &password)
    // note: If we want to just throw out any invalid input that does not include the correct
    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
    // but correct characters then we need to do it slightly differently.
+    if (!regex_match(username, regex(^ [a - zA - Z0 - 9_] *) || !reqex_match(password, regex(^ [a - zA - Z0 - 9_] *) {
+        cout << "Username input not valid";
+        return 1;
+    }
+    else {
+        return 0;
+    }
+    return 0;
 }
 
 /******************** Main ***************/
