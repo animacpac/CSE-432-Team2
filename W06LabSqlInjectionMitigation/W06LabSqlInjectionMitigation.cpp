@@ -62,9 +62,9 @@ const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 /******************** Function Declarations ***************/
 string generateQuery(string username, string password);
-                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
 void demonstrateTest(string testName,
+                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
 void demonstrateWeakMitigation();
 
