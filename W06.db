@@ -1,0 +1,12 @@
+
+CREATE TABLE public.username_password
+(
+    id integer NOT NULL DEFAULT nextval('username_password_id_seq'::regclass),
+    username character varying(255) COLLATE pg_catalog."default",
+    password character varying COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.username_password
+    OWNER to postgres;
