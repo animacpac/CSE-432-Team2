@@ -87,15 +87,19 @@ void demonstrateTest(string testName,
    cout << endl;
 }
 
-void demonstrateWeakMitigation() {
-   // Todo: Read instructions and see if this is required. I would assume so,
-   //  but I can't tell. If it is, maybe show the alteration of one test
-   //  case from each type of vulnerability.
+void demonstrateWeakMitigation(string testName,
+                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
+   cout << testName << endl;
+   //todo: loop through all cases and cout generateQuery results. Like this
+   cout << generateQuery(cases[0/*replace with i*/][USERNAME_INDEX],
+                         cases[0/*replace with i*/][PASS_INDEX]);
+   cout << endl;
 }
 
 
 void weakMitigation(string &username, string &password)
 {
+
    // Instructions: This function accepts the input as a parameter (or two!) and
    // returns the sanitized input.
    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
