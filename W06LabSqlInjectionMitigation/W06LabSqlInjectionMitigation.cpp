@@ -23,37 +23,37 @@ const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn",  "secret_Buffalo7"}, // Nathan
         {"vbarret", "nothingTolose1"}, // Valter
         {"prbowler", "bowler123"}, // Phillip
-        {"username1", "password1"}, // Mark
+        {"markw", "smashingPumpkins"}, // Mark
         {"itsMeMario", "Luigi123"} // Everton
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"user OR 'gotcha' = 'gotcha'", "doesn_tmatter OR 'cantstopme' = 'cantstopme'"}, // Nathan
-        {"vbarret", "ask\' OR 1=1"}, // Valter
+        {"vbarret", "ask' OR 1=1"}, // Valter
         {"prbowler", "non' or 'x' = 'x"}, // Phillip
-        {"username1", "password1"}, // Mark
+        {"Jill", "something' OR '4' = 4"}, // Mark
         {"itsMeMario", " ' OR '1' = '1"} // Everton
 };
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn", "UNION SELECT * FROM administrators"}, // Nathan
-        {"vbarret", "Gimme\' UNION ALL SELECT * from users WHERE username = \'admin\'"}, // Valter
+        {"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin'"}, // Valter
         {"username1", "password1"}, // Phillip
-        {"username1", "password1"}, // Mark
+        {"John", "so' UNION SELECT autenticate FROM passwordList"}, // Mark
         {"istMeMario", " ' UNION SELECT * FROM users;"} // Everton
 };
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn", "insignificant; INSERT INTO administrators (username, password) VALUES 'attacker', 'mypassword'"}, // Nathan
-        {"vbarret", "1\'; DELETE FROM users WHERE 1=1 nothing\'; INSERT INTO users (name, passwd) VALUES \'Awesome\', \'1234'"}, // Valter
+        {"vbarret", "1'; DELETE FROM users WHERE 1=1 nothing'; INSERT INTO users (name, passwd) VALUES 'Awesome', '1234'"}, // Valter
         {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
-        {"username1", "password1"}, // Mark
+        {"Bob", "something' ; del C:\root\user\VSCode "}, // Mark
         {"itsMeMario", " '; DROP TABLE users;"} // Everton
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn /*", "*/"}, // Nathan
-        {"vbarret", "-- DROP users"}, // Valter
+        {"vbarret';--", " DROP users"}, // Valter
         {"prbowler", "--"}, // Phillip
         {"username1", "password1"}, // Mark
         {"itsMeMario'; --", "thanks"} // Everton
@@ -88,15 +88,19 @@ void demonstrateTest(string testName,
    cout << endl;
 }
 
-void demonstrateWeakMitigation() {
-   // Todo: Read instructions and see if this is required. I would assume so,
-   //  but I can't tell. If it is, maybe show the alteration of one test
-   //  case from each type of vulnerability.
+void demonstrateWeakMitigation(string testName,
+                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
+   cout << testName << endl;
+   //todo: loop through all cases and cout generateQuery results. Like this
+   cout << generateQuery(cases[0/*replace with i*/][USERNAME_INDEX],
+                         cases[0/*replace with i*/][PASS_INDEX]);
+   cout << endl;
 }
 
 
 void weakMitigation(string &username, string &password)
 {
+
    // Instructions: This function accepts the input as a parameter (or two!) and
    // returns the sanitized input.
    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
