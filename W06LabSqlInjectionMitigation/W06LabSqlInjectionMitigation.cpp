@@ -106,10 +106,17 @@ void weakMitigation(string &username, string &password)
    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
 }
 
-void demonstrateStrongMitigation() {
-   // Todo: Read instructions and see if this is required. I would assume so,
-   //  but I can't tell. If it is, maybe show the alteration of one test
-   //  case from each type of vulnerability.
+void demonstrateStrongMitigation(string testName,
+    const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
+    cout << testName << endl;
+    //todo: loop through all cases and cout generateQuery results. Like this
+    cout << generateQuery(cases[0/*replace with i*/][USERNAME_INDEX],
+        cases[0/*replace with i*/][PASS_INDEX]);
+    // Todo: Read instructions and see if this is required. I would assume so,
+    //  but I can't tell. If it is, maybe show the alteration of one test
+    //  case from each type of vulnerability.
+    cout << endl;
+
 }
 
 bool strongMitigation(string &username, string &password)
@@ -151,28 +158,28 @@ int main() {
     switch (menuChoice) {
     case 1:
         demonstrateTest("Valid Cases", TESTS_VALID);
+        demonstrateTest("Tautology", TESTS_TAUTOLOGY);
+        demonstrateTest("Union", TESTS_UNION);
+        demonstrateTest("Add State", TESTS_ADD_STATE);
+        demonstrateTest("Add Comment", TESTS_ADD_COMMENT);
         break;
     case 2:
         demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
+        demonstrateWeakMitigation("Tautology", TESTS_TAUTOLOGY);
+        demonstrateWeakMitigation("Union", TESTS_UNION);
+        demonstrateWeakMitigation("Add State", TESTS_ADD_STATE);
+        demonstrateWeakMitigation("Add Comment", TESTS_ADD_COMMENT);
         break;
     case 3:
-        demonstrateStrongMitigation();
+        demonstrateStrongMitigation("Valid Cases", TESTS_VALID);
+        demonstrateStrongMitigation("Tautology", TESTS_TAUTOLOGY);
+        demonstrateStrongMitigation("Union", TESTS_UNION);
+        demonstrateStrongMitigation("Add State", TESTS_ADD_STATE);
+        demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
         break;
     default:
         cout << "Invalid Input";
     }
-
-   demonstrateTest("Valid Cases", TESTS_VALID);
-
-   string tests[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-           {"spottenn /*", "*/"}, // Nathan
-           {"vbarret", "-- DROP users"}, // Valter
-           {"prbowler", "--"}, // Phillip
-           {"username1", "password1"}, // Mark
-           {"itsMeMario'; --", "thanks"} // Everton
-   };
-
-   demonstrateTest("ealfejh" , tests);
 
    return 0;
 }
