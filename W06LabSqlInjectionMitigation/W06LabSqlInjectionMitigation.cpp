@@ -113,7 +113,7 @@ void demonstrateStrongMitigation(string testName,
     for (int i = 0; i < TESTS_SIZE; i++) {
         string username = "prbowler";
         string password = "bowler123";
-        if (strongMitigation(username, password)) {
+        if (!strongMitigation(username, password)) {
             cout << generateQuery(cases[i][USERNAME_INDEX],
                 cases[i][PASS_INDEX]) << endl;
         }
