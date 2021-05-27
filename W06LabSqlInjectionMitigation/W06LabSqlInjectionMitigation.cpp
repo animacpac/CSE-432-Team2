@@ -23,7 +23,7 @@ const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"vbarret", "nothingTolose1"}, // Valter
         {"prbowler", "bowler123"}, // Phillip
         {"username1", "password1"}, // Mark
-        {"username2", "password2"} // Everton
+        {"itsMeMario", "Luigi123"} // Everton
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
@@ -31,7 +31,7 @@ const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"vbarret", "ask\' OR 1=1"}, // Valter
         {"prbowler", "non' or 'x' = 'x"}, // Phillip
         {"username1", "password1"}, // Mark
-        {"username2", "password2"} // Everton
+        {"itsMeMario", " ' OR '1' = '1"} // Everton
 };
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
@@ -43,7 +43,7 @@ const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
                                             "1=2\' union select 1,group_concat(username,0x3a,password),3,4 from user-- -"}, // Valter                                            
         {"username1", "password1"}, // Phillip
         {"username1", "password1"}, // Mark
-        {"username2", "password2"} // Everton
+        {"istMeMario", " ' UNION SELECT * FROM users;"} // Everton
 };
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
@@ -54,7 +54,7 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
                                 "\'; SELECT * FROM users WHERE id = 0 OR 1=1"}, // Valter
         {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"username1", "password1"}, // Mark
-        {"username2", "password2"} // Everton
+        {"itsMeMario", " '; DROP TABLE users;"} // Everton
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
@@ -64,14 +64,14 @@ const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
                                 "admin'--"}, // Valter
         {"prbowler", "//"}, // Phillip
         {"username1", "password1"}, // Mark
-        {"username2", "password2"} // Everton
+        {"itsMeMario'; --", "thanks"} // Everton
 };
 
 /******************** Function Declarations ***************/
 string generateQuery(string username, string password);
+                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
 void demonstrateTest(string testName,
-                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
 void demonstrateWeakMitigation();
 
