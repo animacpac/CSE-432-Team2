@@ -46,7 +46,7 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn", "insignificant; "}, // Nathan
         {"vbarret", "1\'; DELETE FROM users WHERE 1=1 nothing\'; INSERT INTO users (name, passwd) VALUES \'Awesome\', \'1234'"}, // Valter
         {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
-        {"Bob", "something' ; del "C:\root\user\VSCode "}, // Mark
+        {"Bob", "something' ; DELETE row25 "}, // Mark
         {"itsMeMario", " '; DROP TABLE users;"} // Everton
 };
 
@@ -54,7 +54,7 @@ const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn /*", "*/"}, // Nathan
         {"vbarret", "-- DROP users"}, // Valter
         {"prbowler", "--"}, // Phillip
-        {"username1", "password1"}, // Mark
+        {"markw--", "yes"}, // Mark
         {"itsMeMario'; --", "thanks"} // Everton
 };
 
