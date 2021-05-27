@@ -6,9 +6,18 @@
 ***********************************************************/
 
 #include <iostream>
+#include <vector>
+#include <string>
+#include <locale>
+#include <regex>
+
+
 
 using namespace std;
 
+static vector<string> split(string value, char delimiter);
+static string join(vector<string> values, char delimiter);
+static string to_lower(string s);
 
 const int TESTS_SIZE = 5;
 const int TEST_PARAMETERS_SIZE = 2;
@@ -20,7 +29,7 @@ const int PASS_INDEX = 1;
 //  this needs to be done after the generateQuery function
 const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn",  "secret_Buffalo7"}, // Nathan
-        {"username1", "password1"}, // Valter
+        {"vbarreto", "nothingtolose9"}, // Valter
         {"username1", "password1"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
@@ -123,10 +132,44 @@ void demonstrateCommentAttack() {
 
 }
 
-void demonstrateWeakMitigation() {
-   // Todo: Read instructions and see if this is required. I would assume so,
-   //  but I can't tell. If it is, maybe show the alteration of one test
-   //  case from each type of vulnerability.
+void demonstrateWeakMitigation(string value) {
+       // split the sql
+    vector<string> splitValues = split(value, ' ');
+    string cleanValue = "";
+
+    // Look for dirtysql
+    for (int i = 0; i < splitValues.size(); i++)
+    {
+        string segment = splitValues[i];
+        
+        if (segment.find(';') != string::npos)
+        {
+            // remove the semicolon
+            segment = join(split(segment, ';'), '\0');
+        }
+        if (segment.find("'") != string::npos)
+        {
+            // remove the single quotes
+            segment = join(split(segment, '\''), '\0');
+        }
+        if (to_lower(segment) == "union" || segment.find("--") != string::npos)
+        {
+            return cleanValue;
+        }
+        if (to_lower(segment) == "or")
+        {
+            continue;
+        }
+
+        cleanValue += segment;
+        if (i < splitValues.size() - 1)
+        {
+            cleanValue += " ";
+        }
+    }
+
+    return cleanValue;
+
 }
 
 
