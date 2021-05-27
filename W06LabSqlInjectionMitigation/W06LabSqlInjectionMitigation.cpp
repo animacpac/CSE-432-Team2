@@ -20,40 +20,40 @@ const int PASS_INDEX = 1;
 //  this needs to be done after the generateQuery function
 const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn",  "secret_Buffalo7"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "nothingTolose1"}, // Valter
+        {"prbowler", "bowler123"}, // Phillip
         {"username1", "password1"}, // Mark
         {"itsMeMario", "Luigi123"} // Everton
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "' OR 1=1"}, // Valter
+        {"prbowler", "non' or 'x' = 'x"}, // Phillip
         {"username1", "password1"}, // Mark
         {"itsMeMario", " ' OR '1' = '1"} // Everton
 };
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "password1"}, // Valter
+        {"prbowler", "non' UNION SELECT * from username"}, // Phillip
         {"username1", "password1"}, // Mark
         {"istMeMario", " ' UNION SELECT * FROM users;"} // Everton
 };
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "password1"}, // Valter
+        {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"username1", "password1"}, // Mark
         {"itsMeMario", " '; DROP TABLE users;"} // Everton
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "password1"}, // Valter
+        {"prbowler", "//"}, // Phillip
         {"username1", "password1"}, // Mark
         {"itsMeMario'; --", "thanks"} // Everton
 };
@@ -70,7 +70,7 @@ void weakMitigation(string &username, string &password);
 
 void demonstrateStrongMitigation();
 
-void strongMitigation(string &username, string &password);
+bool strongMitigation(string &username, string &password);
 
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
@@ -78,6 +78,8 @@ string generateQuery(string username, string password)
    // todo: create a query that could be vulnerable to the 4 types of attacks in
    //  the instuctions
    return "Some query part" + username + "other query part" + password;
+
+   // "SELECT * FROM users where Username=" + username + " password=" + password;
 }
 
 void demonstrateTest(string testName,
@@ -100,7 +102,7 @@ void weakMitigation(string &username, string &password)
 {
    // Instructions: This function accepts the input as a parameter (or two!) and
    // returns the sanitized input.
-   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--"
+   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " "
 }
 
 void demonstrateStrongMitigation() {
@@ -109,7 +111,7 @@ void demonstrateStrongMitigation() {
    //  case from each type of vulnerability.
 }
 
-void strongMitigation(string &username, string &password)
+bool strongMitigation(string &username, string &password)
 // Todo: look at the book strong mitigation definition along with instructions
 //  to see if we are supposed to alter the invalid input, or just not run it
 //  all together. We could return a boolean that shows if the input is invalid
