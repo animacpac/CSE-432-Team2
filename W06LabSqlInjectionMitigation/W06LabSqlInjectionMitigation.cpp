@@ -38,7 +38,7 @@ const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn", "UNION SELECT * FROM administrators"}, // Nathan
         {"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin'"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"username1", "non'; UNION SELECT * from users WHERE password = 'password'; UPDATE users SET password = 'password' WHERE id = 1"}, // Phillip
         {"John", "so' UNION SELECT autenticate FROM passwordList"}, // Mark
         {"istMeMario", " ' UNION SELECT * FROM users;"} // Everton
 };
@@ -46,7 +46,7 @@ const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn", "insignificant; INSERT INTO administrators (username, password) VALUES 'attacker', 'mypassword'"}, // Nathan
         {"vbarret", "1'; DELETE FROM users WHERE 1=1 nothing'; INSERT INTO users (name, passwd) VALUES 'Awesome', '1234'"}, // Valter
-        {"prbowler", "non' INSERT INTO users (username, password) VALUES 'hacker', 'password'"}, // Phillip
+        {"prbowler", "non'; INSERT INTO users (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"Bob", "something' ; DELETE row25 "}, // Mark
         {"itsMeMario", " '; DROP TABLE users;"} // Everton
 };
