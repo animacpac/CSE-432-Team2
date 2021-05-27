@@ -28,7 +28,7 @@ const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"user OR 'gotcha' = 'gotcha'", "doesn_tmatter"}, // Nathan
-        {"vbarret", "ask\' OR 1=1"}, // Valter
+        {"vbarret", "ask' OR 1=1"}, // Valter
         {"prbowler", "non' or 'x' = 'x"}, // Phillip
         {"Jill", "something' OR '4' = 4"}, // Mark
         {"itsMeMario", " ' OR '1' = '1"} // Everton
@@ -36,7 +36,7 @@ const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"vbarret", "Gimme\' UNION ALL SELECT * from users WHERE username = \'admin\'"}, // Valter
+        {"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin'"}, // Valter
         {"username1", "password1"}, // Phillip
         {"John", "so' UNION SELECT autenticate FROM passwordList"}, // Mark
         {"istMeMario", " ' UNION SELECT * FROM users;"} // Everton
@@ -44,7 +44,7 @@ const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn", "insignificant; "}, // Nathan
-        {"vbarret", " '; DELETE FROM users WHERE 1=1 'nothing\'; INSERT INTO users (name, passwd) VALUES \'Awesome\', \'1234'"}, // Valter
+        {"vbarret", " '; DELETE FROM users WHERE 1=1 'nothing'; INSERT INTO users (name, passwd) VALUES 'Awesome', '1234'"}, // Valter
         {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"Bob", "something' ; del C:\root\user\VSCode "}, // Mark
         {"itsMeMario", " '; DROP TABLE users;"} // Everton
