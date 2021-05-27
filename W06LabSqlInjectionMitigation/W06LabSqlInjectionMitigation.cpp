@@ -21,7 +21,7 @@ const int PASS_INDEX = 1;
 const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn",  "secret_Buffalo7"}, // Nathan
         {"vbarret", "nothingTolose1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"prbowler", "bowler123"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
 };
@@ -29,7 +29,7 @@ const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
         {"vbarret", "' OR 1=1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"prbowler", "non' or 'x' = 'x"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
 };
@@ -48,7 +48,7 @@ const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
         {"vbarret", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
 };
@@ -56,7 +56,7 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
         {"vbarret", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"prbowler", "//"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
 };
