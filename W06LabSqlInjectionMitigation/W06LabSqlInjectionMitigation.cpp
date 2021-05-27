@@ -27,7 +27,7 @@ const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-        {"username1", "password1"}, // Nathan
+        {"user OR 'gotcha' = 'gotcha'", "doesn_tmatter"}, // Nathan
         {"vbarret", "' OR 1=1"}, // Valter
         {"prbowler", "non' or 'x' = 'x"}, // Phillip
         {"username1", "password1"}, // Mark
@@ -51,7 +51,7 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-        {"username1", "password1"}, // Nathan
+        {"spottenn /*", "*/"}, // Nathan
         {"vbarret", "password1"}, // Valter
         {"prbowler", "//"}, // Phillip
         {"username1", "password1"}, // Mark
@@ -75,7 +75,7 @@ bool strongMitigation(string &username, string &password);
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
 {
-   return "SELECT * FROM users WHERE username=" + username + " AND Password=" + password;
+   return "SELECT * FROM users WHERE username=" + username + " AND Password=" + password + ";";
 }
 
 void demonstrateTest(string testName,
