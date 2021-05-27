@@ -20,40 +20,40 @@ const int PASS_INDEX = 1;
 //  this needs to be done after the generateQuery function
 const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn",  "secret_Buffalo7"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "nothingTolose1"}, // Valter
+        {"prbowler", "bowler123"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "' OR 1=1"}, // Valter
+        {"prbowler", "non' or 'x' = 'x"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
 };
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "password1"}, // Valter
+        {"prbowler", "non' UNION SELECT * from username"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
 };
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "password1"}, // Valter
+        {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"username1", "password1"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"vbarret", "password1"}, // Valter
+        {"prbowler", "//"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
 };
