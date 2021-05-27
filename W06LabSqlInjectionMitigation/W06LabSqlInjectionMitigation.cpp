@@ -52,9 +52,7 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn /*", "*/"}, // Nathan
-        {"vbarret", "Root\'; --","\';shutdown --",
-                                "DROP password;--","DROP users;#",
-                                "admin'--"}, // Valter
+        {"vbarret", "-- DROP users"}, // Valter
         {"prbowler", "//"}, // Phillip
         {"username1", "password1"}, // Mark
         {"itsMeMario'; --", "thanks"} // Everton
