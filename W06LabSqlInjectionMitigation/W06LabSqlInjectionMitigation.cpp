@@ -28,7 +28,7 @@ const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"vbarret", "' OR 1=1"}, // Valter
+        {"vbarret", "ask\' OR 1=1"}, // Valter
         {"prbowler", "non' or 'x' = 'x"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
@@ -36,10 +36,11 @@ const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"vbarret", "1\'; DELETE FROM users WHERE 1=1","nothing\'; INSERT INTO users (name, passwd) VALUES \'Awesome\', \'1234",
-                                "WHERE id = \'username\' UNION SELECT Username, Password FROM users;",
-                                "\'; SELECT * FROM users WHERE user_id = Username; DROP TABLE users",
-                                "\'; SELECT * FROM users WHERE id = 0 OR 1=1"}, // Valter
+        {"vbarret", "\' UNION SELECT * from Users",
+                                             "doesnt matter\' UNION SELECT 1--",
+                                            "something\' UNION ALL SELECT * from users WHERE username = \'admin\'",
+                                            "112312as123\' UNION ALL SELECT password, username from users",
+                                            "1=2\' union select 1,group_concat(username,0x3a,password),3,4 from user-- -"}, // Valter                                            
         {"username1", "password1"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
@@ -47,7 +48,10 @@ const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"vbarret", "password1"}, // Valter
+        {"vbarret", "1\'; DELETE FROM users WHERE 1=1","nothing\'; INSERT INTO users (name, passwd) VALUES \'Awesome\', \'1234",
+                                "WHERE id = \'username\' UNION SELECT Username, Password FROM users;",
+                                "\'; SELECT * FROM users WHERE user_id = Username; DROP TABLE users",
+                                "\'; SELECT * FROM users WHERE id = 0 OR 1=1"}, // Valter
         {"prbowler", "non' INSERT INTO passwordlist (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
@@ -55,7 +59,9 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"username1", "password1"}, // Nathan
-        {"vbarret", "password1"}, // Valter
+        {"vbarret", "Root\'; --","\';shutdown --",
+                                "DROP sampletable;--","DROP sampletable;#",
+                                "admin'--"}, // Valter
         {"prbowler", "//"}, // Phillip
         {"username1", "password1"}, // Mark
         {"username2", "password2"} // Everton
