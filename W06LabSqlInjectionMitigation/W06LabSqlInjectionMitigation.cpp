@@ -35,7 +35,7 @@ const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"user' OR 'gotcha' = 'gotcha", "doesn_tmatter' OR 'cantstopme' = 'cantstopme'"}, // Nathan
+    {"user' OR 'gotcha' = 'gotcha", "doesn_tmatter' OR 'cantstopme' = 'cantstopme"}, // Nathan
     {"vbarret", "ask' OR 1=1"},                                                      // Valter
     {"prbowler", "non' or 'x' = 'x"},                                                // Phillip
     {"Jill", "something' OR '4' = 4"},                                               // Mark
