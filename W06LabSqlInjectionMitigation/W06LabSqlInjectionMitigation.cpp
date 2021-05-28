@@ -136,7 +136,7 @@ bool strongMitigation(string &username, string &password)
    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
    // but correct characters then we need to do it slightly differently.
     if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*"))) {
-        cout << "Username or password are not valid";
+        cout << "Username or password are not valid\n";
         return 1;
     }
     return 0;
