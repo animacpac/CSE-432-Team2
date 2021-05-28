@@ -13,6 +13,7 @@ using namespace std;
 
 
 const int TESTS_SIZE = 5;
+const int NUM_TEST_ARRAYS = 5;
 const int TEST_PARAMETERS_SIZE = 2;
 const int USERNAME_INDEX = 0;
 const int PASS_INDEX = 1;
@@ -120,8 +121,8 @@ void demonstrateStrongMitigation(string testName,
     cout << testName << endl;
     //todo: loop through all cases and cout generateQuery results. Like this
     for (int i = 0; i < TESTS_SIZE; i++) {
-        string username = "prbowler";
-        string password = "bowler123";
+        string username = cases[i][USERNAME_INDEX];
+        string password = cases[i][PASS_INDEX];
         if (!strongMitigation(username, password)) {
             cout << generateQuery(cases[i][USERNAME_INDEX],
                 cases[i][PASS_INDEX]) << endl;
@@ -144,7 +145,7 @@ bool strongMitigation(string &username, string &password)
    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
    // but correct characters then we need to do it slightly differently.
     if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*"))) {
-        cout << "Username or password are not valid";
+        cout << "Username or password are not valid\n";
         return 1;
     }
     return 0;
