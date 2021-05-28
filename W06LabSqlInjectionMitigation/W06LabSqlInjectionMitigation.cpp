@@ -90,12 +90,23 @@ void demonstrateTest(string testName,
 }
 
 void demonstrateWeakMitigation(string testName,
-                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
-   cout << testName << endl;
-   //todo: loop through all cases and cout generateQuery results. Like this
-   cout << generateQuery(cases[0/*replace with i*/][USERNAME_INDEX],
-                         cases[0/*replace with i*/][PASS_INDEX]);
-   cout << endl;
+    const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
+    cout << testName << endl;
+
+    weakMitigation = 
+    //todo: loop through all cases and cout generateQuery results. Like this
+    for (int i = 0; i < TESTS_SIZE; i++) {
+        string username = cases[i][USERNAME_INDEX];
+        string password = cases[i][PASS_INDEX];
+        if (!weakMitigation(&username, &password)) {
+            cout << generateQuery(cases[i][USERNAME_INDEX],
+                cases[i][PASS_INDEX]) << endl;
+        }
+    }
+    // Todo: Read instructions and see if this is required. I would assume so,
+    //  but I can't tell. If it is, maybe show the alteration of one test
+    //  case from each type of vulnerability.
+    cout << endl;
 }
 
 
