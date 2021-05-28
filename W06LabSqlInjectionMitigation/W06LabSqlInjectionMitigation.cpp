@@ -304,15 +304,13 @@ int main()
         case 5:
             fillArray(selectedCases, TESTS_ADD_COMMENT);
             break;
+        case 6: 
+			runAllCases(testTypeChoice);
+			continue;    
         default:
             cout << "Invalid Input";
         }
-        if (testCasesChoice == 6)
-        {
-            runAllCases(testTypeChoice);
-            continue;
-        }
-
+       
         string testName =
             "Running " + TEST_NAMES[testCasesChoice - 1] + "Test Cases";
 
