@@ -76,11 +76,13 @@ string generateQuery(string username, string password);
 void demonstrateTest(string testName,
                      const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
-void demonstrateWeakMitigation();
+void demonstrateWeakMitigation(string testName,
+                                 const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
 void weakMitigation(string &username, string &password);
 
-void demonstrateStrongMitigation();
+void demonstrateStrongMitigation(string testName,
+                                 const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
 bool strongMitigation(string &username, string &password);
 
@@ -93,10 +95,12 @@ string generateQuery(string username, string password)
 void demonstrateTest(string testName,
                      const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]){
    cout << testName << endl;
-   //todo: loop through all cases and cout generateQuery results. Like this
-   cout << generateQuery(cases[0/*replace with i*/][USERNAME_INDEX],
-                         cases[0/*replace with i*/][PASS_INDEX]);
-   cout << endl;
+   for (int i = 0; i < TESTS_SIZE; ++i)
+   {
+      cout << generateQuery(cases[i][USERNAME_INDEX],
+                            cases[i][PASS_INDEX]);
+      cout << endl;
+   }
 }
 
 void demonstrateWeakMitigation(string testName,
@@ -210,59 +214,77 @@ int main() {
     cout << "******MENU*********\n";
 
     //valid cases
-    int testTypeChoice;
-    cout << "Select the type of test to run by typing the number and hitting enter\n";
-    cout << "[1]. Test Vulnerabilities\n";
-    cout << "[2]. Test Weak Mitigation\n";
-    cout << "[3]. Test Strong Mitigation\n";
-    cout << "Please select the type of test you wish to preform.\n";
-    cin >> testTypeChoice;
+    while(true)
+    {
+       char testTypeChoice;
+       cout
+               << "Select the type of test to run by typing the number and hitting enter\n";
+       cout << "[1]. Test Vulnerabilities\n";
+       cout << "[2]. Test Weak Mitigation\n";
+       cout << "[3]. Test Strong Mitigation\n";
+       cout << "[0] to quit\n";
+       cout << "Please select the type of test you wish to preform.\n";
+       cin >> testTypeChoice;
+       if (testTypeChoice == 0)
+       {
+          return 0;
+       }
 
-    int testCasesChoice;
-    cout << "Select the specific type of cases \n";
-    cout << "[1]. Use Valid Cases\n";
-    cout << "[2]. Use Tautology Cases\n";
-    cout << "[3]. Use Union Cases\n";
-    cout << "[4]. Use Add Statement Cases\n";
-    cout << "[5]. Use Add Comment Cases\n";
-    cout << "[6]. Use All Cases\n";
-    cout << "Please select the type of test you wish to preform.\n";
-    cin >> testCasesChoice;
+       char testCasesChoice;
+       cout << "Select the specific type of cases \n";
+       cout << "[1]. Use Valid Cases\n";
+       cout << "[2]. Use Tautology Cases\n";
+       cout << "[3]. Use Union Cases\n";
+       cout << "[4]. Use Add Statement Cases\n";
+       cout << "[5]. Use Add Comment Cases\n";
+       cout << "[6]. Use All Cases\n";
+       cout << "[0] to quit\n";
+       cout << "Please select the type of test you wish to preform.\n";
+       cin >> testCasesChoice;
+       if (testCasesChoice == 0)
+       {
+          return 0;
+       }
 
-   string selectedCases[TESTS_SIZE][TEST_PARAMETERS_SIZE];
-   switch (testCasesChoice)
-   {
-      case 1:
-         memcpy(selectedCases, TESTS_VALID, sizeof(TESTS_VALID));
-         break;
-      case 2:
-         memcpy(selectedCases, TESTS_TAUTOLOGY, sizeof(TESTS_TAUTOLOGY));
-         break;
-      case 3:
-         memcpy(selectedCases, TESTS_UNION, sizeof(TESTS_UNION));
-         break;
-      case 4:
-         memcpy(selectedCases, TESTS_ADD_STATE, sizeof(TESTS_ADD_STATE));
-         break;
-      case 5:
-         memcpy(selectedCases, TESTS_ADD_COMMENT, sizeof(TESTS_ADD_COMMENT));
-         break;
-      default:
-         cout << "Invalid Input";
-   }
+       string selectedCases[TESTS_SIZE][TEST_PARAMETERS_SIZE];
+       switch (testCasesChoice)
+       {
+          case 1:
+             memcpy(selectedCases, TESTS_VALID, sizeof(TESTS_VALID));
+             break;
+          case 2:
+             memcpy(selectedCases, TESTS_TAUTOLOGY, sizeof(TESTS_TAUTOLOGY));
+             break;
+          case 3:
+             memcpy(selectedCases, TESTS_UNION, sizeof(TESTS_UNION));
+             break;
+          case 4:
+             memcpy(selectedCases, TESTS_ADD_STATE, sizeof(TESTS_ADD_STATE));
+             break;
+          case 5:
+             memcpy(selectedCases, TESTS_ADD_COMMENT,
+                    sizeof(TESTS_ADD_COMMENT));
+             break;
+          default:
+             cout << "Invalid Input";
+       }
 
-    switch (testTypeChoice) {
-    case 1:
-        demonstrateTest(TEST_NAMES[testCasesChoice], selectedCases);
-        break;
-    case 2:
-       demonstrateWeakMitigation(TEST_NAMES[testCasesChoice], selectedCases);
-        break;
-    case 3:
-       demonstrateStrongMitigation(TEST_NAMES[testCasesChoice], selectedCases);
-        break;
-    default:
-        cout << "Invalid Input";
+       string testName =
+               "Running " + TEST_NAMES[testCasesChoice - 1] + "Test Cases";
+       switch (testTypeChoice)
+       {
+          case 1:
+             demonstrateTest(testName, selectedCases);
+             break;
+          case 2:
+             demonstrateWeakMitigation(testName, selectedCases);
+             break;
+          case 3:
+             demonstrateStrongMitigation(testName, selectedCases);
+             break;
+          default:
+             cout << "Invalid Input";
+       }
     }
 
    return 0;
