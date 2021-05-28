@@ -107,10 +107,11 @@ void demonstrateWeakMitigation(string testName,
     for (int i = 0; i < TESTS_SIZE; i++) {
         string username = cases[i][USERNAME_INDEX];
         string password = cases[i][PASS_INDEX];
-  
-
- 
-    return weakMitigation(username, password);
+        weakMitigation(username, password);
+        cout << generateQuery(cases[i][USERNAME_INDEX],
+                cases[i][PASS_INDEX]) << endl;
+        
+    }
     
 }
 
