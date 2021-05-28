@@ -196,7 +196,7 @@ bool strongMitigation(string &username, string &password)
     // but correct characters then we need to do it slightly differently.
     if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*")))
     {
-        cout << "Username or password is not valid\n";
+        cout << "Username or password are not valid\n";
         return 1;
     }
     return 0;
@@ -327,7 +327,6 @@ int main()
             default:
                 cout << "Invalid Input";
             }
-            
         }
         for (int i = 0; i < TESTS_SIZE; i++)
         {
