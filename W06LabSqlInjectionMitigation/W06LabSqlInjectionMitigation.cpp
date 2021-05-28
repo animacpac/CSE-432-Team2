@@ -23,7 +23,7 @@ const int PASS_INDEX = 1;
 //  this needs to be done after the generateQuery function
 
 const string TEST_NAMES[NUM_TEST_ARRAYS] = {
-        "Valid Cases",
+        "Valid",
         "Tautology",
         "Union",
         "Add Statement",
