@@ -107,12 +107,27 @@ void demonstrateWeakMitigation(string testName,
 
 /**********************************************
  * function: removeCaracter
- * purpose: remove caracters from a given text.
- *******************************************
-void removeCaracter(string & text, char caracter){
-    text.erase(remove(text.begin(), text.end(), caracter), text.end());	
+ * purpose: remove bad SQL caracters from a given text.
+ *******************************************/
+void removeBadCaracter(string & text){
+    for (int i = 0; i < text.length(); i++) {
+        if (!regex_match(text, regex("[a-z]\\:.*"))) {
+        	switch(text[i]){
+        		case '-':
+        			text[i] = '_';
+        			break;
+        		case ';':
+        			text[i] = '_';
+        			break;
+        		case '\\':
+        			text[i] = '_';
+        			break;
+			}
+		}
+	}
 }
-*/
+
+
 void weakMitigation(string &username, string &password)
 {
    // Instructions: This function accepts the input as a parameter (or two!) and
@@ -120,37 +135,11 @@ void weakMitigation(string &username, string &password)
    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
 
     //regex("[a-z]\\:.*"),
-
-    for (int i = 0, username.length(); i++) {
-        //if (username[i] = regex("[a-z]\\:.*")){
-        //    _username[i] = "_";
-        //else
-        if (username[i] = regex("[a-z]\\:.*")) {
-        i = "";
-        else if (i = "--")
-        i = "_";
-        else if (i = " ")
-        i = "_";
-        else if (i = "\"")
-        i = "_";
-        else i = i;
-
-        for (int i = 0, password.length(); i++) {
-            //if (username[i] = regex("[a-z]\\:.*")){
-            //    _username[i] = "_";
-            //else
-
-            i = "";
-        else if (i = "--")
-        i = "_";
-        else if (i = " ")
-        i = "_";
-        else if (i = "\"")
-        i = "_";
-        else i = i;
-
-    }
+	
+	removeBadCaracter(username);
+	removeBadCaracter(password);
 }
+
     
 
 void demonstrateStrongMitigation(string testName,
