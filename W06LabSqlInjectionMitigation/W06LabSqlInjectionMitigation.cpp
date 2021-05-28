@@ -35,7 +35,7 @@ const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"user OR 'gotcha' = 'gotcha'", "doesn_tmatter OR 'cantstopme' = 'cantstopme'"}, // Nathan
+    {"user' OR 'gotcha' = 'gotcha", "doesn_tmatter' OR 'cantstopme' = 'cantstopme'"}, // Nathan
     {"vbarret", "ask' OR 1=1"},                                                      // Valter
     {"prbowler", "non' or 'x' = 'x"},                                                // Phillip
     {"Jill", "something' OR '4' = 4"},                                               // Mark
@@ -43,15 +43,15 @@ const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 };
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"spottenn", "UNION SELECT * FROM administrators"},                                                                                // Nathan
-    {"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin'"},                                                      // Valter
-    {"username1", "non'; UNION SELECT * from users WHERE password = 'password'; UPDATE users SET password = 'password' WHERE id = 1"}, // Phillip
-    {"John", "so' UNION SELECT autenticate FROM passwordList"},                                                                        // Mark
-    {"istMeMario", " ' UNION SELECT * FROM users;"}                                                                                    // Everton
+    {"spottenn", "' UNION SELECT * FROM administrators"},                                                                                // Nathan
+    {"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin"},                                                      // Valter
+    {"username1", "non'; UNION SELECT * from users WHERE password = 'password'; UPDATE users SET password = 'password' WHERE id = '1"}, // Phillip
+    {"John", "so' UNION SELECT authenticate FROM passwordList 'end"},                                                                        // Mark
+    {"istMeMario", " ' UNION SELECT * FROM users"}                                                                                    // Everton
 };
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"spottenn", "insignificant; INSERT INTO administrators (username, password) VALUES 'attacker', 'mypassword'"},     // Nathan
+    {"spottenn", "insignificant'; INSERT INTO administrators (username, password) VALUES 'attacker', 'mypassword'"},     // Nathan
     {"vbarret", "1'; DELETE FROM users WHERE 1=1 nothing'; INSERT INTO users (name, passwd) VALUES 'Awesome', '1234'"}, // Valter
     {"prbowler", "non'; INSERT INTO users (username, password) VALUES 'hacker', 'password'"},                           // Phillip
     {"Bob", "something' ; DELETE row25 "},                                                                              // Mark
@@ -59,10 +59,10 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"spottenn /*", "*/"},                   // Nathan
-    {"vbarret';--", " DROP users"},          // Valter
-    {"prbowler';--", "SELECT * FROM users"}, // Phillip
-    {"markw--", "yes"},                      // Mark
+    {"spottenn' /*", "*/"},                   // Nathan
+    {"vbarret'--", "DROP users just kidding, this is just a comment"},          // Valter
+    {"prbowler'--", "a hacker was here"}, // Phillip
+    {"markw'--", "yes"},                      // Mark
     {"itsMeMario'; --", "thanks"}            // Everton
 };
 
@@ -276,15 +276,16 @@ int main()
         case 5:
             fillArray(selectedCases, TESTS_ADD_COMMENT);
             break;
-        case 6: 
+        case 6:
 			runAllCases(testTypeChoice);
-			continue;    
+			continue;
         default:
             cout << "Invalid Input";
+              continue;
         }
 
         string testName =
-            "Running " + TEST_NAMES[testCasesChoice - 1] + "Test Cases";
+            "Running " + TEST_NAMES[testCasesChoice - 1] + " Test Cases";
 
         switch (testTypeChoice)
         {
@@ -299,6 +300,7 @@ int main()
             break;
         default:
             cout << "Invalid Input";
+              continue;
         }
     }
     return 0;
