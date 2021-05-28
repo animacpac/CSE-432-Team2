@@ -143,8 +143,8 @@ void weakMitigation(string &username, string &password)
         i = "_";
         else i = i;
 
-        }
     }
+}
     
 
 void demonstrateStrongMitigation(string testName,
