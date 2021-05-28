@@ -113,11 +113,11 @@ void demonstrateWeakMitigation(string testName,
 /**********************************************
  * function: removeCaracter
  * purpose: remove caracters from a given text.
- *******************************************/
+ *******************************************
 void removeCaracter(string & text, char caracter){
     text.erase(remove(text.begin(), text.end(), caracter), text.end());	
 }
-
+*/
 void weakMitigation(string &username, string &password)
 {
    // Instructions: This function accepts the input as a parameter (or two!) and
@@ -126,18 +126,18 @@ void weakMitigation(string &username, string &password)
 
     //regex("[a-z]\\:.*"),
 
-    for (int i = 0, username.length(); i++){
+    for (int i = 0, username.length(); i++) {
         //if (username[i] = regex("[a-z]\\:.*")){
         //    _username[i] = "_";
         //else
-
-            i = "";
+        if (username[i] = regex("[a-z]\\:.*")) {
+        i = "";
         else if (i = "--")
-            i = "_";
+        i = "_";
         else if (i = " ")
-            i = "_";
+        i = "_";
         else if (i = "\")
-            i = "_";
+        i = "_";
         else i = i;
 
         for (int i = 0, password.length(); i++) {
@@ -154,7 +154,8 @@ void weakMitigation(string &username, string &password)
         i = "_";
         else i = i;
 
-
+        }
+    }
 
 void demonstrateStrongMitigation(string testName,
     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
