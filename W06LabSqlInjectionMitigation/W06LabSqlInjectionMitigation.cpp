@@ -33,7 +33,7 @@ const string TEST_NAMES[NUM_TEST_ARRAYS] = {
 const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn",  "secret_Buffalo7"}, // Nathan
         {"vbarret", "nothingTolose1"}, // Valter
-        {"prbowler", "bowler@123#123"}, // Phillip
+        {"prbowler", "bowler123"}, // Phillip
         {"markw", "smashingPumpkins"}, // Mark
         {"itsMeMario", "Luigi123"} // Everton
 };
