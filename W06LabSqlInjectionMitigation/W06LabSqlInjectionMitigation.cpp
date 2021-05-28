@@ -92,7 +92,11 @@ void demonstrateTest(string testName,
 
 void demonstrateWeakMitigation(string testName,
     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
-   
+        string username;
+        string password;
+        
+   cout << weakMitigation(username,password);
+    
 }
 
 /**********************************************
