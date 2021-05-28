@@ -7,7 +7,8 @@
 
 #include <iostream>
 #include <regex>
-
+#include <algorithm>
+#include <string>
 using namespace std;
 
 
@@ -109,6 +110,13 @@ void demonstrateWeakMitigation(string testName,
     cout << endl;
 }
 
+/**********************************************
+ * function: removeCaracter
+ * purpose: remove caracters from a given text.
+ *******************************************/
+void removeCaracter(string & text, char caracter){
+    text.erase(remove(text.begin(), text.end(), caracter), text.end());	
+}
 
 void weakMitigation(string &username, string &password)
 {
@@ -116,6 +124,7 @@ void weakMitigation(string &username, string &password)
    // Instructions: This function accepts the input as a parameter (or two!) and
    // returns the sanitized input.
    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
+   
 }
 
 void demonstrateStrongMitigation(string testName,
