@@ -86,6 +86,8 @@ void demonstrateStrongMitigation(string testName,
 
 bool strongMitigation(string &username, string &password);
 
+void runAllCases(char testTypeChoice);
+
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
 {
@@ -193,6 +195,19 @@ bool strongMitigation(string &username, string &password)
     return 0;
 }
 
+void runAllCases(char testTypeChoice)
+{
+   switch (testTypeChoice)
+   {
+      case 1:
+         break;
+      case 2:
+         break;
+      case 3:
+         break;
+   }
+}
+
 /******************** Main ***************/
 int main() {
    // From instructions. It should be possible to execute any of the test cases in the report.
@@ -208,13 +223,11 @@ int main() {
     while(true)
     {
        char testTypeChoice;
-       cout
-               << "Select the type of test to run by typing the number and hitting enter\n";
+       cout << "Select the type of test to run by typing the number and hitting enter\n";
        cout << "[1]. Test Vulnerabilities\n";
        cout << "[2]. Test Weak Mitigation\n";
        cout << "[3]. Test Strong Mitigation\n";
        cout << "[0] to quit\n";
-       cout << "Please select the type of test you wish to preform.\n";
        cin >> testTypeChoice;
        if (testTypeChoice == 0)
        {
@@ -222,7 +235,7 @@ int main() {
        }
 
        char testCasesChoice;
-       cout << "Select the specific type of cases \n";
+       cout << "Select the specific type of cases to run by typing the number and hitting enter\n";
        cout << "[1]. Use Valid Cases\n";
        cout << "[2]. Use Tautology Cases\n";
        cout << "[3]. Use Union Cases\n";
@@ -230,7 +243,6 @@ int main() {
        cout << "[5]. Use Add Comment Cases\n";
        cout << "[6]. Use All Cases\n";
        cout << "[0] to quit\n";
-       cout << "Please select the type of test you wish to preform.\n";
        cin >> testCasesChoice;
        if (testCasesChoice == 0)
        {
@@ -259,9 +271,15 @@ int main() {
           default:
              cout << "Invalid Input";
        }
+       if (testCasesChoice == 6) {
+          runAllCases(testTypeChoice);
+          break;
+       }
 
        string testName =
                "Running " + TEST_NAMES[testCasesChoice - 1] + "Test Cases";
+
+
        switch (testTypeChoice)
        {
           case 1:
