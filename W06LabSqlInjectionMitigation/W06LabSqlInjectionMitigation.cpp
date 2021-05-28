@@ -226,6 +226,16 @@ void runAllCases(int testTypeChoice)
     }
 }
 
+void fillArray(string destination[TESTS_SIZE][TEST_PARAMETERS_SIZE],  const string SOURCE[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
+    for (int i = 0; i < TESTS_SIZE; i++)
+    {
+        for (int j = 0; j < TEST_PARAMETERS_SIZE; j++)
+        {
+            destination[i][j] = SOURCE[i][j];
+        }
+    }
+}
+
 /******************** Main ***************/
 int main() {
     // From instructions. It should be possible to execute any of the test cases in the report.
@@ -268,30 +278,30 @@ int main() {
         }
 
         string selectedCases[TESTS_SIZE][TEST_PARAMETERS_SIZE];
+        
         switch (testCasesChoice)
         {
         case 1:
-            memcpy(selectedCases, TESTS_VALID, sizeof(TESTS_VALID));
+            fillArray(selectedCases, TESTS_VALID);
             break;
         case 2:
-            memcpy(selectedCases, TESTS_TAUTOLOGY, sizeof(TESTS_TAUTOLOGY));
+            fillArray(selectedCases, TESTS_TAUTOLOGY);
             break;
         case 3:
-            memcpy(selectedCases, TESTS_UNION, sizeof(TESTS_UNION));
+            fillArray(selectedCases, TESTS_UNION);
             break;
         case 4:
-            memcpy(selectedCases, TESTS_ADD_STATE, sizeof(TESTS_ADD_STATE));
+            fillArray(selectedCases, TESTS_ADD_STATE);
             break;
         case 5:
-            memcpy(selectedCases, TESTS_ADD_COMMENT,
-                sizeof(TESTS_ADD_COMMENT));
+            fillArray(selectedCases, TESTS_ADD_COMMENT);
             break;
         default:
             cout << "Invalid Input";
         }
         if (testCasesChoice == 6) {
             runAllCases(testTypeChoice);
-            break;
+            continue;
         }
 
         string testName =
@@ -311,6 +321,13 @@ int main() {
             break;
         default:
             cout << "Invalid Input";
+        }
+        for (int i = 0; i < TESTS_SIZE; i++)
+        {
+            for (int j = 0; j < TEST_PARAMETERS_SIZE; j++)
+            {
+                selectedCases[i][j] = "";
+            }
         }
     }
     return 0;
