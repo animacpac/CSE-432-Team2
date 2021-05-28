@@ -7,11 +7,13 @@
 
 #include <iostream>
 #include <regex>
-
+#include <algorithm>
+#include <string>
 using namespace std;
 
 
 const int TESTS_SIZE = 5;
+const int NUM_TEST_ARRAYS = 5;
 const int TEST_PARAMETERS_SIZE = 2;
 const int USERNAME_INDEX = 0;
 const int PASS_INDEX = 1;
@@ -38,7 +40,7 @@ const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn", "UNION SELECT * FROM administrators"}, // Nathan
         {"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin'"}, // Valter
-        {"username1", "password1"}, // Phillip
+        {"username1", "non'; UNION SELECT * from users WHERE password = 'password'; UPDATE users SET password = 'password' WHERE id = 1"}, // Phillip
         {"John", "so' UNION SELECT autenticate FROM passwordList"}, // Mark
         {"istMeMario", " ' UNION SELECT * FROM users;"} // Everton
 };
@@ -46,7 +48,7 @@ const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn", "insignificant; INSERT INTO administrators (username, password) VALUES 'attacker', 'mypassword'"}, // Nathan
         {"vbarret", "1'; DELETE FROM users WHERE 1=1 nothing'; INSERT INTO users (name, passwd) VALUES 'Awesome', '1234'"}, // Valter
-        {"prbowler", "non' INSERT INTO users (username, password) VALUES 'hacker', 'password'"}, // Phillip
+        {"prbowler", "non'; INSERT INTO users (username, password) VALUES 'hacker', 'password'"}, // Phillip
         {"Bob", "something' ; DELETE row25 "}, // Mark
         {"itsMeMario", " '; DROP TABLE users;"} // Everton
 };
@@ -89,14 +91,32 @@ void demonstrateTest(string testName,
 }
 
 void demonstrateWeakMitigation(string testName,
-                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
-   cout << testName << endl;
-   //todo: loop through all cases and cout generateQuery results. Like this
-   cout << generateQuery(cases[0/*replace with i*/][USERNAME_INDEX],
-                         cases[0/*replace with i*/][PASS_INDEX]);
-   cout << endl;
+    const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
+    cout << testName << endl;
+
+    weakMitigation = 
+    //todo: loop through all cases and cout generateQuery results. Like this
+    for (int i = 0; i < TESTS_SIZE; i++) {
+        string username = cases[i][USERNAME_INDEX];
+        string password = cases[i][PASS_INDEX];
+        if (!weakMitigation(&username, &password)) {
+            cout << generateQuery(cases[i][USERNAME_INDEX],
+                cases[i][PASS_INDEX]) << endl;
+        }
+    }
+    // Todo: Read instructions and see if this is required. I would assume so,
+    //  but I can't tell. If it is, maybe show the alteration of one test
+    //  case from each type of vulnerability.
+    cout << endl;
 }
 
+/**********************************************
+ * function: removeCaracter
+ * purpose: remove caracters from a given text.
+ *******************************************/
+void removeCaracter(string & text, char caracter){
+    text.erase(remove(text.begin(), text.end(), caracter), text.end());	
+}
 
 void weakMitigation(string &username, string &password)
 {
@@ -136,10 +156,22 @@ void weakMitigation(string &username, string &password)
 
 
 
-void demonstrateStrongMitigation() {
-   // Todo: Read instructions and see if this is required. I would assume so,
-   //  but I can't tell. If it is, maybe show the alteration of one test
-   //  case from each type of vulnerability.
+void demonstrateStrongMitigation(string testName,
+    const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
+    cout << testName << endl;
+    //todo: loop through all cases and cout generateQuery results. Like this
+    for (int i = 0; i < TESTS_SIZE; i++) {
+        string username = cases[i][USERNAME_INDEX];
+        string password = cases[i][PASS_INDEX];
+        if (!strongMitigation(username, password)) {
+            cout << generateQuery(cases[i][USERNAME_INDEX],
+                cases[i][PASS_INDEX]) << endl;
+        }
+    }
+    // Todo: Read instructions and see if this is required. I would assume so,
+    //  but I can't tell. If it is, maybe show the alteration of one test
+    //  case from each type of vulnerability.
+    cout << endl;
 }
 
 bool strongMitigation(string &username, string &password)
@@ -153,7 +185,7 @@ bool strongMitigation(string &username, string &password)
    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
    // but correct characters then we need to do it slightly differently.
     if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*"))) {
-        cout << "Username or password are not valid";
+        cout << "Username or password are not valid\n";
         return 1;
     }
     return 0;
@@ -181,28 +213,28 @@ int main() {
     switch (menuChoice) {
     case 1:
         demonstrateTest("Valid Cases", TESTS_VALID);
+        demonstrateTest("Tautology", TESTS_TAUTOLOGY);
+        demonstrateTest("Union", TESTS_UNION);
+        demonstrateTest("Add State", TESTS_ADD_STATE);
+        demonstrateTest("Add Comment", TESTS_ADD_COMMENT);
         break;
     case 2:
         demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
+        demonstrateWeakMitigation("Tautology", TESTS_TAUTOLOGY);
+        demonstrateWeakMitigation("Union", TESTS_UNION);
+        demonstrateWeakMitigation("Add State", TESTS_ADD_STATE);
+        demonstrateWeakMitigation("Add Comment", TESTS_ADD_COMMENT);
         break;
     case 3:
-        demonstrateStrongMitigation();
+        demonstrateStrongMitigation("Valid Cases", TESTS_VALID);
+        demonstrateStrongMitigation("Tautology", TESTS_TAUTOLOGY);
+        demonstrateStrongMitigation("Union", TESTS_UNION);
+        demonstrateStrongMitigation("Add State", TESTS_ADD_STATE);
+        demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
         break;
     default:
         cout << "Invalid Input";
     }
-
-   demonstrateTest("Valid Cases", TESTS_VALID);
-
-   string tests[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-           {"spottenn /*", "*/"}, // Nathan
-           {"vbarret", "-- DROP users"}, // Valter
-           {"prbowler", "--"}, // Phillip
-           {"username1", "password1"}, // Mark
-           {"itsMeMario'; --", "thanks"} // Everton
-   };
-
-   demonstrateTest("ealfejh" , tests);
 
    return 0;
 }
