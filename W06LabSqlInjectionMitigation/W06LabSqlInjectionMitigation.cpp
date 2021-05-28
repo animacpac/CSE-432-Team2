@@ -100,11 +100,41 @@ void demonstrateWeakMitigation(string testName,
 
 void weakMitigation(string &username, string &password)
 {
-
    // Instructions: This function accepts the input as a parameter (or two!) and
    // returns the sanitized input.
    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
-}
+
+    //regex("[a-z]\\:.*"),
+
+    for (int i = 0, username.length(); i++){
+        //if (username[i] = regex("[a-z]\\:.*")){
+        //    _username[i] = "_";
+        //else
+
+            i = "";
+        else if (i = "--")
+            i = "_";
+        else if (i = " ")
+            i = "_";
+        else if (i = "\")
+            i = "_";
+        else i = i;
+
+        for (int i = 0, password.length(); i++) {
+            //if (username[i] = regex("[a-z]\\:.*")){
+            //    _username[i] = "_";
+            //else
+
+            i = "";
+        else if (i = "--")
+        i = "_";
+        else if (i = " ")
+        i = "_";
+        else if (i = "\")
+        i = "_";
+        else i = i;
+
+
 
 void demonstrateStrongMitigation() {
    // Todo: Read instructions and see if this is required. I would assume so,
