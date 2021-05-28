@@ -141,15 +141,13 @@ void removeBadCharacter(string & text){
 	}
 }
 
-
+/**********************************************
+ * function: weakMitigation
+ * purpose: Send the username and password to
+ * removeBadCharacters function.
+ *******************************************/
 void weakMitigation(string &username, string &password)
 {
-   // Instructions: This function accepts the input as a parameter (or two!) and
-   // returns the sanitized input.
-   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
-
-    //regex("[a-z]\\:.*"),
-
    removeBadCharacter(username);
    removeBadCharacter(password);
 }
