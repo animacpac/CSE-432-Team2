@@ -23,7 +23,7 @@ const int PASS_INDEX = 1;
 //  this needs to be done after the generateQuery function
 
 const string TEST_NAMES[NUM_TEST_ARRAYS] = {
-        "Valid Cases",
+        "Valid",
         "Tautology",
         "Union",
         "Add Statement",
@@ -198,16 +198,32 @@ bool strongMitigation(string &username, string &password)
     return 0;
 }
 
-void runAllCases(char testTypeChoice)
+void runAllCases(int testTypeChoice)
 {
-   switch (testTypeChoice)
-   {
+   switch (testTypeChoice) {
       case 1:
+         demonstrateTest("Valid Cases", TESTS_VALID);
+         demonstrateTest("Tautology", TESTS_TAUTOLOGY);
+         demonstrateTest("Union", TESTS_UNION);
+         demonstrateTest("Add State", TESTS_ADD_STATE);
+         demonstrateTest("Add Comment", TESTS_ADD_COMMENT);
          break;
       case 2:
+         demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
+         demonstrateWeakMitigation("Tautology", TESTS_TAUTOLOGY);
+         demonstrateWeakMitigation("Union", TESTS_UNION);
+         demonstrateWeakMitigation("Add State", TESTS_ADD_STATE);
+         demonstrateWeakMitigation("Add Comment", TESTS_ADD_COMMENT);
          break;
       case 3:
+         demonstrateStrongMitigation("Valid Cases", TESTS_VALID);
+         demonstrateStrongMitigation("Tautology", TESTS_TAUTOLOGY);
+         demonstrateStrongMitigation("Union", TESTS_UNION);
+         demonstrateStrongMitigation("Add State", TESTS_ADD_STATE);
+         demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
          break;
+      default:
+         cout << "Invalid Input";
    }
 }
 
