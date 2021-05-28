@@ -79,7 +79,7 @@ void demonstrateTest(string testName,
 void demonstrateWeakMitigation(string testName,
     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
-void weakMitigation(string& username, string& password);
+string weakMitigation(string userInput);
 
 void demonstrateStrongMitigation(string testName,
     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
@@ -111,50 +111,43 @@ void demonstrateWeakMitigation(string testName,
     string password;
 
     for (int i = 0; i < TESTS_SIZE; i++) {
-        string username = cases[i][USERNAME_INDEX];
-        string password = cases[i][PASS_INDEX];
-        weakMitigation(username, password);
-        cout << generateQuery(cases[i][USERNAME_INDEX],
-            cases[i][PASS_INDEX]) << endl;
-
+        string username = weakMitigation(cases[i][USERNAME_INDEX]);
+        string password = weakMitigation(cases[i][PASS_INDEX]);
+        cout << generateQuery(username, password) << endl;
     }
 
 }
 
 /**********************************************
- * function: removeCharacter
- * purpose: remove bad SQL characters from a given text.
+ * function: weakMitigation
+ * purpose: Send the username and password to
+ * removeBadCharacters function.
  *******************************************/
-void removeBadCharacter(string& text) {
-    for (int i = 0; i < text.length(); i++) {
-        switch (text[i]) {
-        case '-':
-            text[i] = '_';
-            break;
-        case ';':
-            text[i] = '_';
-            break;
-        case '\\':
-            text[i] = '_';
-            break;
-        case '\'':
-            text[i] = '_';
-            break;
-        }
-    }
-}
-
-
-void weakMitigation(string& username, string& password)
+string weakMitigation(string userInput)
 {
-    // Instructions: This function accepts the input as a parameter (or two!) and
-    // returns the sanitized input.
-    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
+   // Instructions: This function accepts the input as a parameter (or two!) and
+   // returns the sanitized input.
+   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
 
-     //regex("[a-z]\\:.*"),
-
-    removeBadCharacter(username);
-    removeBadCharacter(password);
+	string newText = userInput;
+    for (int i = 0; i < newText.length(); i++) {
+        switch(newText[i]){
+        	case '-':
+        		newText[i] = '_';
+        		break;
+        	case ';':
+        		newText[i] = '_';
+        		break;
+        	case '\\':
+        		newText[i] = '_';
+        		break;
+        	case '\'':
+        		newText[i] = '_';
+        		break;
+		}
+	}
+	
+	return newText;
 }
 
 
