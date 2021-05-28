@@ -144,6 +144,12 @@ string weakMitigation(string userInput)
         	case '\'':
         		newText[i] = '_';
         		break;
+        	case '/':
+        		newText[i] = '_';
+        		break;
+			case '*':
+        		newText[i] = '_';
+        		break;        		
 		}
 	}
 	
