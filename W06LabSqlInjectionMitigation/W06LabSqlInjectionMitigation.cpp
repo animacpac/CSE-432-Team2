@@ -74,35 +74,35 @@ const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 string generateQuery(string username, string password);
 
 void demonstrateTest(string testName,
-                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
+    const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
 void demonstrateWeakMitigation(string testName,
-                                 const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
+    const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
-void weakMitigation(string &username, string &password);
+void weakMitigation(string& username, string& password);
 
 void demonstrateStrongMitigation(string testName,
-                                 const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
+    const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
-bool strongMitigation(string &username, string &password);
+bool strongMitigation(string& username, string& password);
 
 void runAllCases(char testTypeChoice);
 
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
 {
-   return "SELECT * FROM users WHERE username= \'" + username + "\' AND Password= \'" + password + "\';";
+    return "SELECT * FROM users WHERE username= \'" + username + "\' AND Password= \'" + password + "\';";
 }
 
 void demonstrateTest(string testName,
-                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]){
-   cout << testName << endl;
-   for (int i = 0; i < TESTS_SIZE; ++i)
-   {
-      cout << generateQuery(cases[i][USERNAME_INDEX],
-                            cases[i][PASS_INDEX]);
-      cout << endl;
-   }
+    const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
+    cout << testName << endl;
+    for (int i = 0; i < TESTS_SIZE; ++i)
+    {
+        cout << generateQuery(cases[i][USERNAME_INDEX],
+            cases[i][PASS_INDEX]);
+        cout << endl;
+    }
 }
 
 void demonstrateWeakMitigation(string testName,
@@ -115,49 +115,49 @@ void demonstrateWeakMitigation(string testName,
         string password = cases[i][PASS_INDEX];
         weakMitigation(username, password);
         cout << generateQuery(cases[i][USERNAME_INDEX],
-                cases[i][PASS_INDEX]) << endl;
-        
+            cases[i][PASS_INDEX]) << endl;
+
     }
-    
+
 }
 
 /**********************************************
  * function: removeCharacter
  * purpose: remove bad SQL characters from a given text.
  *******************************************/
-void removeBadCharacter(string & text){
+void removeBadCharacter(string& text) {
     for (int i = 0; i < text.length(); i++) {
-        switch(text[i]){
-        	case '-':
-        		text[i] = '_';
-        		break;
-        	case ';':
-        		text[i] = '_';
-        		break;
-        	case '\\':
-        		text[i] = '_';
-        		break;
-        	case '\'':
-        		text[i] = '_';
-        		break;
-		}
-	}
+        switch (text[i]) {
+        case '-':
+            text[i] = '_';
+            break;
+        case ';':
+            text[i] = '_';
+            break;
+        case '\\':
+            text[i] = '_';
+            break;
+        case '\'':
+            text[i] = '_';
+            break;
+        }
+    }
 }
 
 
-void weakMitigation(string &username, string &password)
+void weakMitigation(string& username, string& password)
 {
-   // Instructions: This function accepts the input as a parameter (or two!) and
-   // returns the sanitized input.
-   // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
+    // Instructions: This function accepts the input as a parameter (or two!) and
+    // returns the sanitized input.
+    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
 
-    //regex("[a-z]\\:.*"),
+     //regex("[a-z]\\:.*"),
 
-   removeBadCharacter(username);
-   removeBadCharacter(password);
+    removeBadCharacter(username);
+    removeBadCharacter(password);
 }
 
-    
+
 
 void demonstrateStrongMitigation(string testName,
     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
@@ -172,7 +172,7 @@ void demonstrateStrongMitigation(string testName,
         }
         else
         {
-           cout << "Did not generate query.";
+            cout << "Did not generate query.";
         }
     }
     // Todo: Read instructions and see if this is required. I would assume so,
@@ -181,16 +181,16 @@ void demonstrateStrongMitigation(string testName,
     cout << endl;
 }
 
-bool strongMitigation(string &username, string &password)
+bool strongMitigation(string& username, string& password)
 // Todo: look at the book strong mitigation definition along with instructions
 //  to see if we are supposed to alter the invalid input, or just not run it
 //  all together. We could return a boolean that shows if the input is invalid
 //  if that's all we need to do.
 {
-   // Todo: Alter username and password to only allow letters, numbers, and underscores.
-   // note: If we want to just throw out any invalid input that does not include the correct
-   // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
-   // but correct characters then we need to do it slightly differently.
+    // Todo: Alter username and password to only allow letters, numbers, and underscores.
+    // note: If we want to just throw out any invalid input that does not include the correct
+    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
+    // but correct characters then we need to do it slightly differently.
     if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*"))) {
         cout << "Username or password is not valid\n";
         return 1;
@@ -200,119 +200,119 @@ bool strongMitigation(string &username, string &password)
 
 void runAllCases(int testTypeChoice)
 {
-   switch (testTypeChoice) {
-      case 1:
-         demonstrateTest("Valid Cases", TESTS_VALID);
-         demonstrateTest("Tautology", TESTS_TAUTOLOGY);
-         demonstrateTest("Union", TESTS_UNION);
-         demonstrateTest("Add State", TESTS_ADD_STATE);
-         demonstrateTest("Add Comment", TESTS_ADD_COMMENT);
-         break;
-      case 2:
-         demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
-         demonstrateWeakMitigation("Tautology", TESTS_TAUTOLOGY);
-         demonstrateWeakMitigation("Union", TESTS_UNION);
-         demonstrateWeakMitigation("Add State", TESTS_ADD_STATE);
-         demonstrateWeakMitigation("Add Comment", TESTS_ADD_COMMENT);
-         break;
-      case 3:
-         demonstrateStrongMitigation("Valid Cases", TESTS_VALID);
-         demonstrateStrongMitigation("Tautology", TESTS_TAUTOLOGY);
-         demonstrateStrongMitigation("Union", TESTS_UNION);
-         demonstrateStrongMitigation("Add State", TESTS_ADD_STATE);
-         demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
-         break;
-      default:
-         cout << "Invalid Input";
-   }
+    switch (testTypeChoice) {
+    case 1:
+        demonstrateTest("Valid Cases", TESTS_VALID);
+        demonstrateTest("Tautology", TESTS_TAUTOLOGY);
+        demonstrateTest("Union", TESTS_UNION);
+        demonstrateTest("Add State", TESTS_ADD_STATE);
+        demonstrateTest("Add Comment", TESTS_ADD_COMMENT);
+        break;
+    case 2:
+        demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
+        demonstrateWeakMitigation("Tautology", TESTS_TAUTOLOGY);
+        demonstrateWeakMitigation("Union", TESTS_UNION);
+        demonstrateWeakMitigation("Add State", TESTS_ADD_STATE);
+        demonstrateWeakMitigation("Add Comment", TESTS_ADD_COMMENT);
+        break;
+    case 3:
+        demonstrateStrongMitigation("Valid Cases", TESTS_VALID);
+        demonstrateStrongMitigation("Tautology", TESTS_TAUTOLOGY);
+        demonstrateStrongMitigation("Union", TESTS_UNION);
+        demonstrateStrongMitigation("Add State", TESTS_ADD_STATE);
+        demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
+        break;
+    default:
+        cout << "Invalid Input";
+    }
 }
 
 /******************** Main ***************/
 int main() {
-   // From instructions. It should be possible to execute any of the test cases in the report.
-   // A simple menu structure should be provided to facilitate this.
-   // todo: create a menu to call correct function: The demonstrateTest function
-   //  with the correct parameters. Also maybe include options for calling the
-   //  mitigation demonstration functions depending on if we figure out it's
-   //  required.
-   // todo: call it like this.
+    // From instructions. It should be possible to execute any of the test cases in the report.
+    // A simple menu structure should be provided to facilitate this.
+    // todo: create a menu to call correct function: The demonstrateTest function
+    //  with the correct parameters. Also maybe include options for calling the
+    //  mitigation demonstration functions depending on if we figure out it's
+    //  required.
+    // todo: call it like this.
     cout << "******MENU*********\n";
 
     //valid cases
-    while(true)
+    while (true)
     {
-       int testTypeChoice;
-       cout << "Select the type of test to run by typing the number and hitting enter\n";
-       cout << "[1]. Test Vulnerabilities\n";
-       cout << "[2]. Test Weak Mitigation\n";
-       cout << "[3]. Test Strong Mitigation\n";
-       cout << "[0] to quit\n";
-       cin >> testTypeChoice;
-       if (testTypeChoice == 0)
-       {
-          return 0;
-       }
+        int testTypeChoice;
+        cout << "Select the type of test to run by typing the number and hitting enter\n";
+        cout << "[1]. Test Vulnerabilities\n";
+        cout << "[2]. Test Weak Mitigation\n";
+        cout << "[3]. Test Strong Mitigation\n";
+        cout << "[0] to quit\n";
+        cin >> testTypeChoice;
+        if (testTypeChoice == 0)
+        {
+            return 0;
+        }
 
-       int testCasesChoice;
-       cout << "Select the specific type of cases to run by typing the number and hitting enter\n";
-       cout << "[1]. Use Valid Cases\n";
-       cout << "[2]. Use Tautology Cases\n";
-       cout << "[3]. Use Union Cases\n";
-       cout << "[4]. Use Add Statement Cases\n";
-       cout << "[5]. Use Add Comment Cases\n";
-       cout << "[6]. Use All Cases\n";
-       cout << "[0] to quit\n";
-       cin >> testCasesChoice;
-       if (testCasesChoice == 0)
-       {
-          return 0;
-       }
+        int testCasesChoice;
+        cout << "Select the specific type of cases to run by typing the number and hitting enter\n";
+        cout << "[1]. Use Valid Cases\n";
+        cout << "[2]. Use Tautology Cases\n";
+        cout << "[3]. Use Union Cases\n";
+        cout << "[4]. Use Add Statement Cases\n";
+        cout << "[5]. Use Add Comment Cases\n";
+        cout << "[6]. Use All Cases\n";
+        cout << "[0] to quit\n";
+        cin >> testCasesChoice;
+        if (testCasesChoice == 0)
+        {
+            return 0;
+        }
 
-       string selectedCases[TESTS_SIZE][TEST_PARAMETERS_SIZE];
-       switch (testCasesChoice)
-       {
-          case 1:
-             memcpy(selectedCases, TESTS_VALID, sizeof(TESTS_VALID));
-             break;
-          case 2:
-             memcpy(selectedCases, TESTS_TAUTOLOGY, sizeof(TESTS_TAUTOLOGY));
-             break;
-          case 3:
-             memcpy(selectedCases, TESTS_UNION, sizeof(TESTS_UNION));
-             break;
-          case 4:
-             memcpy(selectedCases, TESTS_ADD_STATE, sizeof(TESTS_ADD_STATE));
-             break;
-          case 5:
-             memcpy(selectedCases, TESTS_ADD_COMMENT,
-                    sizeof(TESTS_ADD_COMMENT));
-             break;
-          default:
-             cout << "Invalid Input";
-       }
-       if (testCasesChoice == 6) {
-          runAllCases(testTypeChoice);
-          break;
-       }
+        string selectedCases[TESTS_SIZE][TEST_PARAMETERS_SIZE];
+        switch (testCasesChoice)
+        {
+        case 1:
+            memcpy(selectedCases, TESTS_VALID, sizeof(TESTS_VALID));
+            break;
+        case 2:
+            memcpy(selectedCases, TESTS_TAUTOLOGY, sizeof(TESTS_TAUTOLOGY));
+            break;
+        case 3:
+            memcpy(selectedCases, TESTS_UNION, sizeof(TESTS_UNION));
+            break;
+        case 4:
+            memcpy(selectedCases, TESTS_ADD_STATE, sizeof(TESTS_ADD_STATE));
+            break;
+        case 5:
+            memcpy(selectedCases, TESTS_ADD_COMMENT,
+                sizeof(TESTS_ADD_COMMENT));
+            break;
+        default:
+            cout << "Invalid Input";
+        }
+        if (testCasesChoice == 6) {
+            runAllCases(testTypeChoice);
+            break;
+        }
 
-       string testName =
-               "Running " + TEST_NAMES[testCasesChoice - 1] + "Test Cases";
+        string testName =
+            "Running " + TEST_NAMES[testCasesChoice - 1] + "Test Cases";
 
 
-       switch (testTypeChoice)
-       {
-          case 1:
-             demonstrateTest(testName, selectedCases);
-             break;
-          case 2:
-             demonstrateWeakMitigation(testName, selectedCases);
-             break;
-          case 3:
-             demonstrateStrongMitigation(testName, selectedCases);
-             break;
-          default:
-             cout << "Invalid Input";
-       }
+        switch (testTypeChoice)
+        {
+        case 1:
+            demonstrateTest(testName, selectedCases);
+            break;
+        case 2:
+            demonstrateWeakMitigation(testName, selectedCases);
+            break;
+        case 3:
+            demonstrateStrongMitigation(testName, selectedCases);
+            break;
+        default:
+            cout << "Invalid Input";
+        }
     }
-   return 0;
+    return 0;
 }
