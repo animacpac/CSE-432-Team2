@@ -173,6 +173,8 @@ void demonstrateStrongMitigation(string testName,
             cout << generateQuery(cases[i][USERNAME_INDEX],
                 cases[i][PASS_INDEX]) << endl;
         }
+        else {
+            cout << "Did not generate query."
     }
     // Todo: Read instructions and see if this is required. I would assume so,
     //  but I can't tell. If it is, maybe show the alteration of one test
@@ -191,7 +193,7 @@ bool strongMitigation(string &username, string &password)
    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
    // but correct characters then we need to do it slightly differently.
     if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*"))) {
-        cout << "Username or password are not valid\n";
+        cout << "Username or password is not valid\n";
         return 1;
     }
     return 0;
