@@ -246,14 +246,6 @@ void fillArray(string destination[TESTS_SIZE][TEST_PARAMETERS_SIZE], const strin
 /******************** Main ***************/
 int main()
 {
-    // From instructions. It should be possible to execute any of the test cases in the report.
-    // A simple menu structure should be provided to facilitate this.
-    // todo: create a menu to call correct function: The demonstrateTest function
-    //  with the correct parameters. Also maybe include options for calling the
-    //  mitigation demonstration functions depending on if we figure out it's
-    //  required.
-    // todo: call it like this.
-    //valid cases
     while (true)
     {
         cout << "******MENU*********\n";
@@ -327,13 +319,6 @@ int main()
                 break;
             default:
                 cout << "Invalid Input";
-            }
-        }
-        for (int i = 0; i < TESTS_SIZE; i++)
-        {
-            for (int j = 0; j < TEST_PARAMETERS_SIZE; j++)
-            {
-                selectedCases[i][j] = "";
             }
         }
     }
