@@ -94,7 +94,7 @@ void demonstrateWeakMitigation(string testName,
     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
         string username;
         string password;
-        
+
    cout << weakMitigation(username,password);
     
 }
@@ -125,7 +125,7 @@ void weakMitigation(string &username, string &password)
         i = "_";
         else if (i = " ")
         i = "_";
-        else if (i = "\")
+        else if (i = "\"")
         i = "_";
         else i = i;
 
@@ -139,12 +139,13 @@ void weakMitigation(string &username, string &password)
         i = "_";
         else if (i = " ")
         i = "_";
-        else if (i = "\")
+        else if (i = "\"")
         i = "_";
         else i = i;
 
         }
     }
+    
 
 void demonstrateStrongMitigation(string testName,
     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
