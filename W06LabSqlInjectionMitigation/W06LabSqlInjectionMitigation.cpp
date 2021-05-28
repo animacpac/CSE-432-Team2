@@ -18,8 +18,6 @@ const int USERNAME_INDEX = 0;
 const int PASS_INDEX = 1;
 
 /******************** Constant Declarations ***************/
-// Todo: EVERYONE create one of each of these test cases by your name.
-//  this needs to be done after the generateQuery function
 
 const string TEST_NAMES[NUM_TEST_ARRAYS] = {
     "Valid",
@@ -120,49 +118,42 @@ void demonstrateWeakMitigation(string testName,
 
 /**********************************************
  * function: weakMitigation
- * purpose: Send the username and password to
- * removeBadCharacters function.
+ * purpose: alter password and username, by
+ * replacing invalid characters with an underscore.
  *******************************************/
 string weakMitigation(string userInput)
 {
-    // Instructions: This function accepts the input as a parameter (or two!) and
-    // returns the sanitized input.
-    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
-
-    string newText = userInput;
-    for (int i = 0; i < newText.length(); i++)
+    for (int i = 0; i < userInput.length(); i++)
     {
-        switch (newText[i])
+        switch (userInput[i])
         {
         case '-':
-            newText[i] = '_';
+           userInput[i] = '_';
             break;
         case ';':
-            newText[i] = '_';
+           userInput[i] = '_';
             break;
         case '\\':
-            newText[i] = '_';
+           userInput[i] = '_';
             break;
         case '\'':
-            newText[i] = '_';
+           userInput[i] = '_';
             break;
         case '/':
-            newText[i] = '_';
+           userInput[i] = '_';
             break;
         case '*':
-            newText[i] = '_';
+           userInput[i] = '_';
             break;
         }
     }
-
-    return newText;
+    return userInput;
 }
 
 void demonstrateStrongMitigation(string testName,
                                  const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
 {
     cout << testName << endl;
-    //todo: loop through all cases and cout generateQuery results. Like this
     for (int i = 0; i < TESTS_SIZE; i++)
     {
         string username = cases[i][USERNAME_INDEX];
@@ -178,28 +169,18 @@ void demonstrateStrongMitigation(string testName,
             cout << "Did not generate query.\n";
         }
     }
-    // Todo: Read instructions and see if this is required. I would assume so,
-    //  but I can't tell. If it is, maybe show the alteration of one test
-    //  case from each type of vulnerability.
     cout << endl;
 }
 
 bool strongMitigation(string &username, string &password)
-// Todo: look at the book strong mitigation definition along with instructions
-//  to see if we are supposed to alter the invalid input, or just not run it
-//  all together. We could return a boolean that shows if the input is invalid
-//  if that's all we need to do.
 {
-    // Todo: Alter username and password to only allow letters, numbers, and underscores.
-    // note: If we want to just throw out any invalid input that does not include the correct
-    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
-    // but correct characters then we need to do it slightly differently.
-    if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*")))
+    if (!regex_match(username, regex("^[a-zA-Z0-9_]*"))
+    || !regex_match(password, regex("^[a-zA-Z0-9_]*")))
     {
         cout << "Username or password are not valid\n";
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
 void runAllCases(int testTypeChoice)
@@ -228,7 +209,7 @@ void runAllCases(int testTypeChoice)
         demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
         break;
     default:
-        cout << "Invalid Input";
+        cout << "Invalid Input" << endl;
     }
 }
 
@@ -301,25 +282,23 @@ int main()
         default:
             cout << "Invalid Input";
         }
-        if (testCasesChoice == 6)
+
+        string testName =
+            "Running " + TEST_NAMES[testCasesChoice - 1] + "Test Cases";
+
+        switch (testTypeChoice)
         {
-            runAllCases(testTypeChoice);
-        }
-        else {
-            switch (testTypeChoice)
-            {
-            case 1:
-                demonstrateTest(testName, selectedCases);
-                break;
-            case 2:
-                demonstrateWeakMitigation(testName, selectedCases);
-                break;
-            case 3:
-                demonstrateStrongMitigation(testName, selectedCases);
-                break;
-            default:
-                cout << "Invalid Input";
-            }
+        case 1:
+            demonstrateTest(testName, selectedCases);
+            break;
+        case 2:
+            demonstrateWeakMitigation(testName, selectedCases);
+            break;
+        case 3:
+            demonstrateStrongMitigation(testName, selectedCases);
+            break;
+        default:
+            cout << "Invalid Input";
         }
     }
     return 0;
