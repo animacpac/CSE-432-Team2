@@ -84,7 +84,7 @@ void demonstrateStrongMitigation(string testName,
 
 bool strongMitigation(string &username, string &password);
 
-void runAllCases(char testTypeChoice);
+void runAllCases(int testTypeChoice);
 
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
