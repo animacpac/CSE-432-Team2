@@ -158,7 +158,7 @@ void demonstrateStrongMitigation(string testName,
     {
         string username = cases[i][USERNAME_INDEX];
         string password = cases[i][PASS_INDEX];
-        if (!strongMitigation(username, password))
+        if (strongMitigation(username, password))
         {
             cout << generateQuery(cases[i][USERNAME_INDEX],
                                   cases[i][PASS_INDEX])
@@ -178,9 +178,9 @@ bool strongMitigation(string &username, string &password)
     || !regex_match(password, regex("^[a-zA-Z0-9_]*")))
     {
         cout << "Username or password are not valid\n";
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
 
 void runAllCases(int testTypeChoice)
