@@ -95,7 +95,7 @@ void demonstrateWeakMitigation(string testName,
         string username;
         string password;
 
-   cout << weakMitigation(username,password);
+   weakMitigation(username,password);
     
 }
 
