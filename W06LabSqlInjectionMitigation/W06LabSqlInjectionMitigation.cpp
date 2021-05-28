@@ -91,7 +91,7 @@ void runAllCases(char testTypeChoice);
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
 {
-   return "SELECT * FROM users WHERE username=" + username + " AND Password=" + password + ";";
+   return "SELECT * FROM users WHERE username= \'" + username + "\' AND Password= \'" + password + "\';";
 }
 
 void demonstrateTest(string testName,
@@ -135,6 +135,9 @@ void removeBadCharacter(string & text){
         		text[i] = '_';
         		break;
         	case '\\':
+        		text[i] = '_';
+        		break;
+        	case '\'':
         		text[i] = '_';
         		break;
 		}
