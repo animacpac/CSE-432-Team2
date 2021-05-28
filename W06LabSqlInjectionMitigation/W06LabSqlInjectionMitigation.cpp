@@ -84,7 +84,7 @@ void demonstrateStrongMitigation(string testName,
 
 bool strongMitigation(string &username, string &password);
 
-void runAllCases(char testTypeChoice);
+void runAllCases(int testTypeChoice);
 
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
@@ -175,7 +175,7 @@ void demonstrateStrongMitigation(string testName,
         }
         else
         {
-            cout << "Did not generate query.";
+            cout << "Did not generate query.\n";
         }
     }
     // Todo: Read instructions and see if this is required. I would assume so,
@@ -306,8 +306,6 @@ int main()
         default:
             cout << "Invalid Input";
         }
-        string testName =
-            "Running " + TEST_NAMES[testCasesChoice - 1] + " Test Cases";
         if (testCasesChoice == 6)
         {
             runAllCases(testTypeChoice);
