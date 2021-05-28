@@ -43,10 +43,10 @@ const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 };
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"spottenn", "' UNION SELECT * FROM administrators"},                                                                                // Nathan
+    {"spottenn", "' UNION SELECT * FROM administrators WHERE 1='1"},                                                                                // Nathan
     {"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin"},                                                      // Valter
     {"username1", "non'; UNION SELECT * from users WHERE password = 'password'; UPDATE users SET password = 'password' WHERE id = '1"}, // Phillip
-    {"John", "so' UNION SELECT authenticate FROM passwordList 'end"},                                                                        // Mark
+    {"John", "so' UNION SELECT authenticate FROM passwordList WHERE 'a'='a"},                                                                        // Mark
     {"istMeMario", " ' UNION SELECT * FROM users"}                                                                                    // Everton
 };
 
@@ -59,7 +59,7 @@ const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"spottenn' /*", "*/"},                   // Nathan
+    {"spottenn/*", "*/"},                   // Nathan
     {"vbarret'--", "DROP users just kidding, this is just a comment"},          // Valter
     {"prbowler'--", "a hacker was here"}, // Phillip
     {"markw'--", "yes"},                      // Mark
