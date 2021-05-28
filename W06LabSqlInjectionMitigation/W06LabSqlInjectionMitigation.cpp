@@ -95,12 +95,12 @@ void demonstrateWeakMitigation(string testName,
     string username;
     string password;
 
-
+    for (int i = 0; i < TESTS_SIZE; i++) {
+        string username = cases[i][USERNAME_INDEX];
+        string password = cases[i][PASS_INDEX];
   
 
-    string SQL_statement = "SELECT * FROM Users WHERE username='" + username + 
-        "' AND password='" + password +"'";
-    
+ 
     return weakMitigation(username, password);
     
 }
