@@ -92,10 +92,16 @@ void demonstrateTest(string testName,
 
 void demonstrateWeakMitigation(string testName,
     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]) {
-        string username;
-        string password;
+    string username;
+    string password;
 
-   weakMitigation(username,password);
+
+  
+
+    string SQL_statement = "SELECT * FROM Users WHERE username='" + username + 
+        "' AND password='" + password +"'";
+    
+    return weakMitigation(username, password);
     
 }
 
