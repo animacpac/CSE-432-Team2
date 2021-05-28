@@ -89,7 +89,7 @@ void runAllCases(int testTypeChoice);
 /******************** Function Definitions ***************/
 string generateQuery(string username, string password)
 {
-    return "SELECT * FROM users WHERE username= \'" + username + "\' AND Password= \'" + password + "\';";
+    return "SELECT * FROM users WHERE username=\'" + username + "\' AND password=\'" + password + "\';";
 }
 
 void demonstrateTest(string testName,
@@ -196,7 +196,7 @@ bool strongMitigation(string &username, string &password)
     // but correct characters then we need to do it slightly differently.
     if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*")))
     {
-        cout << "Username or password is not valid.";
+        cout << "Username or password are not valid\n";
         return 1;
     }
     return 0;
@@ -253,17 +253,16 @@ int main()
     //  mitigation demonstration functions depending on if we figure out it's
     //  required.
     // todo: call it like this.
-    cout << "******MENU*********\n";
-
     //valid cases
     while (true)
     {
+        cout << "******MENU*********\n";
         int testTypeChoice;
-        cout << "Select the type of test to run by typing the number and hitting enter\n";
+        cout << "Select the type of test to run by typing the number and hitting enter.\n";
         cout << "[1]. Test Vulnerabilities\n";
         cout << "[2]. Test Weak Mitigation\n";
         cout << "[3]. Test Strong Mitigation\n";
-        cout << "[0] to quit\n";
+        cout << "[0]. to quit\n";
         cin >> testTypeChoice;
         if (testTypeChoice == 0)
         {
@@ -271,14 +270,14 @@ int main()
         }
 
         int testCasesChoice;
-        cout << "Select the specific type of cases to run by typing the number and hitting enter\n";
+        cout << "Select the specific type of cases to run by typing the number and hitting enter.\n";
         cout << "[1]. Use Valid Cases\n";
         cout << "[2]. Use Tautology Cases\n";
         cout << "[3]. Use Union Cases\n";
         cout << "[4]. Use Add Statement Cases\n";
         cout << "[5]. Use Add Comment Cases\n";
         cout << "[6]. Use All Cases\n";
-        cout << "[0] to quit\n";
+        cout << "[0]. to quit\n";
         cin >> testCasesChoice;
         if (testCasesChoice == 0)
         {
@@ -310,23 +309,25 @@ int main()
         default:
             cout << "Invalid Input";
         }
-       
-        string testName =
-            "Running " + TEST_NAMES[testCasesChoice - 1] + "Test Cases";
-
-        switch (testTypeChoice)
+        if (testCasesChoice == 6)
         {
-        case 1:
-            demonstrateTest(testName, selectedCases);
-            break;
-        case 2:
-            demonstrateWeakMitigation(testName, selectedCases);
-            break;
-        case 3:
-            demonstrateStrongMitigation(testName, selectedCases);
-            break;
-        default:
-            cout << "Invalid Input";
+            runAllCases(testTypeChoice);
+        }
+        else {
+            switch (testTypeChoice)
+            {
+            case 1:
+                demonstrateTest(testName, selectedCases);
+                break;
+            case 2:
+                demonstrateWeakMitigation(testName, selectedCases);
+                break;
+            case 3:
+                demonstrateStrongMitigation(testName, selectedCases);
+                break;
+            default:
+                cout << "Invalid Input";
+            }
         }
         for (int i = 0; i < TESTS_SIZE; i++)
         {
