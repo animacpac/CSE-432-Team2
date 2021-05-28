@@ -125,18 +125,16 @@ void demonstrateWeakMitigation(string testName,
  *******************************************/
 void removeBadCaracter(string & text){
     for (int i = 0; i < text.length(); i++) {
-        if (!regex_match(text, regex("[a-z]\\:.*"))) {
-        	switch(text[i]){
-        		case '-':
-        			text[i] = '_';
-        			break;
-        		case ';':
-        			text[i] = '_';
-        			break;
-        		case '\\':
-        			text[i] = '_';
-        			break;
-			}
+        switch(text[i]){
+        	case '-':
+        		text[i] = '_';
+        		break;
+        	case ';':
+        		text[i] = '_';
+        		break;
+        	case '\\':
+        		text[i] = '_';
+        		break;
 		}
 	}
 }
