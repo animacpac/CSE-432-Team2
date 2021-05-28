@@ -167,8 +167,10 @@ void demonstrateStrongMitigation(string testName,
             cout << generateQuery(cases[i][USERNAME_INDEX],
                 cases[i][PASS_INDEX]) << endl;
         }
-        else {
-            cout << "Did not generate query."
+        else
+        {
+           cout << "Did not generate query.";
+        }
     }
     // Todo: Read instructions and see if this is required. I would assume so,
     //  but I can't tell. If it is, maybe show the alteration of one test
