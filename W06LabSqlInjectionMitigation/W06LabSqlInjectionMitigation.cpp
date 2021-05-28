@@ -122,10 +122,10 @@ void demonstrateWeakMitigation(string testName,
 }
 
 /**********************************************
- * function: removeCaracter
- * purpose: remove bad SQL caracters from a given text.
+ * function: removeCharacter
+ * purpose: remove bad SQL characters from a given text.
  *******************************************/
-void removeBadCaracter(string & text){
+void removeBadCharacter(string & text){
     for (int i = 0; i < text.length(); i++) {
         switch(text[i]){
         	case '-':
@@ -149,9 +149,9 @@ void weakMitigation(string &username, string &password)
    // Todo: alter password and username, by escaping out (insert \ before) characters like ";", "--", " ", "\"
 
     //regex("[a-z]\\:.*"),
-	
-	removeBadCaracter(username);
-	removeBadCaracter(password);
+
+   removeBadCharacter(username);
+   removeBadCharacter(password);
 }
 
     
@@ -222,7 +222,7 @@ int main() {
     //valid cases
     while(true)
     {
-       char testTypeChoice;
+       int testTypeChoice;
        cout << "Select the type of test to run by typing the number and hitting enter\n";
        cout << "[1]. Test Vulnerabilities\n";
        cout << "[2]. Test Weak Mitigation\n";
@@ -234,7 +234,7 @@ int main() {
           return 0;
        }
 
-       char testCasesChoice;
+       int testCasesChoice;
        cout << "Select the specific type of cases to run by typing the number and hitting enter\n";
        cout << "[1]. Use Valid Cases\n";
        cout << "[2]. Use Tautology Cases\n";
@@ -295,6 +295,5 @@ int main() {
              cout << "Invalid Input";
        }
     }
-
    return 0;
 }
