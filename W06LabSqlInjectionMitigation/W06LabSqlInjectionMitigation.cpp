@@ -21,6 +21,15 @@ const int PASS_INDEX = 1;
 /******************** Constant Declarations ***************/
 // Todo: EVERYONE create one of each of these test cases by your name.
 //  this needs to be done after the generateQuery function
+
+const string TEST_NAMES[NUM_TEST_ARRAYS] = {
+        "Valid Cases",
+        "Tautology",
+        "Union",
+        "Add Statement",
+        "Add Comment"
+};
+
 const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
         {"spottenn",  "secret_Buffalo7"}, // Nathan
         {"vbarret", "nothingTolose1"}, // Valter
@@ -95,13 +104,14 @@ void demonstrateWeakMitigation(string testName,
     string username;
     string password;
 
-
-  
-
-    string SQL_statement = "SELECT * FROM Users WHERE username='" + username + 
-        "' AND password='" + password +"'";
-    
-    return weakMitigation(username, password);
+    for (int i = 0; i < TESTS_SIZE; i++) {
+        string username = cases[i][USERNAME_INDEX];
+        string password = cases[i][PASS_INDEX];
+        weakMitigation(username, password);
+        cout << generateQuery(cases[i][USERNAME_INDEX],
+                cases[i][PASS_INDEX]) << endl;
+        
+    }
     
 }
 
@@ -153,6 +163,8 @@ void demonstrateStrongMitigation(string testName,
             cout << generateQuery(cases[i][USERNAME_INDEX],
                 cases[i][PASS_INDEX]) << endl;
         }
+        else {
+            cout << "Did not generate query."
     }
     // Todo: Read instructions and see if this is required. I would assume so,
     //  but I can't tell. If it is, maybe show the alteration of one test
@@ -171,7 +183,7 @@ bool strongMitigation(string &username, string &password)
    // characters then the regex is "^[a-zA-Z0-9_]*". If we want to remove all
    // but correct characters then we need to do it slightly differently.
     if (!regex_match(username, regex("^[a-zA-Z0-9_]*")) || !regex_match(password, regex("^[a-zA-Z0-9_]*"))) {
-        cout << "Username or password are not valid\n";
+        cout << "Username or password is not valid\n";
         return 1;
     }
     return 0;
@@ -186,37 +198,59 @@ int main() {
    //  mitigation demonstration functions depending on if we figure out it's
    //  required.
    // todo: call it like this.
-
-   //valid cases
-    int menuChoice;
     cout << "******MENU*********\n";
-    cout << "1. Test Vulnerabilities\n";
-    cout << "2. Test Weak Mitigation\n";
-    cout << "3. Test Strong Mitigation\n";
-    cout << "Please select the test you wish to preform.\n";
-    cin >> menuChoice;
 
-    switch (menuChoice) {
+    //valid cases
+    int testTypeChoice;
+    cout << "Select the type of test to run by typing the number and hitting enter\n";
+    cout << "[1]. Test Vulnerabilities\n";
+    cout << "[2]. Test Weak Mitigation\n";
+    cout << "[3]. Test Strong Mitigation\n";
+    cout << "Please select the type of test you wish to preform.\n";
+    cin >> testTypeChoice;
+
+    int testCasesChoice;
+    cout << "Select the specific type of cases \n";
+    cout << "[1]. Use Valid Cases\n";
+    cout << "[2]. Use Tautology Cases\n";
+    cout << "[3]. Use Union Cases\n";
+    cout << "[4]. Use Add Statement Cases\n";
+    cout << "[5]. Use Add Comment Cases\n";
+    cout << "[6]. Use All Cases\n";
+    cout << "Please select the type of test you wish to preform.\n";
+    cin >> testCasesChoice;
+
+   string selectedCases[TESTS_SIZE][TEST_PARAMETERS_SIZE];
+   switch (testCasesChoice)
+   {
+      case 1:
+         memcpy(selectedCases, TESTS_VALID, sizeof(TESTS_VALID));
+         break;
+      case 2:
+         memcpy(selectedCases, TESTS_TAUTOLOGY, sizeof(TESTS_TAUTOLOGY));
+         break;
+      case 3:
+         memcpy(selectedCases, TESTS_UNION, sizeof(TESTS_UNION));
+         break;
+      case 4:
+         memcpy(selectedCases, TESTS_ADD_STATE, sizeof(TESTS_ADD_STATE));
+         break;
+      case 5:
+         memcpy(selectedCases, TESTS_ADD_COMMENT, sizeof(TESTS_ADD_COMMENT));
+         break;
+      default:
+         cout << "Invalid Input";
+   }
+
+    switch (testTypeChoice) {
     case 1:
-        demonstrateTest("Valid Cases", TESTS_VALID);
-        demonstrateTest("Tautology", TESTS_TAUTOLOGY);
-        demonstrateTest("Union", TESTS_UNION);
-        demonstrateTest("Add State", TESTS_ADD_STATE);
-        demonstrateTest("Add Comment", TESTS_ADD_COMMENT);
+        demonstrateTest(TEST_NAMES[testCasesChoice], selectedCases);
         break;
     case 2:
-        demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
-        demonstrateWeakMitigation("Tautology", TESTS_TAUTOLOGY);
-        demonstrateWeakMitigation("Union", TESTS_UNION);
-        demonstrateWeakMitigation("Add State", TESTS_ADD_STATE);
-        demonstrateWeakMitigation("Add Comment", TESTS_ADD_COMMENT);
+       demonstrateWeakMitigation(TEST_NAMES[testCasesChoice], selectedCases);
         break;
     case 3:
-        demonstrateStrongMitigation("Valid Cases", TESTS_VALID);
-        demonstrateStrongMitigation("Tautology", TESTS_TAUTOLOGY);
-        demonstrateStrongMitigation("Union", TESTS_UNION);
-        demonstrateStrongMitigation("Add State", TESTS_ADD_STATE);
-        demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
+       demonstrateStrongMitigation(TEST_NAMES[testCasesChoice], selectedCases);
         break;
     default:
         cout << "Invalid Input";
