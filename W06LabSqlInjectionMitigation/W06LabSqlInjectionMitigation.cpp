@@ -161,6 +161,9 @@ string genQueryWeak(string userInput)
 		case '*':
 			userInput[i] = '_';
 			break;
+		case '=':
+			userInput[i] = '_';
+			break;
 		}
 	}
 	return userInput;
