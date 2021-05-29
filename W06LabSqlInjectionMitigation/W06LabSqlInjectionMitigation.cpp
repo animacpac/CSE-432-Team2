@@ -121,6 +121,7 @@ void demonstrateTest(string testName,
 void demonstrateWeakMitigation(string testName,
 	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
 {
+    cout << testName << endl;
 	string username;
 	string password;
 
