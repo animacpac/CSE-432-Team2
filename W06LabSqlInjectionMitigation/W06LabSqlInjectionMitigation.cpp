@@ -25,67 +25,67 @@ const int PASS_INDEX = 1;
 /******************** Test case arrays ***************/
 
 const string TEST_NAMES[NUM_TEST_ARRAYS] = {
-    "Valid",
-    "Tautology",
-    "Union",
-    "Add Statement",
-    "Add Comment"};
+	"Valid",
+	"Tautology",
+	"Union",
+	"Add Statement",
+	"Add Comment" };
 
 const string TESTS_VALID[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"spottenn", "secret_Buffalo7"}, // Nathan
-    {"vbarret", "nothingTolose1"},   // Valter
-    {"prbowler", "bowler123"},       // Phillip
-    {"markw", "smashing_Pumpkins"},  // Mark
-    {"itsMeMario", "Luigi123"}       // Everton
+	{"spottenn", "secret_Buffalo7"}, // Nathan
+	{"vbarret", "nothingTolose1"},   // Valter
+	{"prbowler", "bowler123"},       // Phillip
+	{"markw", "smashing_Pumpkins"},  // Mark
+	{"itsMeMario", "Luigi123"}       // Everton
 };
 
 const string TESTS_TAUTOLOGY[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"user' OR 'gotcha' = 'gotcha", "doesn_tmatter' OR 'cantstopme' = 'cantstopme"}, // Nathan
-    {"vbarret", "ask' OR 1=1"},                                                      // Valter
-    {"prbowler", "non' or 'password' = 'password"},                                  // Phillip
-    {"Jill", "something' OR '4' = 4"},                                               // Mark
-    {"itsMeMario", " ' OR '1' = '1"}                                                 // Everton
+	{"user' OR 'gotcha' = 'gotcha", "doesn_tmatter' OR 'cantstopme' = 'cantstopme"}, // Nathan
+	{"vbarret", "ask' OR 1=1"},                                                      // Valter
+	{"prbowler", "non' or 'password' = 'password"},                                  // Phillip
+	{"Jill", "something' OR '4' = 4"},                                               // Mark
+	{"itsMeMario", " ' OR '1' = '1"}                                                 // Everton
 };
 
 const string TESTS_UNION[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"spottenn", "' UNION SELECT * FROM administrators WHERE 1='1"},                 // Nathan
-    {"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin"},     // Valter
-    {"username1", "non' UNION SELECT * FROM users"},                                 // Phillip
-    {"John", "so' UNION SELECT authenticate FROM passwordList WHERE 'a'='a"},        // Mark
-    {"istMeMario", " ' UNION SELECT * FROM users"}                                   // Everton
+	{"spottenn", "' UNION SELECT * FROM administrators WHERE 1='1"},                 // Nathan
+	{"vbarret", "Gimme' UNION ALL SELECT * from users WHERE username = 'admin"},     // Valter
+	{"username1", "non' UNION SELECT * FROM users"},                                 // Phillip
+	{"John", "so' UNION SELECT authenticate FROM passwordList WHERE 'a'='a"},        // Mark
+	{"istMeMario", " ' UNION SELECT * FROM users"}                                   // Everton
 };
 
 const string TESTS_ADD_STATE[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"spottenn", "insignificant'; INSERT INTO administrators (username, password) VALUES 'attacker', 'mypassword'"},    // Nathan
-    {"vbarret", "1'; DELETE FROM users WHERE 1=1 nothing'; INSERT INTO users (name, passwd) VALUES 'Awesome', '1234'"}, // Valter
-    {"prbowler", "non'; INSERT INTO users (username, password) VALUES 'hacker', 'password'"},                           // Phillip
-    {"Bob", "something' ; DELETE row25 "},                                                                              // Mark
-    {"itsMeMario", " '; DROP TABLE users;"}                                                                             // Everton
+	{"spottenn", "insignificant'; INSERT INTO administrators (username, password) VALUES 'attacker', 'mypassword'"},    // Nathan
+	{"vbarret", "1'; DELETE FROM users WHERE 1=1 nothing'; INSERT INTO users (name, passwd) VALUES 'Awesome', '1234'"}, // Valter
+	{"prbowler", "non'; INSERT INTO users (username, password) VALUES 'hacker', 'password'"},                           // Phillip
+	{"Bob", "something' ; DELETE row25 "},                                                                              // Mark
+	{"itsMeMario", " '; DROP TABLE users;"}                                                                             // Everton
 };
 
 const string TESTS_ADD_COMMENT[TESTS_SIZE][TEST_PARAMETERS_SIZE] = {
-    {"spottenn/*", "*/"},                                                       // Nathan
-    {"vbarret'--", "DROP users just kidding, this is just a comment"},          // Valter
-    {"prbowler'--", "a hacker was here"},                                       // Phillip
-    {"markw'--", "yes"},                                                        // Mark
-    {"itsMeMario'; --", "thanks"}                                               // Everton
+	{"spottenn/*", "*/"},                                                       // Nathan
+	{"vbarret'--", "DROP users just kidding, this is just a comment"},          // Valter
+	{"prbowler'--", "a hacker was here"},                                       // Phillip
+	{"markw'--", "yes"},                                                        // Mark
+	{"itsMeMario'; --", "thanks"}                                               // Everton
 };
 
 /******************** Function Declarations ***************/
 string generateQuery(string username, string password);
 
 void demonstrateTest(string testName,
-                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
+	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
 void demonstrateWeakMitigation(string testName,
-                               const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
+	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
-string weakMitigation(string userInput);
+string genQueryWeak(string userInput);
 
 void demonstrateStrongMitigation(string testName,
-                                 const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
+	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
-bool strongMitigation(string &username, string &password);
+bool genQueryStrong(string &username, string &password);
 
 void runAllCases(int testTypeChoice);
 
@@ -95,7 +95,7 @@ void runAllCases(int testTypeChoice);
  ****************************************************************************/
 string generateQuery(string username, string password)
 {
-    return "SELECT * FROM users WHERE username=\'" + username + "\' AND password=\'" + password + "\';";
+	return "SELECT * FROM users WHERE username=\'" + username + "\' AND password=\'" + password + "\';";
 }
 
 /*************************************************************************
@@ -103,15 +103,15 @@ string generateQuery(string username, string password)
  * query string
  ************************************************************************/
 void demonstrateTest(string testName,
-                     const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
+	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
 {
-    cout << testName << endl;
-    for (int i = 0; i < TESTS_SIZE; ++i)
-    {
-        cout << generateQuery(cases[i][USERNAME_INDEX],
-                              cases[i][PASS_INDEX]);
-        cout << endl;
-    }
+	cout << testName << endl;
+	for (int i = 0; i < TESTS_SIZE; ++i)
+	{
+		cout << generateQuery(cases[i][USERNAME_INDEX],
+			cases[i][PASS_INDEX]);
+		cout << endl;
+	}
 }
 
 /*************************************************************************
@@ -119,50 +119,50 @@ void demonstrateTest(string testName,
  * version of the query string.
  ************************************************************************/
 void demonstrateWeakMitigation(string testName,
-                               const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
+	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
 {
-    string username;
-    string password;
+	string username;
+	string password;
 
-    for (int i = 0; i < TESTS_SIZE; i++)
-    {
-        string username = weakMitigation(cases[i][USERNAME_INDEX]);
-        string password = weakMitigation(cases[i][PASS_INDEX]);
-        cout << generateQuery(username, password) << endl;
-    }
+	for (int i = 0; i < TESTS_SIZE; i++)
+	{
+		string username = genQueryWeak(cases[i][USERNAME_INDEX]);
+		string password = genQueryWeak(cases[i][PASS_INDEX]);
+		cout << generateQuery(username, password) << endl;
+	}
 }
 
 /******************************************************************************
  * Alter password and username, by
  * replacing invalid characters with an underscore.
  *****************************************************************************/
-string weakMitigation(string userInput)
+string genQueryWeak(string userInput)
 {
-    for (int i = 0; i < userInput.length(); i++)
-    {
-        switch (userInput[i])
-        {
-        case '-':
-           userInput[i] = '_';
-            break;
-        case ';':
-           userInput[i] = '_';
-            break;
-        case '\\':
-           userInput[i] = '_';
-            break;
-        case '\'':
-           userInput[i] = '_';
-            break;
-        case '/':
-           userInput[i] = '_';
-            break;
-        case '*':
-           userInput[i] = '_';
-            break;
-        }
-    }
-    return userInput;
+	for (int i = 0; i < userInput.length(); i++)
+	{
+		switch (userInput[i])
+		{
+		case '-':
+			userInput[i] = '_';
+			break;
+		case ';':
+			userInput[i] = '_';
+			break;
+		case '\\':
+			userInput[i] = '_';
+			break;
+		case '\'':
+			userInput[i] = '_';
+			break;
+		case '/':
+			userInput[i] = '_';
+			break;
+		case '*':
+			userInput[i] = '_';
+			break;
+		}
+	}
+	return userInput;
 }
 
 /*************************************************************************
@@ -170,40 +170,40 @@ string weakMitigation(string userInput)
  * version of the query string.
  ************************************************************************/
 void demonstrateStrongMitigation(string testName,
-                                 const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
+	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
 {
-    cout << testName << endl;
-    for (int i = 0; i < TESTS_SIZE; i++)
-    {
-        string username = cases[i][USERNAME_INDEX];
-        string password = cases[i][PASS_INDEX];
-        if (strongMitigation(username, password))
-        {
-            cout << generateQuery(cases[i][USERNAME_INDEX],
-                                  cases[i][PASS_INDEX])
-                 << endl;
-        }
-        else
-        {
-            cout << "Did not generate query.\n";
-        }
-    }
-    cout << endl;
+	cout << testName << endl;
+	for (int i = 0; i < TESTS_SIZE; i++)
+	{
+		string username = cases[i][USERNAME_INDEX];
+		string password = cases[i][PASS_INDEX];
+		if (genQueryStrong(username, password))
+		{
+			cout << generateQuery(cases[i][USERNAME_INDEX],
+				cases[i][PASS_INDEX])
+				<< endl;
+		}
+		else
+		{
+			cout << "Did not generate query.\n";
+		}
+	}
+	cout << endl;
 }
 
 /*************************************************************************
  * Determines the presence of characters that may be used in an attack
  * and returns true or false.
  ************************************************************************/
-bool strongMitigation(string &username, string &password)
+bool genQueryStrong(string &username, string &password)
 {
-    if (!regex_match(username, regex("^[a-zA-Z0-9_]*"))
-    || !regex_match(password, regex("^[a-zA-Z0-9_]*")))
-    {
-        cout << "Username or password are not valid\n";
-        return false;
-    }
-    return true;
+	if (!regex_match(username, regex("^[a-zA-Z0-9_]*"))
+		|| !regex_match(password, regex("^[a-zA-Z0-9_]*")))
+	{
+		cout << "Username or password are not valid\n";
+		return false;
+	}
+	return true;
 }
 
 /*************************************************************************
@@ -212,127 +212,127 @@ bool strongMitigation(string &username, string &password)
  ************************************************************************/
 void runAllCases(int testTypeChoice)
 {
-    switch (testTypeChoice)
-    {
-    case 1:
-        demonstrateTest("Valid Cases", TESTS_VALID);
-        demonstrateTest("Tautology", TESTS_TAUTOLOGY);
-        demonstrateTest("Union", TESTS_UNION);
-        demonstrateTest("Add State", TESTS_ADD_STATE);
-        demonstrateTest("Add Comment", TESTS_ADD_COMMENT);
-        break;
-    case 2:
-        demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
-        demonstrateWeakMitigation("Tautology", TESTS_TAUTOLOGY);
-        demonstrateWeakMitigation("Union", TESTS_UNION);
-        demonstrateWeakMitigation("Add State", TESTS_ADD_STATE);
-        demonstrateWeakMitigation("Add Comment", TESTS_ADD_COMMENT);
-        break;
-    case 3:
-        demonstrateStrongMitigation("Valid Cases", TESTS_VALID);
-        demonstrateStrongMitigation("Tautology", TESTS_TAUTOLOGY);
-        demonstrateStrongMitigation("Union", TESTS_UNION);
-        demonstrateStrongMitigation("Add State", TESTS_ADD_STATE);
-        demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
-        break;
-    default:
-        cout << "Invalid Input" << endl;
-    }
+	switch (testTypeChoice)
+	{
+	case 1:
+		demonstrateTest("Valid Cases", TESTS_VALID);
+		demonstrateTest("Tautology", TESTS_TAUTOLOGY);
+		demonstrateTest("Union", TESTS_UNION);
+		demonstrateTest("Add State", TESTS_ADD_STATE);
+		demonstrateTest("Add Comment", TESTS_ADD_COMMENT);
+		break;
+	case 2:
+		demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
+		demonstrateWeakMitigation("Tautology", TESTS_TAUTOLOGY);
+		demonstrateWeakMitigation("Union", TESTS_UNION);
+		demonstrateWeakMitigation("Add State", TESTS_ADD_STATE);
+		demonstrateWeakMitigation("Add Comment", TESTS_ADD_COMMENT);
+		break;
+	case 3:
+		demonstrateStrongMitigation("Valid Cases", TESTS_VALID);
+		demonstrateStrongMitigation("Tautology", TESTS_TAUTOLOGY);
+		demonstrateStrongMitigation("Union", TESTS_UNION);
+		demonstrateStrongMitigation("Add State", TESTS_ADD_STATE);
+		demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
+		break;
+	default:
+		cout << "Invalid Input" << endl;
+	}
 }
 
 /*************************************************************************
- * Fill the selected choices array with the appropriate predetermined 
+ * Fill the selected choices array with the appropriate predetermined
  * values.
  ************************************************************************/
 void fillArray(string destination[TESTS_SIZE][TEST_PARAMETERS_SIZE], const string SOURCE[TESTS_SIZE][TEST_PARAMETERS_SIZE])
 {
-    for (int i = 0; i < TESTS_SIZE; i++)
-    {
-        for (int j = 0; j < TEST_PARAMETERS_SIZE; j++)
-        {
-            destination[i][j] = SOURCE[i][j];
-        }
-    }
+	for (int i = 0; i < TESTS_SIZE; i++)
+	{
+		for (int j = 0; j < TEST_PARAMETERS_SIZE; j++)
+		{
+			destination[i][j] = SOURCE[i][j];
+		}
+	}
 }
 
 int main()
 {
-    while (true)
-    {
-        int testTypeChoice = 0;
-        int testCasesChoice = 0;
-        string selectedCases[TESTS_SIZE][TEST_PARAMETERS_SIZE];
-        string testName =
-            "Running " + TEST_NAMES[testCasesChoice - 1] + " Test Cases";
+	while (true)
+	{
+		int testTypeChoice = 0;
+		int testCasesChoice = 0;
+		string selectedCases[TESTS_SIZE][TEST_PARAMETERS_SIZE];
+		string testName =
+			"Running " + TEST_NAMES[testCasesChoice - 1] + " Test Cases";
 
-        cout << "******MENU*********\n"; 
-        cout << "Select the type of test to run by typing the number and hitting enter.\n";
-        cout << "[1]. Test Vulnerabilities\n";
-        cout << "[2]. Test Weak Mitigation\n";
-        cout << "[3]. Test Strong Mitigation\n";
-        cout << "[0]. to quit\n";
-        cin >> testTypeChoice;
+		cout << "******MENU*********\n";
+		cout << "Select the type of test to run by typing the number and hitting enter.\n";
+		cout << "[1]. Test Vulnerabilities\n";
+		cout << "[2]. Test Weak Mitigation\n";
+		cout << "[3]. Test Strong Mitigation\n";
+		cout << "[0]. to quit\n";
+		cin >> testTypeChoice;
 
-        if (testTypeChoice == 0)
-        {
-            return 0;
-        }        
+		if (testTypeChoice == 0)
+		{
+			return 0;
+		}
 
-        cout << "Select the specific type of cases to run by typing the number and hitting enter.\n";
-        cout << "[1]. Use Valid Cases\n";
-        cout << "[2]. Use Tautology Cases\n";
-        cout << "[3]. Use Union Cases\n";
-        cout << "[4]. Use Add Statement Cases\n";
-        cout << "[5]. Use Add Comment Cases\n";
-        cout << "[6]. Use All Cases\n";
-        cout << "[0]. to quit\n";
-        cin  >> testCasesChoice;
+		cout << "Select the specific type of cases to run by typing the number and hitting enter.\n";
+		cout << "[1]. Use Valid Cases\n";
+		cout << "[2]. Use Tautology Cases\n";
+		cout << "[3]. Use Union Cases\n";
+		cout << "[4]. Use Add Statement Cases\n";
+		cout << "[5]. Use Add Comment Cases\n";
+		cout << "[6]. Use All Cases\n";
+		cout << "[0]. to quit\n";
+		cin >> testCasesChoice;
 
-        if (testCasesChoice == 0)
-        {
-            return 0;
-        }        
+		if (testCasesChoice == 0)
+		{
+			return 0;
+		}
 
-        switch (testCasesChoice)
-        {
-        case 1:
-            fillArray(selectedCases, TESTS_VALID);
-            break;
-        case 2:
-            fillArray(selectedCases, TESTS_TAUTOLOGY);
-            break;
-        case 3:
-            fillArray(selectedCases, TESTS_UNION);
-            break;
-        case 4:
-            fillArray(selectedCases, TESTS_ADD_STATE);
-            break;
-        case 5:
-            fillArray(selectedCases, TESTS_ADD_COMMENT);
-            break;
-        case 6:
+		switch (testCasesChoice)
+		{
+		case 1:
+			fillArray(selectedCases, TESTS_VALID);
+			break;
+		case 2:
+			fillArray(selectedCases, TESTS_TAUTOLOGY);
+			break;
+		case 3:
+			fillArray(selectedCases, TESTS_UNION);
+			break;
+		case 4:
+			fillArray(selectedCases, TESTS_ADD_STATE);
+			break;
+		case 5:
+			fillArray(selectedCases, TESTS_ADD_COMMENT);
+			break;
+		case 6:
 			runAllCases(testTypeChoice);
 			continue;
-        default:
-            cout << "Invalid Input";
-              continue;
-        }
+		default:
+			cout << "Invalid Input";
+			continue;
+		}
 
-        switch (testTypeChoice)
-        {
-        case 1:
-            demonstrateTest(testName, selectedCases);
-            break;
-        case 2:
-            demonstrateWeakMitigation(testName, selectedCases);
-            break;
-        case 3:
-            demonstrateStrongMitigation(testName, selectedCases);
-            break;
-        default:
-            cout << "Invalid Input";
-              continue;
-        }
-    }
-    return 0;
+		switch (testTypeChoice)
+		{
+		case 1:
+			demonstrateTest(testName, selectedCases);
+			break;
+		case 2:
+			demonstrateWeakMitigation(testName, selectedCases);
+			break;
+		case 3:
+			demonstrateStrongMitigation(testName, selectedCases);
+			break;
+		default:
+			cout << "Invalid Input";
+			continue;
+		}
+	}
+	return 0;
 }
