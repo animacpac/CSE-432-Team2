@@ -1,9 +1,14 @@
-/************************************************************
-** FileName: W06LabSqlInjectionMitigation.cpp
-** Authors: Valter Barreto, Nathan Spotten, Phillip Bowler
-** , Everton Alves, Mark Wright
-** Purpose: To demonstrate SQL injection attacks and vulnerabilities
-***********************************************************/
+/*****************************************************************************
+ * Program:
+ *     W06 LAB: SQL INJECTION MITIGATION
+ * Authors:
+ *     Valter Barreto
+ *     Nathan Spotten
+ *     Phillip Bowler
+ *     Everton Alves
+ *     Mark Wright
+ * Summary: To demonstrate SQL injection attacks and vulnerabilities
+*****************************************************************************/
 
 #include <iostream>
 #include <regex>
