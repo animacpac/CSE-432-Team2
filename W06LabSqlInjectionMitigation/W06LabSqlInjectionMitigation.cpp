@@ -77,15 +77,15 @@ string generateQuery(string username, string password);
 void demonstrateTest(string testName,
 	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
-void demonstrateWeakMitigation(string testName,
+void genQueryWeak(string testName,
 	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
-string genQueryWeak(string userInput);
+string weakMitigation(string userInput);
 
-void demonstrateStrongMitigation(string testName,
+void genQueryStrong(string testName,
 	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE]);
 
-bool genQueryStrong(string &username, string &password);
+bool strongMitigation(string &username, string &password);
 
 void runAllCases(int testTypeChoice);
 
@@ -118,17 +118,17 @@ void demonstrateTest(string testName,
  * Loops through a specific test and prints the weak mitigation
  * version of the query string.
  ************************************************************************/
-void demonstrateWeakMitigation(string testName,
+void genQueryWeak(string testName,
 	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
 {
-    cout << testName << endl;
+	cout << testName << endl;
 	string username;
 	string password;
 
 	for (int i = 0; i < TESTS_SIZE; i++)
 	{
-		string username = genQueryWeak(cases[i][USERNAME_INDEX]);
-		string password = genQueryWeak(cases[i][PASS_INDEX]);
+		string username = weakMitigation(cases[i][USERNAME_INDEX]);
+		string password = weakMitigation(cases[i][PASS_INDEX]);
 		cout << generateQuery(username, password) << endl;
 	}
 }
@@ -137,7 +137,7 @@ void demonstrateWeakMitigation(string testName,
  * Alter password and username, by
  * replacing invalid characters with an underscore.
  *****************************************************************************/
-string genQueryWeak(string userInput)
+string weakMitigation(string userInput)
 {
 	for (int i = 0; i < userInput.length(); i++)
 	{
@@ -170,7 +170,7 @@ string genQueryWeak(string userInput)
  * Loops through a specific test and prints the strong mitigation
  * version of the query string.
  ************************************************************************/
-void demonstrateStrongMitigation(string testName,
+void genQueryStrong(string testName,
 	const string cases[TESTS_SIZE][TEST_PARAMETERS_SIZE])
 {
 	cout << testName << endl;
@@ -178,7 +178,7 @@ void demonstrateStrongMitigation(string testName,
 	{
 		string username = cases[i][USERNAME_INDEX];
 		string password = cases[i][PASS_INDEX];
-		if (genQueryStrong(username, password))
+		if (strongMitigation(username, password))
 		{
 			cout << generateQuery(cases[i][USERNAME_INDEX],
 				cases[i][PASS_INDEX])
@@ -196,7 +196,7 @@ void demonstrateStrongMitigation(string testName,
  * Determines the presence of characters that may be used in an attack
  * and returns true or false.
  ************************************************************************/
-bool genQueryStrong(string &username, string &password)
+bool strongMitigation(string &username, string &password)
 {
 	if (!regex_match(username, regex("^[a-zA-Z0-9_]*"))
 		|| !regex_match(password, regex("^[a-zA-Z0-9_]*")))
@@ -223,18 +223,18 @@ void runAllCases(int testTypeChoice)
 		demonstrateTest("Add Comment", TESTS_ADD_COMMENT);
 		break;
 	case 2:
-		demonstrateWeakMitigation("Valid Cases", TESTS_VALID);
-		demonstrateWeakMitigation("Tautology", TESTS_TAUTOLOGY);
-		demonstrateWeakMitigation("Union", TESTS_UNION);
-		demonstrateWeakMitigation("Add State", TESTS_ADD_STATE);
-		demonstrateWeakMitigation("Add Comment", TESTS_ADD_COMMENT);
+		genQueryWeak("Valid Cases", TESTS_VALID);
+		genQueryWeak("Tautology", TESTS_TAUTOLOGY);
+		genQueryWeak("Union", TESTS_UNION);
+		genQueryWeak("Add State", TESTS_ADD_STATE);
+		genQueryWeak("Add Comment", TESTS_ADD_COMMENT);
 		break;
 	case 3:
-		demonstrateStrongMitigation("Valid Cases", TESTS_VALID);
-		demonstrateStrongMitigation("Tautology", TESTS_TAUTOLOGY);
-		demonstrateStrongMitigation("Union", TESTS_UNION);
-		demonstrateStrongMitigation("Add State", TESTS_ADD_STATE);
-		demonstrateStrongMitigation("Add Comment", TESTS_ADD_COMMENT);
+		genQueryStrong("Valid Cases", TESTS_VALID);
+		genQueryStrong("Tautology", TESTS_TAUTOLOGY);
+		genQueryStrong("Union", TESTS_UNION);
+		genQueryStrong("Add State", TESTS_ADD_STATE);
+		genQueryStrong("Add Comment", TESTS_ADD_COMMENT);
 		break;
 	default:
 		cout << "Invalid Input" << endl;
@@ -325,10 +325,10 @@ int main()
 			demonstrateTest(testName, selectedCases);
 			break;
 		case 2:
-			demonstrateWeakMitigation(testName, selectedCases);
+			genQueryWeak(testName, selectedCases);
 			break;
 		case 3:
-			demonstrateStrongMitigation(testName, selectedCases);
+			genQueryStrong(testName, selectedCases);
 			break;
 		default:
 			cout << "Invalid Input";
