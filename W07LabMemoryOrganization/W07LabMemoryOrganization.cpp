@@ -97,7 +97,12 @@ void two(long number)              // 345678
    {
       ////////////////////////////////////////////////
       // Insert code here to display the callstack
-      
+      cout << '[' << setw(2) << i << ']'
+        << setw(15) << "address" 
+        << setw(20) << "hexadecimal" 
+        << setw(20) << "decimal"
+        << setw(18) << "characters"
+        << endl;
       //
       ////////////////////////////////////////////////
    }
@@ -108,7 +113,11 @@ void two(long number)              // 345678
    // change text in main() to "*main**"
 
    // change number in main() to 654321
-
+    long int *newNumber;
+    newNumber = &number;
+	*newNumber = 654321;
+	cout << "Checking in the function :" << number << endl;
+	
    // change pointerFunction in main() to point to pass
 
    // change message in main() to point to passMessage
