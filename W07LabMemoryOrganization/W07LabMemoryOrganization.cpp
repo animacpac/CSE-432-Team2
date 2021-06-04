@@ -114,9 +114,8 @@ void two(long number)              // 345678
 
    // change number in main() to 654321
     long int *newNumber;
-    newNumber = &number;
+    newNumber = &number + 19; //Adding 19 To be able to change the number of main
 	*newNumber = 654321;
-	cout << "Checking in the function :" << number << endl;
 	
    // change pointerFunction in main() to point to pass
 
